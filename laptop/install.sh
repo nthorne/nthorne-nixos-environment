@@ -10,6 +10,8 @@ echo "Installing settings repositories.."
 test -d $HOME/.vim || git clone git@github.com:nthorne/nthorne-vim-environment.git $HOME/.vim
 test -d $HOME/.config/nvim || (mkdir $HOME/.config ; ln -s $HOME/.vim $HOME/.config/nvim)
 test -f $HOME/.vimrc || ln -s $HOME/.vim/.vimrc $HOME/
+test -d $HOME/.zgen || git clone https://github.com/tarjoilija/zgen.git $HOME/.zgen
+test -d $HOME/.tmux/plugins/tpm || (mkdir -p $HOME/.tmux/plugins/ && git clone https://github.com/tmux-plugins/tpm.git $HOME/.tmux/plugins/tpm)
 
 test -d $HOME/.zsh || git clone git@github.com:nthorne/nthorne-zsh-environment.git $HOME/.zsh
 test -f $HOME/.zprofile || ln -s $HOME/.zsh/.zprofile $HOME/

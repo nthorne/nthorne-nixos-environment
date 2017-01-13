@@ -1,4 +1,4 @@
-xterm*faceName:        Terminus:style=Regular:size=12
+xterm*faceName:        Terminus:style=Regular:size=10
 xterm*loginShell:      true
 xterm*saveLines:       2000
 xterm*termName:        xterm-256color
