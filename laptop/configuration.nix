@@ -36,6 +36,7 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     ag
+    conky
     direnv
     dmenu
     dzen2
@@ -54,6 +55,9 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  # Enable power management
+  #services.tlp.enable = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -77,6 +81,7 @@
     synaptics = {
       enable = true;
       accelFactor = "0.1";
+      fingersMap = [ 1 3 2 ];
     };
   };
 

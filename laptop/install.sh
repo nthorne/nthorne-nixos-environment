@@ -3,8 +3,7 @@
 # Sets up environment
 
 echo "Installing configuration.nix.."
-sudo rm /etc/nixos/configuration.nix
-sudo ln -s $PWD/configuration.nix /etc/nixos/
+test -L /etc/nixos/configuration.nix || (sudo rm /etc/nixos/configuration.nix && sudo ln -s $PWD/configuration.nix /etc/nixos/)
 
 echo "Installing settings repositories.."
 test -d $HOME/.vim || git clone git@github.com:nthorne/nthorne-vim-environment.git $HOME/.vim
@@ -18,7 +17,7 @@ test -f $HOME/.zprofile || ln -s $HOME/.zsh/.zprofile $HOME/
 test -f $HOME/.zshenv || ln -s $HOME/.zsh/.zshenv $HOME/
 test -f $HOME/.zshrc || ln -s $HOME/.zsh/.zshrc $HOME/
 
-test -f $HOME/repos || mkdir $HOME/repos
+test -d $HOME/repos || mkdir $HOME/repos
 pushd $HOME/repos
 test -d nthorne-xmonad-environment || git clone git@github.com:nthorne/nthorne-xmonad-environment.git
 test -d $HOME/.xmonad || mkdir $HOME/.xmonad
@@ -29,3 +28,4 @@ test -f $HOME/.tmux.conf || ln -s $PWD/nthorne-tmux-environment/.tmux.conf $HOME
 popd
 
 test -f $HOME/.Xresources || ln -s $PWD/.Xresources $HOME/
+test -f $HOME/.conkyrc || ln -s $PWD/.conkyrc $HOME/
