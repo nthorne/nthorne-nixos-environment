@@ -74,6 +74,10 @@
 	defaultUser = "nthorne";
       };
     };
+    synaptics = {
+      enable = true;
+      accelFactor = "0.1";
+    };
   };
 
 
