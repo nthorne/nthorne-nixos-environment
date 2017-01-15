@@ -30,3 +30,4 @@ popd
 test -f $HOME/.Xresources || ln -s $PWD/.Xresources $HOME/
 test -f $HOME/.conkyrc || ln -s $PWD/.conkyrc $HOME/
 test -f $HOME/.direnvrc || ln -s $PWD/.direnvrc $HOME/
+test -f $HOME/.gitconfig || ln -s $PWD/.gitconfig $HOME/

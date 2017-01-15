@@ -1,0 +1,23 @@
+[user]
+	email = notrupertthorne@gmail.com
+	nthorne
+[color]
+	ui = true
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[diff]
+	tool = vimdiff
+[mergetool]
+	prompt = false
+[alias]
+	graph = log --graph --pretty=oneline --abbrev-commit
+	ds = diff --staged
+	st = status -sb
+	sst = submodule status
+	ls = log --pretty=format:'%C(yellow)%h %C(green)%ad%C(red)%d %C(reset)%s%C(green) [%cn]' --decorate --date=short
+	pg = log --graph --pretty=format':%C(yellow)%h%Cred%d%Creset %s %C(green) %an%C(reset), %ar'
+	sup = submodule update --init --recursive
+	publish = "!git push origin HEAD:refs/for/$1"
+	draft = "!git push origin HEAD:refs/drafts/$1"
+	forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
