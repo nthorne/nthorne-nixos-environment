@@ -38,16 +38,19 @@
     afuse
     ag
     conky
+    deluge
     direnv
     dmenu
     dzen2
     firefox
     fzf
     git
+    gparted
     neovim
     sshfsFuse
     terminus_font
     tmux
+    vlc
     xsel
     zsh
   ];
