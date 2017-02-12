@@ -37,13 +37,13 @@
   environment.systemPackages = with pkgs; [
     afuse
     ag
+    calibre
     conky
     deluge
     direnv
     dmenu
     dzen2
     firefox
-    fzf
     git
     gparted
     neovim
@@ -87,6 +87,7 @@
       enable = true;
       accelFactor = "0.1";
       fingersMap = [ 1 3 2 ];
+      palmDetect = true;
     };
   };
 
