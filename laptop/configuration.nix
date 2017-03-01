@@ -37,6 +37,7 @@
   environment.systemPackages = with pkgs; [
     afuse
     ag
+    bashmount
     calibre
     conky
     deluge
