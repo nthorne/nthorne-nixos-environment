@@ -47,6 +47,7 @@
     firefox
     git
     gparted
+    irssi
     neovim
     sshfsFuse
     terminus_font
