@@ -4,5 +4,4 @@ out_to_x no
 update_interval 1
 
 TEXT
-#DROPBOX:${exec dropbox status | tail -1} 
-ESSID:${exec iwconfig wlp1s0 | sed -ne "s/.*ESSID:\"\([0-9A-Za-z]*\)\".*/\1/p"} | BATTERY:$battery | ${time %Y-%m-%d} ${time %R}
+DROPBOX:${exec /nix/store/*-dropbox-cli-*/bin/dropbox status | tail -1} ESSID:${exec iwconfig wlp1s0 | sed -ne "s/.*ESSID:\"\([0-9A-Za-z]*\)\".*/\1/p"} | BATTERY:$battery | ${time %Y-%m-%d} ${time %R}

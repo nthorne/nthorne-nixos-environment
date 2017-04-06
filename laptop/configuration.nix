@@ -43,6 +43,8 @@
     deluge
     direnv
     dmenu
+    dropbox
+    dropbox-cli
     dzen2
     firefox
     git
@@ -84,6 +86,9 @@
 	autoLogin = true;
 	defaultUser = "nthorne";
       };
+      sessionCommands = ''
+      dropbox &
+      '';
     };
     synaptics = {
       enable = true;
@@ -109,4 +114,6 @@
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "17.03";
 
+  # :(
+  nixpkgs.config.allowUnfree = true;
 }
