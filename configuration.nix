@@ -4,11 +4,16 @@
 
 { config, pkgs, ... }:
 
+let
+  # The adaptation file details configuration items that are unique
+  # to the particular target (e.g. guest additions for work vm).
+  adaptation = /etc/nixos/adaptation.nix;
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
-    ];
+    ] ++ (if builtins.pathExists adaptation then [ adaptation ] else []);
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -19,8 +24,8 @@
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
-  networking.hostName = "nixlaptop"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  # networking.hostName = "nixlaptop"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Select internationalisation properties.
   i18n = {
@@ -35,26 +40,18 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    afuse
     ag
-    bashmount
-    calibre
-    conky
-    deluge
     direnv
     dmenu
-    dropbox
-    dropbox-cli
     dzen2
     firefox
     git
     gparted
     irssi
     neovim
-    sshfsFuse
+    shellcheck
     terminus_font
     tmux
-    vlc
     xsel
     zsh
   ];
@@ -63,7 +60,7 @@
   services.nixosManual.showManual = true;
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  #services.openssh.enable = true;
 
   # Enable power management
   #services.tlp.enable = true;
