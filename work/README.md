@@ -12,3 +12,5 @@ Clone all dot-repos (follow the respective README):
     $ git clone https://github.com/nthorne-zsh-environment
 
 Generate a hash for the proxy, and update proxy.nix, according to comments.
+
+Symlink all the files under `dotfiles/` into the proper places.
