@@ -1,0 +1,38 @@
+#[https]
+#	proxy = <URL>
+[user]
+	email = <EMAIL>
+	name = <EMAIL>
+[color]
+	ui = true
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+	ff = only
+[diff]
+	tool = vimdiff
+[mergetool]
+	prompt = false
+[mergetool "vimdiff"]
+        cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[alias]
+	graph = log --graph --pretty=oneline --abbrev-commit --decorate
+	ds = diff --staged
+	st = status -sb
+	su = submodule update --recursive --rebase
+	sst = submodule status
+	ls = log --pretty=format:'%C(yellow)%h %C(green)%ad%C(red)%d %C(reset)%s%C(green) [%cn]' --decorate --date=short
+	standup = log --since '1 day ago' --oneline --author niklas.thorne@delphi.com
+	pg = log --graph --pretty=format':%C(yellow)%h%Cred%d%Creset %s %C(green) %an%C(reset), %ar'
+
+        namedshort = !bash -c 'echo "$(basename $PWD): $(git log -1 --format=\"format:%H [%an: %s]\")"'
+        rc = !git --no-pager namedshort && git --no-pager submodule foreach --quiet --recursive git namedshort
+
+	short = !bash -c 'echo "$(basename $PWD): $(git branch --no-color | grep \"^[*] \" | cut -d\" \" -f 2):$(git log -1 --format=\"format:%H\")"'
+	cr = !git log -1 --format="%b" && bash -c 'echo "Version: $(git describe)"' && git --no-pager short && git --no-pager submodule foreach --quiet --recursive git short
+
+	fom = fetch origin master
+	lom = log ..origin/master
+	rom = rebase --autostash origin/master
+        forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
+        bs = for-each-ref --sort=-committerdate refs/heads/
