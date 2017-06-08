@@ -10,6 +10,7 @@ stdenv.mkDerivation {
     cat <<EOF > $out/bin/ntvim
 #!${bash}/bin/bash
 
+PATH=${stdenv.lib.makeSearchPath "bin" [tmux]}:\$PATH
 xterm -e "tmux -2 new-session \"nvim \$*\""
 
 EOF
