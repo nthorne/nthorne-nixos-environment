@@ -71,6 +71,7 @@
     pkgs.pythonPackages.pylint
     pkgs.pythonPackages.virtualenv
 
+    (import ./cppclean)
     (import ./ntvim)
   ];
 
