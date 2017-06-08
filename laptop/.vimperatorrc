@@ -1,0 +1,15 @@
+"3.16.0 (created: 2017/02/01 00:55:15)
+
+" Key bindings
+inoremap <C-a> <Insert><C-a><Insert>
+map ö :
+noremap j 5j
+noremap k 10k
+
+" Settings
+set hintchars=hjklasdfgyuiopqwertnmzxcvb
+set tabnumbers
+
+source! /home/nthorne/.vimperatorrc.local
+
+" vim: set ft=vimperator:
