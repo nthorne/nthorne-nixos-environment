@@ -71,7 +71,7 @@
     pkgs.pythonPackages.pylint
     pkgs.pythonPackages.virtualenv
 
-     (import ./ddoc)
+    (import ./ntvim)
   ];
 
   # List services that you want to enable:
