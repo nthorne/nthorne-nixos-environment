@@ -8,7 +8,6 @@ noremap k 10k
 
 " Settings
 set hintchars=hjklasdfgyuiopqwertnmzxcvb
-set tabnumbers
 
 source! /home/nthorne/.vimperatorrc.local
 
