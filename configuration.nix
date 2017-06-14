@@ -72,6 +72,8 @@ in
   services.xserver = {
     enable = true;
     layout = "se";
+    # Don't use xterm as a desktop manager..
+    desktopManager.xterm.enable = false;
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
