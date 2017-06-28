@@ -7,19 +7,8 @@
     cntlm
   ];
 
-  services.cntlm.domain = <DOMAIN>;
   services.cntlm.enable = true;
-  services.cntlm.proxy = [<PROXY URL>];
   services.cntlm.port = [3128];
-  services.cntlm.username = <LDAP USER>
-  services.cntlm.password = "";
-  # To generate new hash: cntlm -u <LDAP USER> -d <DOMAIN> -H <PROXY URL> <PROXY PORT>
-  services.cntlm.extraConfig = "
-Auth NTLMv2
-NoProxy localhost, 127.0.0.*, 10.*, 192.168.*, <LOCAL DOMAIN>
-PassNTLMv2      <HASH>
-  ";
-  networking.proxy.noProxy = "localhost, 127.0.0.*, 192.168.*, <LOCAL DOMAIN>"
   networking.proxy.default = "http://127.0.0.1:3128";
 
   environment.etc.gitconfig.text = ''

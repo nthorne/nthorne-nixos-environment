@@ -1,14 +1,13 @@
 { config, pkgs, ... }:
 
+let
+  # This file contains non-public information.
+  private = /etc/nixos/private.nix;
+in
 {
   imports =
     [
-      # Corporate proxy derivation.
-      ./proxy.nix
-
-      # For Android development
-      ./android_container/docker.nix
-    ];
+    ] ++ (if builtins.pathExists private then [ private ] else []);
 
   networking.hostName = "nixos";
 
@@ -38,7 +37,6 @@
     pkgs.pythonPackages.virtualenv
 
     (import ./cppclean)
-    (import ./ddoc)
     (import ./ntvim)
   ];
 
