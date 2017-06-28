@@ -53,6 +53,7 @@ in
     terminus_font
     tmux
     xsel
+    yank
     zsh
   ];
 
@@ -85,9 +86,6 @@ in
 	autoLogin = true;
 	defaultUser = "nthorne";
       };
-      sessionCommands = ''
-      dropbox &
-      '';
     };
     synaptics = {
       enable = true;
@@ -107,6 +105,9 @@ in
     home = "/home/nthorne";
     shell = "/run/current-system/sw/bin/zsh";
   };
+
+  programs.zsh.enable = true;
+  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
   security.sudo.enable = true;
 
