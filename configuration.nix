@@ -44,6 +44,7 @@ in
     direnv
     dmenu
     dzen2
+    file
     firefox
     git
     gparted
@@ -51,6 +52,7 @@ in
     neovim
     shellcheck
     terminus_font
+    tldr
     tmux
     xsel
     yank
