@@ -1,1 +1,2 @@
 set editor="/run/current-system/sw/bin/ntvim"
+highlight Hint font-family: monospace; font-size: 16px; font-weight: bold; color: white; background-color: red; border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 1px 0px 1px;
