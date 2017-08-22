@@ -36,3 +36,4 @@
 	rom = rebase --autostash origin/master
         forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
         bs = for-each-ref --sort=-committerdate refs/heads/
+	graphall = !bash -c 'git log --graph --pretty=oneline --abbrev-commit --decorate $(git rev-list -g --all)'
