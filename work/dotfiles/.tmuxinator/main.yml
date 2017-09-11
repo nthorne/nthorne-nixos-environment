@@ -1,0 +1,8 @@
+# ~/.tmuxinator/main.yml
+
+name: main
+root: ~/
+
+
+windows:
+  - audioengine: cd ~/work/vgtt_android/device/delphi/vgtt_p2952/private/audioengine
