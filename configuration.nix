@@ -50,6 +50,7 @@ in
     gparted
     irssi
     neovim
+    ranger
     shellcheck
     terminus_font
     tldr
