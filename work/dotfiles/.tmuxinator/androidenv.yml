@@ -21,3 +21,7 @@ windows:
         - sysmonitor:
           - nix-shell -p htop
           - htop
+  - minicom:
+      panes:
+        - minicom:
+          - minicom ihu
