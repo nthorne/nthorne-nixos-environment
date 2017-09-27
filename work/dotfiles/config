@@ -6,3 +6,13 @@ host plmaaa02.europe.delphiauto.net
  user kjtsc2
 host 10.236.95.21
  user NiklasT
+host gerrit.tckbuild02.europe.delphiauto.net
+ user kjtsc2
+
+# After merge of SEM and IHU Gerrit servers
+host bsdvm022.debads.europe.delphiauto.net
+ user kjtsc2
+host 10.236.95.27
+ user kjtsc2
+host plmaaa02.europe.delphiauto.net
+ user kjtsc2
