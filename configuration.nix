@@ -44,6 +44,7 @@ in
     direnv
     dmenu
     dzen2
+    evince
     file
     firefox
     git
