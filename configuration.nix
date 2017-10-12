@@ -54,6 +54,7 @@ in
     gparted
     irssi
     neovim
+    qalculate-gtk
     ranger
     shellcheck
     terminus_font
