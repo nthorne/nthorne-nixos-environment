@@ -8,6 +8,9 @@ let
   # The adaptation file details configuration items that are unique
   # to the particular target (e.g. guest additions for work vm).
   adaptation = /etc/nixos/adaptation.nix;
+  # Change to the real deal
+  proxyCredentials = "<USER>:<PASSWORD>";
+  proxyUrl = "<PROXY_URL>";
 in
 {
   imports =
@@ -120,4 +123,10 @@ in
 
   # :(
   nixpkgs.config.allowUnfree = true;
+
+  # Uncomment these, and insert corporate proxy credentials in proxyCredentials.
+  #  networking.proxy.httpProxy = "http://${proxyCredentials}@${proxyUrl}/";
+  #  networking.proxy.httpsProxy = "http://${proxyCredentials}@${proxyUrl}/";
+  #  networking.proxy.ftpProxy = "http://${proxyCredentials}@${proxyUrl}/";
+
 }
