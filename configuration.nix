@@ -60,6 +60,7 @@ in
     terminus_font
     tldr
     tmux
+    unzip
     xsel
     yank
     zsh
