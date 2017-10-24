@@ -13,6 +13,7 @@ windows:
           - android-env
           - export USE_CCACHE=1
           - export CCACHE_DIR=~/.ccache
+          - export USED_DISPLAY_DEVICE=On_Lap_1002
           - . ./build/envsetup.sh
           - lunch gtt_abl_car-eng
         - ccachemonitor:
