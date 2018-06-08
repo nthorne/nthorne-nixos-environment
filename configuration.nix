@@ -41,6 +41,7 @@ in
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     ag
+    alsaUtils
     direnv
     dmenu
     dzen2
@@ -65,6 +66,8 @@ in
 
   # List services that you want to enable:
   services.nixosManual.showManual = true;
+
+  sound.enable = true;
 
   # Enable the OpenSSH daemon.
   #services.openssh.enable = true;
