@@ -3,7 +3,9 @@
 # Sets up environment
 
 echo "Installing configuration.nix.."
-test -L /etc/nixos/configuration.nix || (sudo rm /etc/nixos/configuration.nix && sudo ln -s $PWD/configuration.nix /etc/nixos/)
+test -L /etc/nixos/configuration.nix || (sudo rm /etc/nixos/configuration.nix ; sudo ln -s $PWD/configuration.nix /etc/nixos/)
+test -L /etc/nixos/adaptation.nix || (sudo rm /etc/nixos/adaptation.nix ; sudo ln -s $PWD/adaptation.nix /etc/nixos/)
+test -L /etc/nixos/private.nix || (sudo rm /etc/nixos/private.nix ; sudo ln -s $PWD/private.nix /etc/nixos/)
 
 echo "Installing settings repositories.."
 test -d $HOME/.vim || git clone git@github.com:nthorne/nthorne-vim-environment.git $HOME/.vim

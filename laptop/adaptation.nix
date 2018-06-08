@@ -1,6 +1,14 @@
 { config, pkgs, ... }:
 
+let
+  # This file contains non-public information.
+  private = /etc/nixos/private.nix;
+in
 {
+  imports =
+    [
+    ] ++ (if builtins.pathExists private then [ private ] else []);
+
   networking.hostName = "nixlaptop"; # Define your hostname.
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
