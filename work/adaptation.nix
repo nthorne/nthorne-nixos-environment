@@ -3,6 +3,10 @@
 let
   # This file contains non-public information.
   private = /etc/nixos/private.nix;
+
+  #pidgin = pkgs.pidgin-with-plugins.override {
+  #  plugins = [ pkgs.pidginsipe ];
+  #};
 in
 {
   imports =
@@ -29,6 +33,7 @@ in
     gitRepo  # For the repo command.
     lnav
     minicom
+    #pidgin
     tmuxinator
     xdotool
 
@@ -38,6 +43,12 @@ in
 
     (import ./cppclean)
     (import ./ntvim)
+
+    # TODO: Can possibly drop this one.
+    # Used in order to get deoplete up and running again, since
+    # it requires a neovim python package that is not available
+    # through Nix yet :/
+    (python36.withPackages(ps: with ps; [ pip setuptools ]))
   ];
 
   services.udev.extraRules = ''
