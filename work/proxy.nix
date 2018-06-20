@@ -10,6 +10,7 @@
   services.cntlm.enable = true;
   services.cntlm.port = [3128];
   networking.proxy.default = "http://127.0.0.1:3128";
+  networking.firewall.allowedTCPPorts = [ 3128 ];
 
   environment.etc.gitconfig.text = ''
   [url "https://github.com/"]
