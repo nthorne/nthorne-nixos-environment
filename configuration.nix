@@ -50,6 +50,7 @@ in
     firefox
     git
     gparted
+    hyperfine
     irssi
     neovim
     qalculate-gtk
