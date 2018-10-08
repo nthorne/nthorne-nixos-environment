@@ -13,7 +13,6 @@ in
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   environment.systemPackages = with pkgs; [
-    afuse
     bashmount
     calibre
     conky
