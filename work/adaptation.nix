@@ -31,6 +31,7 @@ in
     arandr
     bashdb
     ctags
+    cppcheck
     gitRepo  # For the repo command.
     lnav
     minicom
@@ -40,7 +41,7 @@ in
     xdotool
 
     pkgs.pythonPackages.ipython
-    pkgs.pythonPackages.pylint
+    #pkgs.pythonPackages.pylint
     pkgs.pythonPackages.virtualenv
 
     (import ./cppclean)
