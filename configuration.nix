@@ -127,4 +127,6 @@ in
   # :(
   nixpkgs.config.allowUnfree = true;
 
+  # Enable this one when building derivations intented for NixPkgs
+  #nix.useSandbox = true;
 }
