@@ -1,0 +1,2 @@
+#!/bin/bash
+cling -w $(find . -name \*include -exec echo '-I {}' \;)

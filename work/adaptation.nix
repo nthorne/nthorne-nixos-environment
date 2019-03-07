@@ -11,6 +11,8 @@ in
 {
   imports =
     [
+      # For Android development
+      ./android_container/docker.nix
     ] ++ (if builtins.pathExists private then [ private ] else []);
 
   networking.hostName = "nixos";
@@ -32,6 +34,7 @@ in
     afuse
     arandr
     bashdb
+    bedup
     ctags
     cppcheck
     gitRepo  # For the repo command.
@@ -48,6 +51,7 @@ in
     pkgs.pythonPackages.virtualenv
 
     (import ./cppclean)
+    (import ./ddoc)
     (import ./ntvim)
 
     # TODO: Can possibly drop this one.
@@ -68,4 +72,9 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.nthorne.extraGroups =[ "wheel" "vboxsf" "docker" "dialout" ];
+
+  # Allow ssh forwarding
+  programs.ssh.forwardX11 = true;
+
+
 }
