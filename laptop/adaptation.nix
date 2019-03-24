@@ -41,5 +41,8 @@ in
       fingersMap = [ 1 3 2 ];
       palmDetect = true;
   };
+
+  hardware.opengl.enable = true;
+  hardware.opengl.driSupport = true;
 }
 
