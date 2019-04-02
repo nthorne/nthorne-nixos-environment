@@ -15,7 +15,12 @@ Generate a hash for the proxy, and update proxy.nix, according to comments.
 
 Symlink all the files under `dotfiles/` into the proper places.
 
-Re-create the samba credentials file (`/etc/nixos/smb-secrets`).
+Re-create the samba credentials file (`/etc/nixos/smb-secrets`); this file
+should be of the following format:
+
+    username=<USERNAME>
+    domain=<DOMAIN>
+    password=<PASSWORD>
 
 Set up the cronjob for my backup script.
 

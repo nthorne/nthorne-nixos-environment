@@ -26,6 +26,15 @@ in
     options = [ "rw" ];
   };
 
+  fileSystems."/mnt/as" = {
+      device = "//10.239.124.56/nthorne";
+      fsType = "cifs";
+      options = let
+        # this line prevents hanging on network split
+        automount_opts = "rw,,uid=1000,gid=100,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+      in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
+  };
   boot.tmpOnTmpfs = true;
 
   # List packages installed in system profile. To search by name, run:
@@ -38,6 +47,7 @@ in
     ctags
     cppcheck
     gitRepo  # For the repo command.
+    gnupg
     lnav
     minicom
     #pidgin
@@ -65,6 +75,14 @@ in
     # IHU
     SUBSYSTEM=="usb", ATTR{idVendor}=="8087", MODE="0666", GROUP="plugdev"
     '';
+
+  services.cron = {
+    enable = true;
+    mailto = "niklas.thorne@aptiv.com";
+    systemCronJobs = [
+      "0 11 * * *      root    btrfs scrub start -q /dev/sda1"
+    ];
+  };
 
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
