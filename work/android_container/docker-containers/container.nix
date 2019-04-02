@@ -26,6 +26,7 @@ docker run \
   -e HOME=$HOME \
   -e USER=$USER \
   -v $HOME/:$HOME \
+  -v /mnt/as:/mnt/as \
   -w "$PWD" \
   -it "${name}"
 '';

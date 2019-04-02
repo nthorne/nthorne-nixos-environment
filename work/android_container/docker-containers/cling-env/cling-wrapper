@@ -1,2 +1,2 @@
 #!/bin/bash
-cling -w $(find . -name \*include -exec echo '-I {}' \;)
+cling -w -std=c++14 $(find . -name \*include -exec echo '-I {}' \;)

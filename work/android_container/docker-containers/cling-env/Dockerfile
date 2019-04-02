@@ -18,6 +18,15 @@ RUN echo "#!/bin/bash" >> /usr/local/sbin/cling-wrapper
 RUN echo "cling -w \$(find . -name \\*include -exec echo '-I {}' \;)" >> /usr/local/sbin/cling-wrapper
 RUN chmod ugo+rwx /usr/local/sbin/cling-wrapper
 
+# Create the prelude
+RUN echo "#include <iostream>" > /usr/local/include/prelude.h
+RUN echo "#include <list>" >> /usr/local/include/prelude.h
+RUN echo "#include <map>" >> /usr/local/include/prelude.h
+RUN echo "#include <array>" >> /usr/local/include/prelude.h
+RUN echo "#include <algorithm>" >> /usr/local/include/prelude.h
+RUN echo "#include <thread>" >> /usr/local/include/prelude.h
+RUN echo "#include <chrono>" >> /usr/local/include/prelude.h
+
 # Make sure that pre-installed packages are up to date.
 # NOTE: Removing /var/lib/apt/lists is for minimizing layer/images size.
 RUN apt-get -y update && apt-get -fy install   && rm -rf /var/lib/apt/lists/*
