@@ -17,6 +17,9 @@ run = ''
 USER_ID="$(id -u "$USER")"
 ${xhost}/bin/xhost +si:localuser:$USER
 
+# NOTE: By passing $@ as final argument here, we can fire up
+#       the container, and execute any command inside it.
+
 docker run \
   -e DISPLAY=$DISPLAY \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
@@ -28,7 +31,8 @@ docker run \
   -v $HOME/:$HOME \
   -v /mnt/as:/mnt/as \
   -w "$PWD" \
-  -it "${name}"
+  -it "${name}" \
+  $@
 '';
 
 in
