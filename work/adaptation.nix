@@ -17,14 +17,15 @@ in
 
   networking.hostName = "nixos";
 
+  # Broken on 19.03 using BTRFS, apparently :(
   # Virtualbox settings
-  virtualisation.virtualbox.guest.enable = true;
+  #virtualisation.virtualbox.guest.enable = true;
 
-  fileSystems."/virtualboxshare" = {
-    fsType = "vboxsf";
-    device = "transfer";
-    options = [ "rw" ];
-  };
+  #fileSystems."/virtualboxshare" = {
+  #  fsType = "vboxsf";
+  #  device = "transfer";
+  #  options = [ "rw" ];
+  #};
 
   fileSystems."/mnt/as" = {
       device = "//10.239.124.56/nthorne";

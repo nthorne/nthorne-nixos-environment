@@ -149,7 +149,7 @@ function remote_shell()
 
 function build_project()
 {
-  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch 8 && nice make flashfiles'"
+  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch 9 && nice make flashfiles'"
 }
 
 function flash_project()

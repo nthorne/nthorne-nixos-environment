@@ -8,6 +8,10 @@ let
   # The adaptation file details configuration items that are unique
   # to the particular target (e.g. guest additions for work vm).
   adaptation = /etc/nixos/adaptation.nix;
+
+  unstableTarball =
+    fetchTarball
+      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
 in
 {
   imports =
@@ -37,6 +41,14 @@ in
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
+  nixpkgs.config = {
+    packageOverrides = pkgs: {
+      unstable = import unstableTarball {
+        config = config.nixpkgs.config;
+      };
+    };
+  };
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
@@ -52,7 +64,7 @@ in
     gparted
     hyperfine
     irssi
-    neovim
+    unstable.neovim
     qalculate-gtk
     ranger
     shellcheck
@@ -122,7 +134,7 @@ in
   security.sudo.enable = true;
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "18.09";
+  system.stateVersion = "19.03";
 
   # :(
   nixpkgs.config.allowUnfree = true;
