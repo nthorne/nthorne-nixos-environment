@@ -14,6 +14,10 @@ Symlink the adaptation nix file in to place, if applicable; e.g.
 
 if the target is my home laptop.
 
+Symlink any dotfiles into the appropriate place; e.g.
+
+    ln -s $PWD/dotfiles/.direnvrc $HOME/
+
 ## Temporary
 
 In order to fix broken ath10k driver, I also copied the firmware-5.bin from
