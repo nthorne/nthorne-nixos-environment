@@ -51,6 +51,8 @@ ln -s ${PWD}/dotfiles/.tmuxinator ${HOME}/
 ln -s ${PWD}/dotfiles/.gitconfig ${HOME}/
 ln -s ${PWD}/dotfiles/.minirc.usb* ${HOME}/
 ln -s ${PWD}/dotfiles/.Xresources ${HOME}/
+mkdir -p ${HOME}/.lnav/formats/
+ln -s ${PWD}/dotfiles/lnav ${HOME}/.lnav/formats/own
 
 echo "Cloning environment repos if needed.."
 pushd ${HOME}/repos
