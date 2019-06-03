@@ -37,7 +37,7 @@ fi
 function usage()
 {
   cat <<Usage_Heredoc
-Usage: $(basename $0) <COMMAND> [OPTIONS]
+Usage: $(basename $0) <COMMAND> [OPTIONS] [CMDLINE]
 
 $(basename $0) is a tool for convenient local editing, combined with remote
 building.
@@ -49,6 +49,10 @@ Wher valid COMMANDs are:
   flash  copy the build result from the remote to the local, and flash
          onto the unit.
   shell  fires up a shell in the project folder on the remote.
+  clean  clean any build results.
+  init   initialize a new project; copies the entire project to the remote;
+         this is needed in order to get VCS folder etc in place.
+  remove remove the project from the remote.
 
 Where valid OPTIONS are:
   -h, --help     display usage
@@ -90,6 +94,15 @@ function parse_options()
         ;;
       flash)
         ACTION=flash_project
+        ;;
+      clean)
+        ACTION=clean_project
+        ;;
+      init)
+        ACTION=init_project
+        ;;
+      remove)
+        ACTION=remove_project
         ;;
       -p|--project)
         shift
@@ -152,15 +165,40 @@ function build_project()
   ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch 9 && nice make flashfiles'"
 }
 
+function clean_project()
+{
+  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch 9 && nice make clean'"
+}
+
+function init_project()
+{
+  echo "Initializing $PROJECT in $TARGET_FOLDER"
+
+  ssh $USER@$REMOTE "mkdir -p $TARGET_FOLDER" \
+    || error "Unable to create remote folder. Is passwordless login configured?"
+
+  # Sync everything, excluding build results to the target, since
+  # VCS files are needed for the build :/
+  rsync -Karv --delete --exclude=*/out/ $PROJECT $USER@$REMOTE:$TARGET_FOLDER
+
+}
+
+function remove_project()
+{
+  local readonly p=$(basename $PROJECT)
+
+  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && cd .. && rm -rf $p"
+}
+
 function flash_project()
 {
   local readonly flashdir=$HOME/tmp/flashing
   mkdir -p $HOME/tmp/flashing || error "unable to create flash dir $flashdir"
 
-  pushd $flashdir
-  rm *
+  pushd $flashdir || error "$flashdir: no such folder"
+  rm ./*
   scp $USER@$REMOTE:sync/$PROJECT/out/target/product/\*/\*-flashfiles-\*.zip .
-  unzip *.zip
+  unzip ./*.zip
   android-env "bash ./fastboot.sh --abl --disable-verity"
   popd
 }
