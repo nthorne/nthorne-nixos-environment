@@ -22,7 +22,7 @@ should be of the following format:
     domain=<DOMAIN>
     password=<PASSWORD>
 
-Set up the cronjob for my backup script.
+Install cronjobs stored in `crontab.root` and `crontab.user`.
 
 
 Scripted
