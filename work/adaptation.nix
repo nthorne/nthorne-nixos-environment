@@ -85,6 +85,10 @@ in
     ];
   };
 
+  security.sudo.extraConfig = ''
+    %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.bedup}/bin/bedup
+    %wheel      ALL=(ALL:ALL) NOPASSWD: /run/current-system/sw/bin/btrfs
+    '';
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
