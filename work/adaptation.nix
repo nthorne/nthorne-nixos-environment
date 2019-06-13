@@ -49,6 +49,7 @@ in
     cppcheck
     gitRepo  # For the repo command.
     gnupg
+    kdiff3
     lnav
     minicom
     #pidgin
