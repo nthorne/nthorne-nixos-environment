@@ -81,16 +81,14 @@ mkdir -p ${BACKUP_FOLDER}
 pushd ${BACKUP_FOLDER}
 
 set -x
-cp -r ${HOME}/repos/nthorne-nixos-environment .
-cp -r ${HOME}/repos/nthorne-vim-environment .
-cp -r ${HOME}/repos/nthorne-zsh-environment .
-cp -r ${HOME}/repos/dev-cookbook .
+cp -r ${HOME}/repos/ .
 cp -r ${HOME}/.mozilla .
 cp -r ${HOME}/.ssh .
 cp -r ${HOME}/.vim-bookmarks .
 cp -r ${HOME}/.zshhistory .
 cp -r ${HOME}/Downloads/tiddlywikis .
 cp -r ${HOME}/Documents .
+cp -r ${HOME}/.lesshst .
 
 crontab -l > crontab.nthorne
 
