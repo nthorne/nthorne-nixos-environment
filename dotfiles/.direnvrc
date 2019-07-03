@@ -23,8 +23,8 @@ use_nix() {
   fi
 
   local path_backup=$PATH
-  #eval "$(< $cache)"
-  direnv_load cat "$cache"
+  eval "$(< $cache)"
+  #direnv_load cat "$cache"
   export PATH=$PATH:$path_backup
 
   if [[ $# = 0 ]]; then
