@@ -7,6 +7,7 @@
 ACTION=usage
 PROJECT=
 REMOTE=
+LUNCH_TARGET=
 
 # Set IFS explicitly to space-tab-newline to avoid tampering
 IFS=' 	
@@ -59,6 +60,7 @@ Where valid OPTIONS are:
   -p, --project  details the local project root folder.
   -r, --remote   details the remote build server. Passwordless login
                  must be setup on this host.
+  -t, --target   details lunch target.
 
 Usage_Heredoc
 }
@@ -118,6 +120,13 @@ function parse_options()
           REMOTE="$1"
         fi
         ;;
+      -t|--target)
+        shift
+        if [[ -n "$1" ]]
+        then
+          LUNCH_TARGET="$1"
+        fi
+        ;;
       *)
         usage_error "Unknown option: $1."
         ;;
@@ -162,12 +171,14 @@ function remote_shell()
 
 function build_project()
 {
-  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch 9 && nice make flashfiles'"
+  test -n "$LUNCH_TARGET" || usage_error "Lunch target not set."
+  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch $LUNCH_TARGET && nice make flashfiles'"
 }
 
 function clean_project()
 {
-  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch 9 && nice make clean'"
+  test -n "$LUNCH_TARGET" || usage_error "Lunch target not set."
+  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch $LUNCH_TARGET && nice make clean'"
 }
 
 function init_project()
