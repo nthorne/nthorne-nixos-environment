@@ -21,21 +21,21 @@ in
   # Virtualbox settings
   #virtualisation.virtualbox.guest.enable = true;
 
-  #fileSystems."/virtualboxshare" = {
-  #  fsType = "vboxsf";
-  #  device = "transfer";
-  #  options = [ "rw" ];
-  #};
-
-  fileSystems."/mnt/as" = {
-      device = "//10.239.124.56/nthorne";
-      fsType = "cifs";
-      options = let
-        # this line prevents hanging on network split
-        automount_opts = "rw,,uid=1000,gid=100,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-
-      in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
+  fileSystems."/virtualboxshare" = {
+    fsType = "vboxsf";
+    device = "transfer";
+    options = [ "rw" "nofail" ];
   };
+
+  #fileSystems."/mnt/as" = {
+  #    device = "//10.239.124.56/nthorne";
+  #    fsType = "cifs";
+  #    options = let
+  #      # this line prevents hanging on network split
+  #      automount_opts = "rw,,uid=1000,gid=100,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+  #    in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
+  #};
   boot.tmpOnTmpfs = true;
 
   # List packages installed in system profile. To search by name, run:
