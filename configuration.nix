@@ -58,10 +58,12 @@ in
     dmenu
     dzen2
     evince
+    fasd
     file
     firefox
     git
     gparted
+    htop
     hyperfine
     irssi
     unstable.neovim
@@ -70,6 +72,7 @@ in
     shellcheck
     terminus_font
     tldr
+    tree
     tmux
     unzip
     xsel
