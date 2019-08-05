@@ -19,12 +19,12 @@ in
 
   # Broken on 19.03 using BTRFS, apparently :(
   # Virtualbox settings
-  #virtualisation.virtualbox.guest.enable = true;
+  virtualisation.virtualbox.guest.enable = true;
 
   fileSystems."/virtualboxshare" = {
     fsType = "vboxsf";
     device = "transfer";
-    options = [ "rw" "nofail" ];
+    options = [ "rw,uid=1000,gid=100,nofail" ];
   };
 
   #fileSystems."/mnt/as" = {
@@ -82,7 +82,8 @@ in
     enable = true;
     mailto = "niklas.thorne@aptiv.com";
     systemCronJobs = [
-      "0 11 * * *      root    btrfs scrub start -q /dev/sda1"
+      "00 22 * * *      root    btrfs scrub start -q /dev/sda1"
+      "00 23 * * * /run/current-system/sw/bin/bedup dedup --size-cutoff 1024 --flush /home/nthorne/work &> /tmp/bedup.log"
     ];
   };
 
