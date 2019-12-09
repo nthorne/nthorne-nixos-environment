@@ -44,5 +44,9 @@ in
 
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
+
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+  users.extraUsers.nthorne.extraGroups = [ "wheel" "audio" ];
 }
 
