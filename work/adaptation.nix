@@ -96,8 +96,8 @@ in
     enable = true;
     mailto = "niklas.thorne@aptiv.com";
     systemCronJobs = [
-      "00 22 * * *      root    btrfs scrub start -q /dev/sda1"
-      "00 23 * * * /run/current-system/sw/bin/bedup dedup --size-cutoff 1024 --flush /home/nthorne/work &> /tmp/bedup.log"
+      "00 20 * * *      root    btrfs scrub start -q /dev/sda1"
+      "00 23 * * *      root    /run/current-system/sw/bin/bedup dedup --size-cutoff 1024 --flush &> /tmp/bedup.log"
     ];
   };
 
