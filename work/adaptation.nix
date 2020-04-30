@@ -83,9 +83,13 @@ in
     (python36.withPackages(ps: with ps; [ pip setuptools ]))
   ];
 
+  # 05c6 is the IHU5 dev board, 18d1 is a newer iteration; 0403 is my Galaxy S9.
   services.udev.extraRules = ''
     # IHU
     SUBSYSTEM=="usb", ATTR{idVendor}=="8087", MODE="0666", GROUP="plugdev"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="05c6", MODE="0666", GROUP="plugdev"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", MODE="0666", GROUP="plugdev"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0403", MODE="0666", GROUP="plugdev"
     '';
 
   services.cron = {
