@@ -98,6 +98,8 @@ in
     systemCronJobs = [
       "00 20 * * *      root    btrfs scrub start -q /dev/sda1"
       "00 23 * * *      root    /run/current-system/sw/bin/bedup dedup --size-cutoff 1024 --flush &> /tmp/bedup.log"
+      "00 11 * * *      nthorne /home/nthorne/bin/backup.sh"
+      "00 19 * * *      nthorne /home/nthorne/bin/docker-prune.sh"
     ];
   };
 

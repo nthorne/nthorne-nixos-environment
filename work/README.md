@@ -22,9 +22,6 @@ should be of the following format:
     domain=<DOMAIN>
     password=<PASSWORD>
 
-Install cronjobs stored in `crontab.root` and `crontab.user`.
-
-
 Scripted
 --------
 
