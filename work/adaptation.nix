@@ -117,5 +117,11 @@ in
   # Allow ssh forwarding
   programs.ssh.forwardX11 = true;
 
-
+  # allow for e.g. forwarding via adb to target
+  networking.firewall.allowedTCPPorts = [ 8888 ];
+  services.openssh = {
+    enable = true;
+    gatewayPorts = "yes";
+    openFirewall = true;
+  };
 }
