@@ -65,6 +65,7 @@ RUN apt-get -y update && apt-get -y install \
     xsltproc \
     zip \
     zlib1g-dev \
+  && pip install --no-cache-dir cryptography \
   && rm -rf /var/lib/apt/lists/* \
   && wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip \
   && unzip -d /usr/local/sbin platform-tools-latest-linux.zip \
@@ -75,8 +76,6 @@ RUN apt-get -y update && apt-get -y install \
 
 # Set up UDEV rules
 RUN mkdir -p /etc/udev/rules.d && echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="8087", MODE="0666", GROUP="plugdev"' > /etc/udev/rules.d/51-android.rules
-RUN mkdir -p /etc/udev/rules.d && echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="05c6", MODE="0666", GROUP="plugdev"' > /etc/udev/rules.d/52-oneplus.rules
-RUN mkdir -p /etc/udev/rules.d && echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="04e8", MODE="0666", GROUP="plugdev"' > /etc/udev/rules.d/52-oneplus.rules
 
 # Add user to the plugdev group
 RUN usermod -aG plugdev $current_user
