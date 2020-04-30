@@ -31,11 +31,11 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Select internationalisation properties.
-   i18n = {
-     consoleFont = "Lat2-Terminus16";
-     consoleKeyMap = "sv-latin1";
-     defaultLocale = "en_US.UTF-8";
-   };
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "sv-latin1";
+  };
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # Set your time zone.
    time.timeZone = "Europe/Stockholm";
@@ -96,6 +96,6 @@
   };
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "16.09";
+  system.stateVersion = "20.03";
 
 }
