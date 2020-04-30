@@ -1,4 +1,9 @@
 # <https://github.com/direnv/direnv/issues/238>
+#
+# NOTE: This deviates from the original script in that
+#       the --pure argument to nix-shell has been dropped,
+#       as Git fails to verify SSL certs every now and then,
+#       which of course sucks.
 use_nix() {
   local path="$(nix-instantiate --find-file nixpkgs)"
 
@@ -17,7 +22,7 @@ use_nix() {
     [[ shell.nix -nt "$cache" ]];
   then
     [ -d .direnv ] || mkdir .direnv
-    local tmp=$(nix-shell --show-trace --pure "$@" \
+    local tmp=$(nix-shell --show-trace "$@" \
       --run "\"$direnv\" dump bash")
     echo "$tmp" > "$cache"
   fi
