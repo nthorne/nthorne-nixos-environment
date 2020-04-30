@@ -13,7 +13,10 @@ in
     [
       # For Android development
       ./android_container/docker.nix
+      ./qcomm-container/docker.nix
     ] ++ (if builtins.pathExists private then [ private ] else []);
+
+  boot.kernelModules = [ "nbd" ];
 
   networking.hostName = "nixos";
 
@@ -25,6 +28,13 @@ in
     fsType = "vboxsf";
     device = "transfer";
     options = [ "rw,uid=1000,gid=100,nofail" ];
+  };
+
+  fileSystems."/mnt/external" = {
+      fsType = "ext4";
+      device = "/dev/sdb1";
+      options = [ "rw,noauto,user,exec" ];
+
   };
 
   #fileSystems."/mnt/as" = {
@@ -90,13 +100,15 @@ in
   security.sudo.extraConfig = ''
     %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.bedup}/bin/bedup
     %wheel      ALL=(ALL:ALL) NOPASSWD: /run/current-system/sw/bin/btrfs
+    %wheel      ALL=(ALL:ALL) NOPASSWD: /run/current-system/sw/bin/mount
+    %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.qemu}/bin/qemu-nbd
     '';
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.nthorne.extraGroups =[ "wheel" "vboxsf" "docker" "dialout" ];
+  users.extraUsers.nthorne.extraGroups =[ "wheel" "vboxsf" "docker" "dialout" "disk" ];
 
   # Allow ssh forwarding
   programs.ssh.forwardX11 = true;
