@@ -34,7 +34,7 @@ RUN apt-get -y update && apt-get -fy install   && rm -rf /var/lib/apt/lists/*
 # Install the needed packages
 RUN apt-get -y update && apt-get -y install \
     wget bzip2 gcc dpkg-dev binutils \
-    && wget https://root.cern.ch/download/cling/cling_2019-03-06_ubuntu16.tar.bz2 \
-    && tar xvf cling_2019-03-06_ubuntu16.tar.bz2 --strip-components=1 -C /usr/local
+    && wget https://root.cern.ch/download/cling/cling_2020-03-24_ubuntu16.tar.bz2 \
+    && tar xvf cling_2020-03-24_ubuntu16.tar.bz2 --strip-components=1 -C /usr/local
 
 RUN rm -rf /var/lib/apt/lists/*
