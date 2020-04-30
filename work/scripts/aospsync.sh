@@ -87,24 +87,31 @@ function parse_options()
         ;;
       sync)
         ACTION=sync_project
+        execute_action
         ;;
       shell)
         ACTION=remote_shell
+        execute_action
         ;;
       build)
         ACTION=build_project
+        execute_action
         ;;
       flash)
         ACTION=flash_project
+        execute_action
         ;;
       clean)
         ACTION=clean_project
+        execute_action
         ;;
       init)
         ACTION=init_project
+        execute_action
         ;;
       remove)
         ACTION=remove_project
+        execute_action
         ;;
       -p|--project)
         shift
@@ -172,7 +179,7 @@ function remote_shell()
 function build_project()
 {
   test -n "$LUNCH_TARGET" || usage_error "Lunch target not set."
-  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch $LUNCH_TARGET && nice make flashfiles'"
+  ssh $USER@$REMOTE "bash --login -c 'cd sync/$PROJECT && . ./build/envsetup.sh && lunch $LUNCH_TARGET && nice make droid flashfiles'"
 }
 
 function clean_project()
@@ -214,10 +221,13 @@ function flash_project()
   popd
 }
 
+function execute_action()
+{
+  validate_options
+
+  TARGET_FOLDER="sync/$(dirname $PROJECT)"
+
+  $ACTION
+}
 
 parse_options "$@"
-validate_options
-
-TARGET_FOLDER="sync/$(dirname $PROJECT)"
-
-$ACTION
