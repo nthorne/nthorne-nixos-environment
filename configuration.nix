@@ -142,8 +142,10 @@ in
   system.stateVersion = "20.03";
 
   # :(
-  nixpkgs.config.allowUnfree = true;
-
+  nixpkgs.config = {
+    allowUnfree = true;
+    oraclejdk.accept_license = true;
+  };
   # Enable this one when building derivations intented for NixPkgs
   #nix.useSandbox = true;
 }
