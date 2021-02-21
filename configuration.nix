@@ -60,13 +60,15 @@ in
     evince
     fasd
     file
-    firefox
+    # We'll follow unstable Firefox for now, while I've pinned the NixOS channel..
+    unstable.firefox
     git
     gparted
     htop
     hyperfine
     irssi
     unstable.neovim
+    neovim-remote
     qalculate-gtk
     ranger
     shellcheck
@@ -106,10 +108,10 @@ in
     };
     displayManager = {
       defaultSession = "none+xmonad";
-        autoLogin = {
-          enable = true;
-          user = "nthorne";
-        };
+      autoLogin = {
+        enable = true;
+        user = "nthorne";
+      };
       lightdm = {
 	enable = true;
       };
