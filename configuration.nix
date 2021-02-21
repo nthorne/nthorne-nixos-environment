@@ -81,7 +81,7 @@ in
   ];
 
   # List services that you want to enable:
-  services.nixosManual.showManual = true;
+  services.nixosManual.enable = true;
 
   sound.enable = true;
 
@@ -106,12 +106,12 @@ in
     };
     displayManager = {
       defaultSession = "none+xmonad";
-      lightdm = {
-	enable = true;
         autoLogin = {
           enable = true;
           user = "nthorne";
         };
+      lightdm = {
+	enable = true;
       };
     };
     synaptics = {
@@ -139,7 +139,7 @@ in
   security.sudo.enable = true;
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "20.03";
+  system.stateVersion = "20.09";
 
   # :(
   nixpkgs.config = {
