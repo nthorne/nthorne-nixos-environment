@@ -96,7 +96,7 @@ cd ..
 
 tar czvf ${BACKUP_FILE}.tar.gz ${BACKUP_FOLDER}
 cat ${HOME}/backup_passphrase | gpg --batch --passphrase-fd 0 -c ${BACKUP_FILE}.tar.gz
-scp ${BACKUP_FILE}.tar.gz.gpg as:backups/
+scp ${BACKUP_FILE}.tar.gz.gpg bs:backups/
 cp ${BACKUP_FILE}.tar.gz.gpg essentials.tar.gz.gpg
 rm ${BACKUP_FILE}*
 popd
