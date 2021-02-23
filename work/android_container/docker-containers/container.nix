@@ -30,6 +30,8 @@ docker run \
   -e USER=$USER \
   -v $HOME/:$HOME \
   -v /mnt/as:/mnt/as \
+  -v /mnt/pkg:/mnt/pkg \
+  -v /mnt/pkg:/pkg \
   -w "$PWD" \
   -it "${name}" \
   $@

@@ -46,6 +46,7 @@ RUN apt-get -y update && apt-get -y install \
     liblz4-tool \
     libssl-dev \
     libx11-dev \
+    libxkbcommon-x11-0 \
     libxml2-utils \
     openjdk-8-jre \
     openjdk-8-jre-headless \
@@ -57,6 +58,7 @@ RUN apt-get -y update && apt-get -y install \
     python-protobuf \
     python-virtualenv \
     python3-jinja2 \
+    python3-pip \
     python3-xlrd \
     sshfs \
     unzip \
@@ -65,7 +67,7 @@ RUN apt-get -y update && apt-get -y install \
     xsltproc \
     zip \
     zlib1g-dev \
-  && pip install --no-cache-dir cryptography \
+  && python3 -m pip install --no-cache-dir cryptography \
   && rm -rf /var/lib/apt/lists/* \
   && wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip \
   && unzip -d /usr/local/sbin platform-tools-latest-linux.zip \
