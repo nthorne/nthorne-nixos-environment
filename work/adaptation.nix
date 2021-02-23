@@ -55,9 +55,10 @@ in
     arandr
     bashdb
     bedup
+    compsize
     ctags
     cppcheck
-    gitRepo  # For the repo command.
+    duperemove
     gnupg
     kdiff3
     lnav
@@ -94,10 +95,9 @@ in
 
   services.cron = {
     enable = true;
-    mailto = "niklas.thorne@aptiv.com";
     systemCronJobs = [
       "00 20 * * *      root    btrfs scrub start -q /dev/sda1"
-      "00 23 * * *      root    /run/current-system/sw/bin/bedup dedup --size-cutoff 1024 --flush &> /tmp/bedup.log"
+      "00 23 * * *      root    duperemove -dr --hashfile=/var/cache/dedupe-db/duperemove.db /home/nthorne/.ccache /home/nthorne/work/sem /home/nthorne/work/ihu > /tmp/dupremove.log"
       "00 11 * * *      nthorne /home/nthorne/bin/backup.sh"
       "00 19 * * *      nthorne /home/nthorne/bin/docker-prune.sh"
     ];
@@ -105,9 +105,11 @@ in
 
   security.sudo.extraConfig = ''
     %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.bedup}/bin/bedup
+    %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.duperemove}/bin/duperemove
     %wheel      ALL=(ALL:ALL) NOPASSWD: /run/current-system/sw/bin/btrfs
     %wheel      ALL=(ALL:ALL) NOPASSWD: /run/current-system/sw/bin/mount
     %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.qemu}/bin/qemu-nbd
+    %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.compsize}/bin/compsize
     '';
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
