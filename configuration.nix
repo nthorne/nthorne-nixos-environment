@@ -68,7 +68,8 @@ in
     hyperfine
     irssi
     unstable.neovim
-    neovim-remote
+    # This one is broken right now...
+    #neovim-remote
     qalculate-gtk
     ranger
     shellcheck

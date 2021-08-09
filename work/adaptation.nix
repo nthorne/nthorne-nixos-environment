@@ -69,7 +69,8 @@ in
     wget
     xdotool
 
-    pkgs.pythonPackages.ipython
+    # Drop ipython, since it does not build at the moment.
+    #pkgs.pythonPackages.ipython
     #pkgs.pythonPackages.pylint
     pkgs.pythonPackages.virtualenv
 
