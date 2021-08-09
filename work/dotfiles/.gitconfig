@@ -34,6 +34,9 @@
 	fom = fetch origin master
 	lom = log ..origin/master
 	rom = rebase --autostash origin/master
+	fod = fetch origin devel
+	lod = log ..origin/devel
+	rod = rebase --autostash origin/devel
         forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
         bs = for-each-ref --sort=-committerdate refs/heads/
 	graphall = !bash -c 'git log --graph --pretty=oneline --abbrev-commit --decorate $(git rev-list -g --all)'
@@ -44,3 +47,8 @@
 	SizeLimit = 100m
 	threads = 1
 	window = 0
+[http]
+	postBuffer = 1048576000
+
+[pull]
+	rebase = false
