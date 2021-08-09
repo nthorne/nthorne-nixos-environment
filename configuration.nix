@@ -150,4 +150,8 @@ in
   };
   # Enable this one when building derivations intented for NixPkgs
   #nix.useSandbox = true;
+
+  # This snapshots configuration.nix into /run/current-system/configuration.nix
+  # (excluding imports, unfortunately).
+  system.copySystemConfiguration = true;
 }
