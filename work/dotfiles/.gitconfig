@@ -1,8 +1,3 @@
-#[https]
-#	proxy = <URL>
-[user]
-	email = <EMAIL>
-	name = <EMAIL>
 [color]
 	ui = auto
 [merge]
@@ -41,7 +36,7 @@
         bs = for-each-ref --sort=-committerdate refs/heads/
 	graphall = !bash -c 'git log --graph --pretty=oneline --abbrev-commit --decorate $(git rev-list -g --all)'
 [core]
-	excludesfile = /home/nthorne/.gitignore_global
+	excludesfile = ~/.gitignore-global
 [pack]
 	windowMemory = 100m
 	SizeLimit = 100m
@@ -52,3 +47,6 @@
 
 [pull]
 	rebase = false
+
+[include]
+	path = .gitconfig-private
