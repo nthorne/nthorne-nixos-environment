@@ -9,8 +9,7 @@ in
     [
     ] ++ (if builtins.pathExists private then [ private ] else []);
 
-  networking.hostName = "nixlaptop"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  nixpkgs.config.pulseaudio = true;
 
   environment.systemPackages = with pkgs; [
     bashmount
@@ -27,6 +26,11 @@ in
     # through Nix yet :/
     (python36.withPackages(ps: with ps; [ pip setuptools ]))
   ];
+
+
+
+  networking.hostName = "nixlaptop"; # Define your hostname.
+  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -47,7 +51,6 @@ in
 
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
-  nixpkgs.config.pulseaudio = true;
   users.extraUsers.nthorne.extraGroups = [ "wheel" "audio" ];
 }
 

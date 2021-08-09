@@ -19,34 +19,16 @@ in
       /etc/nixos/hardware-configuration.nix
     ] ++ (if builtins.pathExists adaptation then [ adaptation ] else []);
 
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  # boot.loader.grub.efiSupport = true;
-  # boot.loader.grub.efiInstallAsRemovable = true;
-  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-
-  # networking.hostName = "nixlaptop"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Select internationalisation properties.
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "sv-latin1";
-  };
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  # Set your time zone.
-  time.timeZone = "Europe/Stockholm";
-
   nixpkgs.config = {
     packageOverrides = pkgs: {
       unstable = import unstableTarball {
         config = config.nixpkgs.config;
       };
     };
+
+    # :(
+    allowUnfree = true;
+    oraclejdk.accept_license = true;
   };
 
   # List packages installed in system profile. To search by name, run:
@@ -82,6 +64,34 @@ in
     yank
     zsh
   ];
+
+
+
+  boot.loader = {
+    # Use the GRUB 2 boot loader.
+    grub = {
+      enable = true;
+      version = 2;
+
+      # Define on which hard drive you want to install Grub.
+      device = "/dev/sda"; # or "nodev" for efi only
+
+      # efiSupport = true;
+      # efiInstallAsRemovable = true;
+    };
+
+    # efi.efiSysMountPoint = "/boot/efi";
+  };
+
+  # Select internationalisation properties.
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "sv-latin1";
+  };
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  # Set your time zone.
+  time.timeZone = "Europe/Stockholm";
 
   # List services that you want to enable:
   documentation.nixos.enable = true;
@@ -141,18 +151,15 @@ in
 
   security.sudo.enable = true;
 
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "21.05";
+  system = {
+    # The NixOS release to be compatible with for stateful data such as databases.
+    stateVersion = "21.05";
 
-  # :(
-  nixpkgs.config = {
-    allowUnfree = true;
-    oraclejdk.accept_license = true;
+    # This snapshots configuration.nix into /run/current-system/configuration.nix
+    # (excluding imports, unfortunately).
+    copySystemConfiguration = true;
   };
+
   # Enable this one when building derivations intented for NixPkgs
   #nix.useSandbox = true;
-
-  # This snapshots configuration.nix into /run/current-system/configuration.nix
-  # (excluding imports, unfortunately).
-  system.copySystemConfiguration = true;
 }

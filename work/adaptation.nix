@@ -3,10 +3,6 @@
 let
   # This file contains non-public information.
   private = /etc/nixos/private.nix;
-
-  #pidgin = pkgs.pidgin-with-plugins.override {
-  #  plugins = [ pkgs.pidginsipe ];
-  #};
 in
 {
   imports =
@@ -15,38 +11,6 @@ in
       ./android_container/docker.nix
       ./qcomm-container/docker.nix
     ] ++ (if builtins.pathExists private then [ private ] else []);
-
-  boot.kernelModules = [ "nbd" ];
-
-  networking.hostName = "nixos";
-
-  # Broken on 19.03 using BTRFS, apparently :(
-  # Virtualbox settings
-  virtualisation.virtualbox.guest.enable = true;
-
-  fileSystems."/virtualboxshare" = {
-    fsType = "vboxsf";
-    device = "transfer";
-    options = [ "rw,uid=1000,gid=100,nofail" ];
-  };
-
-  fileSystems."/mnt/external" = {
-      fsType = "ext4";
-      device = "/dev/sdb1";
-      options = [ "rw,noauto,user,exec" ];
-
-  };
-
-  #fileSystems."/mnt/as" = {
-  #    device = "//10.239.124.56/nthorne";
-  #    fsType = "cifs";
-  #    options = let
-  #      # this line prevents hanging on network split
-  #      automount_opts = "rw,,uid=1000,gid=100,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-
-  #    in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
-  #};
-  boot.tmpOnTmpfs = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -63,7 +27,6 @@ in
     kdiff3
     lnav
     minicom
-    #pidgin
     sshfsFuse
     tmuxinator
     wget
@@ -84,6 +47,45 @@ in
     # through Nix yet :/
     (python36.withPackages(ps: with ps; [ pip setuptools ]))
   ];
+
+
+  boot = {
+    kernelModules = [ "nbd" ];
+    tmpOnTmpfs = true;
+  };
+
+  networking.hostName = "nixos";
+
+  # Broken on 19.03 using BTRFS, apparently :(
+  # Virtualbox settings
+  virtualisation.virtualbox.guest.enable = true;
+
+  fileSystems = {
+    "/virtualboxshare" = {
+      fsType = "vboxsf";
+      device = "transfer";
+      options = [ "rw,uid=1000,gid=100,nofail" ];
+    };
+
+    "mnt/external" = {
+        fsType = "ext4";
+        device = "/dev/sdb1";
+        options = [ "rw,noauto,user,exec" ];
+
+    };
+
+    # "mnt/as" = {
+    #    device = "//10.239.124.56/nthorne";
+    #    fsType = "cifs";
+    #    options = let
+    #      # this line prevents hanging on network split
+    #      automount_opts = "rw,,uid=1000,gid=100,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+    #    in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
+    #};
+  };
+
+
 
   # 05c6 is the IHU5 dev board, 18d1 is a newer iteration; 0403 is my Galaxy S9.
   services.udev.extraRules = ''
@@ -112,12 +114,13 @@ in
     %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.qemu}/bin/qemu-nbd
     %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.compsize}/bin/compsize
     '';
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.nthorne.extraGroups =[ "wheel" "vboxsf" "docker" "dialout" "disk" ];
+
+  # Enable the KDE Desktop Environment.
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
 
   # Allow ssh forwarding
   programs.ssh.forwardX11 = true;
