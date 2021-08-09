@@ -27,6 +27,8 @@ RUN apt-get -y update && apt-get -y install \
 
 # Whatever's needed for VTS
 RUN apt-get -y update && apt-get -y install \ 
+    aapt
+    bc
     fastboot adb openjdk-8-jdk \
     python3 \
     python3-dev \
