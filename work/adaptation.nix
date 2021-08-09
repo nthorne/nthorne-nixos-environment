@@ -8,8 +8,7 @@ in
   imports =
     [
       # For Android development
-      ./android_container/docker.nix
-      ./qcomm-container/docker.nix
+      ./containers/docker.nix
     ] ++ (if builtins.pathExists private then [ private ] else []);
 
   # List packages installed in system profile. To search by name, run:
