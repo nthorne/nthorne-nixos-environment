@@ -16,29 +16,17 @@ in
   environment.systemPackages = with pkgs; [
     afuse
     arandr
-    bashdb
     bedup
     compsize
-    ctags
-    cppcheck
     duperemove
     gnupg
-    kdiff3
-    lnav
-    minicom
     sshfsFuse
     tmuxinator
-    wget
-    xdotool
 
     # Drop ipython, since it does not build at the moment.
     #pkgs.pythonPackages.ipython
     #pkgs.pythonPackages.pylint
     pkgs.pythonPackages.virtualenv
-
-    (import ./cppclean)
-    (import ./ddoc)
-    (import ./ntvim)
 
     # TODO: Can possibly drop this one.
     # Used in order to get deoplete up and running again, since

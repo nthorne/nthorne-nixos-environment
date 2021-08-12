@@ -1,0 +1,108 @@
+# vim: filetype=sh
+
+# Set IFS explicitly to space-tab-newline to avoid tampering
+IFS=' 	
+'
+
+
+NAME=
+# Make sure that we're not on NixOS; if so, avoid tampering with PATH
+if [[ -f /etc/os-release ]]
+then
+  . /etc/os-release
+fi
+
+if [[ "NixOS" != "$NAME" ]]
+then
+  # If found, use getconf to constructing a reasonable PATH, otherwise
+  # we set it manually.
+  if [[ -x /usr/bin/getconf ]]
+  then
+    PATH=$(/usr/bin/getconf PATH)
+  else
+    PATH=/bin:/usr/bin:/usr/local/bin
+  fi
+fi
+
+
+BUGREPORT=
+OUTPUT_PATH=
+
+
+function usage()
+{
+  cat <<Usage_Heredoc
+Usage: $(basename "$0") [OPTIONS] <BUGREPORT> [OUTPUT PATH]
+
+Splits bugreport into separate log files
+
+Where valid OPTIONS are:
+  -h, --help  display usage
+
+Usage_Heredoc
+}
+
+function error()
+{
+  echo "Error: $@" >&2
+  exit 1
+}
+
+function parse_options()
+{
+  while (($#))
+  do
+    case $1 in
+      -h|--help)
+        usage
+        exit 0
+        ;;
+      *)
+        if [[ -z "${BUGREPORT}" ]]
+        then
+          BUGREPORT=$(readlink -f "$1")
+        elif [[ -z "${OUTPUT_PATH}" ]]
+        then
+          OUTPUT_PATH=$1
+        else
+          error "Unknown option: $1. Try $(basename "$0") -h for options."
+        fi
+        ;;
+    esac
+
+    shift
+  done
+
+  test -f "${BUGREPORT}" || error "${BUGREPORT}: no such file."
+  OUTPUT_PATH=${OUTPUT_PATH:-${PWD}}
+  test -d "${OUTPUT_PATH}" \
+    || mkdir -p "${OUTPUT_PATH}" \
+    || error "${OUTPUT_PATH}: unable to create folder."
+}
+
+function run_split()
+{
+
+  pushd "${OUTPUT_PATH}" 2>&1 || exit 1
+
+awk "
+BEGIN {in_snippet=0; counter=0; fnam=\"\"}
+
+/^-{6} [.0-9]+s was the duration / && in_snippet == 1 {in_snippet=0; print \$0 >> fnam; fnam=\"\"; next}
+/^-{6} / {
+  in_snippet=1;
+  counter++;
+  fnam=gensub(/\//, \"_\", \"g\", \$2)\"_\"counter\".log\";
+  print \"Writing \"\$0\" to \"fnam;
+  print \$0 > fnam;
+  next
+}
+
+in_snippet == 1 {print \$0 >> fnam}" "${BUGREPORT}"
+
+  popd 2>&1 || exit 1
+}
+
+
+parse_options "$@"
+run_split
