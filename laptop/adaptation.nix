@@ -12,14 +12,8 @@ in
   nixpkgs.config.pulseaudio = true;
 
   environment.systemPackages = with pkgs; [
-    bashmount
-    calibre
-    conky
-    deluge
     dropbox
     dropbox-cli
-    sshfsFuse
-    vlc
 
     # Used in order to get deoplete up and running again, since
     # it requires a neovim python package that is not available
