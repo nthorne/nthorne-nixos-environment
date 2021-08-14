@@ -21,3 +21,5 @@
 	publish = "!git push origin HEAD:refs/for/$1"
 	draft = "!git push origin HEAD:refs/drafts/$1"
 	forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
+[pull]
+	rebase = false

@@ -9,7 +9,9 @@ in
     [
     ] ++ (if builtins.pathExists private then [ private ] else []);
 
-  nixpkgs.config.pulseaudio = true;
+  # TODO: Got remark on this wile upgrading to 21.05, that there could be
+  #       random failures (which there are).
+  #networking.wireless.interfaces = "wlp1s0";
 
   environment.systemPackages = with pkgs; [
     bashmount
