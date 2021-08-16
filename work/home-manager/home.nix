@@ -27,13 +27,15 @@
   # TODO: Figure out these odd developers' dependencies; are
   #   they because of a nvim plugin or something?
   home.packages = with pkgs; [
-    bashdb    # Shell script debugger
-    cppcheck  # Why did I have this one in my system config?
-    ctags     # Why did I have this one in my system config?
+    bashdb      # Shell script debugger
+    cppcheck    # Why did I have this one in my system config?
+    ctags       # Why did I have this one in my system config?
+    glances
     kdiff3
     lnav
     minicom
     p7zip
+    tmuxinator  # I don't see the point in using `programs` here..
     wget
     xdotool
   ];

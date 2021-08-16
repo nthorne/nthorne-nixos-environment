@@ -9,6 +9,8 @@
     ".minirc.usb3".source = ./.minirc.usb3;
 
     ".lnav/formats/installed".source = ./lnav/formats/installed;
+
+    ".tmuxinator".source = ./.tmuxinator;
   };
 
 }

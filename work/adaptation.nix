@@ -21,7 +21,6 @@ in
     duperemove
     gnupg
     sshfsFuse
-    tmuxinator
 
     # Drop ipython, since it does not build at the moment.
     #pkgs.pythonPackages.ipython

@@ -1,0 +1,35 @@
+# ~/.tmuxinator/ap.yml
+
+name: ap
+root: ~/work/<%= @args[0] %>
+
+startup_window: AudioEngine
+
+windows:
+  - build:
+      - android-env
+      - aosp <%= @args[1] %>
+  - AudioEngine:
+      root: ~/work/<%= @args[0] %>/vendor/aptiv/components/audioengine
+      panes:
+        - AudioEngine:
+          - ccls-init
+          - csdb
+          - nvim
+  - AudioEngine-UT:
+      root: ~/work/<%= @args[0] %>/vendor/aptiv/components/audioengine
+      panes:
+        - AudioEngine-UT:
+          - test -d build || ./build_and_run_ut.sh --burn
+          - cd build
+  - Audio-HAL:
+      root: ~/work/<%= @args[0] %>/vendor/aptiv/components/audio-hal
+      panes:
+        - Audio-HAL:
+          - ccls-init
+          - csdb
+  - manifest:
+      root: ~/work/<%= @args[0] %>/.repo/manifests
+      panes:
+        - git log
+        - nix-shell ./clone_commit_message_generator/shell.nix

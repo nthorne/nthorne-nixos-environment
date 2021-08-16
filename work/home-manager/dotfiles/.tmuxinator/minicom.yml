@@ -1,0 +1,9 @@
+# ~/.tmuxinator/minicom.yml
+
+name: minicom
+root: ~/
+
+
+windows:
+  - USB0: minicom usb0
+  - USB1: minicom usb1
