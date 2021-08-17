@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  unstable = import <nixos-unstable> {};
+in
 {
   imports = [
     ./dotfiles
@@ -32,7 +35,7 @@
     ctags       # Why did I have this one in my system config?
     glances
     kdiff3
-    lnav
+    unstable.lnav
     minicom
     p7zip
     tmuxinator  # I don't see the point in using `programs` here..
