@@ -9,15 +9,9 @@ windows:
   - source:
       panes:
         - ihu:
-          - cd ihu
-          - nice python .repo/repo/repo sync --force-sync -dc --optimized-fetch && bash ./delphi_volvoihu_aosp_patches/apply-patch.sh
-          - MAKE_TARGET=droid aosp build ihu
+          - cd ihu && nice python .repo/repo/repo sync --force-sync -dc --optimized-fetch && bash ./delphi_volvoihu_aosp_patches/apply-patch.sh && MAKE_TARGET=droid aosp build ihu
         - sem:
-          - cd sem
-          - nice python .repo/repo/repo sync --force-sync -dc --optimized-fetch --fetch-submodules && bash ./delphi_vgtt_p2952_aosp_patches/apply-patch.sh
-          - MAKE_TARGET=droid aosp build sem
+          - cd sem && nice python .repo/repo/repo sync --force-sync -dc --optimized-fetch --fetch-submodules && bash ./delphi_vgtt_p2952_aosp_patches/apply-patch.sh && MAKE_TARGET=droid aosp build sem
 
         - sem25:
-          - cd sem-2.5
-          - nice python .repo/repo/repo sync --force-sync -dc --optimized-fetch --fetch-submodules
-          - aosp build sem-2.5
+          - cd sem-2.5 && nice python .repo/repo/repo sync --force-sync -dc --optimized-fetch --fetch-submodules && aosp build sem-2.5
