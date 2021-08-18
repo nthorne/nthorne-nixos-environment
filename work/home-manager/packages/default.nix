@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
   home.packages = [
-    (pkgs.callPackage ./cppclean {pkgs=pkgs;})
+    (pkgs.callPackage ./cppclean {})
   ];
 }
