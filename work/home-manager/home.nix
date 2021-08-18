@@ -41,5 +41,7 @@ in
     tmuxinator  # I don't see the point in using `programs` here..
     wget
     xdotool
+
+    unstable.neovim
   ];
 }
