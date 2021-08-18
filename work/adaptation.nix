@@ -22,15 +22,8 @@ in
     gnupg
     sshfsFuse
 
-    # Drop ipython, since it does not build at the moment.
-    #pkgs.pythonPackages.ipython
-    #pkgs.pythonPackages.pylint
-    pkgs.pythonPackages.virtualenv
-
-    # TODO: Can possibly drop this one.
-    # Used in order to get deoplete up and running again, since
-    # it requires a neovim python package that is not available
-    # through Nix yet :/
+    # Something, somewhere seems to want python3. Perhaps
+    # a zsh plugin or something?
     (python36.withPackages(ps: with ps; [ pip setuptools ]))
   ];
 
