@@ -6,7 +6,7 @@ This repository contains my home manager configurations.
 
 
 First symlink this subfolder into place:
-    $ ln -s ${PWD} ${HOME}/.config/nixpkgs
+    $ ln -s ${PWD}/workvm-home.nix ${HOME}/.config/nixpkgs/home.nix
 
 Then install home manager:
 
