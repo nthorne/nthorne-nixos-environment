@@ -52,6 +52,11 @@ in
     zsh
   ];
 
+  users.users.root.packages = with pkgs;
+  [
+    vim
+  ];
+
 
 
   boot.loader = {
