@@ -49,7 +49,6 @@ in
     htop
     hyperfine
     irssi
-    unstable.neovim
     # This one is broken right now...
     #neovim-remote
     qalculate-gtk
