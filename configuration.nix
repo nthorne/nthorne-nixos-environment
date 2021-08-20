@@ -8,10 +8,6 @@ let
   # The adaptation file details configuration items that are unique
   # to the particular target (e.g. guest additions for work vm).
   adaptation = /etc/nixos/adaptation.nix;
-
-  unstableTarball =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
 in
 {
   imports =
@@ -20,12 +16,6 @@ in
     ] ++ (if builtins.pathExists adaptation then [ adaptation ] else []);
 
   nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-
     # :(
     allowUnfree = true;
     oraclejdk.accept_license = true;
@@ -42,8 +32,6 @@ in
     evince
     fasd
     file
-    # We'll follow unstable Firefox for now, while I've pinned the NixOS channel..
-    unstable.firefox
     git
     gparted
     htop
