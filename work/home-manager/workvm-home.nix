@@ -42,8 +42,6 @@ in
     tmuxinator  # I don't see the point in using `programs` here..
     wget
     xdotool
-
-    unstable.neovim
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
