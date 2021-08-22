@@ -1,5 +1,11 @@
 { config, pkgs, ... }:
+let
+  unstable = import <nixos-unstable> {};
+in
 {
+  imports = [
+    ./common.nix
+  ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -26,4 +32,8 @@
     sshfsFuse
     vlc
   ];
+
+  # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 }

@@ -1,1 +1,0 @@
-/home/nthorne/repos/nixpkgs-mozilla/rust-overlay.nix
