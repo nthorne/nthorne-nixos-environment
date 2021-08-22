@@ -24,31 +24,12 @@ in
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    ag
     alsaUtils
-    direnv
     dmenu
     dzen2
-    evince
-    fasd
-    file
     git
-    gparted
-    htop
-    hyperfine
-    irssi
-    # This one is broken right now...
-    #neovim-remote
-    qalculate-gtk
-    ranger
-    shellcheck
     terminus_font
-    tldr
-    tree
-    tmux
     unzip
-    xsel
-    yank
     zsh
   ];
 
