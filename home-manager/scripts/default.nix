@@ -2,6 +2,8 @@
 let
   splitter = pkgs.writeShellScriptBin "splitter" (builtins.readFile ./splitter);
 
+  aosp = pkgs.writeShellScriptBin "aosp" (builtins.readFile ./aosp);
+
   ntvim = with pkgs; stdenv.mkDerivation {
     name = "ntvim";
     version = "1.0";
@@ -24,6 +26,7 @@ EOF
 in
 {
   home.packages = [
+    aosp
     ntvim
     splitter
 
