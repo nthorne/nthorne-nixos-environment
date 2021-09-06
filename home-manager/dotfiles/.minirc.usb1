@@ -1,0 +1,2 @@
+pu port /dev/ttyUSB1
+pu rtscts No

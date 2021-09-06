@@ -18,6 +18,9 @@ Symlink any dotfiles into the appropriate place; e.g.
 
     ln -s $PWD/dotfiles/.direnvrc $HOME/
 
+Install the respective home manager configuration, if any (at the moment only
+used for my work profile, so check ./work/home-manager/README.md).
+
 ## Temporary
 
 In order to fix broken ath10k driver, I also copied the firmware-5.bin from

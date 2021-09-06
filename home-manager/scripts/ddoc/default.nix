@@ -1,14 +1,18 @@
-with import <nixpkgs> { };
-
+{pkgs, stdenv, ...}:
 let
   plantuml-filter = import ./plantumlfilter;
 in
 stdenv.mkDerivation {
   name = "ddoc";
 
-  buildInputs = [ bash texlive.combined.scheme-small pandoc plantuml-filter ];
+  buildInputs = with pkgs;[
+    bash
+    texlive.combined.scheme-small
+    pandoc
+    plantuml-filter
+  ];
 
-  buildCommand = ''
+  buildCommand = with pkgs;''
     mkdir -p $out/bin
     cat <<EOT > $out/bin/ddoc
 #!${bash}/bin/bash

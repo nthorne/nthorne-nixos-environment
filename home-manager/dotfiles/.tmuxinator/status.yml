@@ -1,0 +1,12 @@
+# ~/.tmuxinator/status.yml
+
+name: status
+root: ~/
+
+startup_window: glances
+
+windows:
+  - glances:
+    - glances
+  - htop:
+    - htop
