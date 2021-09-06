@@ -9,6 +9,7 @@ in
     ag
     evince
     fasd
+    fd
     file
     gparted
     htop
