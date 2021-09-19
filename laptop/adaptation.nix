@@ -48,6 +48,8 @@ in
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
   nixpkgs.config.pulseaudio = true;
-  users.extraUsers.nthorne.extraGroups = [ "wheel" "audio" ];
+  users.extraUsers.nthorne.extraGroups = [ "wheel" "audio" "docker" ];
+
+  virtualisation.docker.enable = true;
 }
 
