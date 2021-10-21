@@ -16,6 +16,7 @@ in
     hyperfine
     irssi
     mosh
+    nvd
     qalculate-gtk
     ranger
     shellcheck
