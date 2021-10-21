@@ -15,6 +15,7 @@ in
     htop
     hyperfine
     irssi
+    mosh
     qalculate-gtk
     ranger
     shellcheck
