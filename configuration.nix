@@ -126,7 +126,7 @@ in
 
   system = {
     # The NixOS release to be compatible with for stateful data such as databases.
-    stateVersion = "21.05";
+    stateVersion = "21.11";
 
     # This snapshots configuration.nix into /run/current-system/configuration.nix
     # (excluding imports, unfortunately).

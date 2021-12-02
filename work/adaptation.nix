@@ -24,7 +24,7 @@ in
 
     # Something, somewhere seems to want python3. Perhaps
     # a zsh plugin or something?
-    (python36.withPackages(ps: with ps; [ pip setuptools ]))
+    (python37.withPackages(ps: with ps; [ pip setuptools ]))
   ];
 
 

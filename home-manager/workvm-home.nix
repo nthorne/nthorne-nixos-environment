@@ -26,7 +26,7 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.05";
+  home.stateVersion = "21.11";
 
   # TODO: Figure out these odd developers' dependencies; are
   #   they because of a nvim plugin or something?
