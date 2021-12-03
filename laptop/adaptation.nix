@@ -20,7 +20,7 @@ in
     # Used in order to get deoplete up and running again, since
     # it requires a neovim python package that is not available
     # through Nix yet :/
-    (python36.withPackages(ps: with ps; [ pip setuptools ]))
+    (python37.withPackages(ps: with ps; [ pip setuptools ]))
   ];
 
 

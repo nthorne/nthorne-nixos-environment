@@ -1,4 +1,4 @@
-{ stdenv, fetchurl}:
+{lib, stdenv, fetchurl}:
 
 # <https://gist.github.com/osmano807/8b8e9b37043007c68c4cbfb69ee3e562>
 # Fix for broken ath10k driver.
@@ -21,11 +21,11 @@ stdenv.mkDerivation rec {
   # Firmware blobs do not need fixing and should not be modified
   dontFixup = true;
 
-  meta = with stdenv.lib; {
+  meta = {
     description = "Binary firmware for QCA9377 chipset";
     homepage = https://github.com/kvalo/ath10k-firmware;
-    license = licenses.unfreeRedistributableFirmware;
-    platforms = platforms.linux;
+    license = lib.licenses.unfreeRedistributableFirmware;
+    platforms = lib.platforms.linux;
     # priority = 6; # give precedence to kernel firmware
   };
 
