@@ -32,8 +32,4 @@ in
     sshfsFuse
     vlc
   ];
-
-  # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
 }

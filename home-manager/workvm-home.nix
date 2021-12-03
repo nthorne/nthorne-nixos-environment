@@ -44,10 +44,6 @@ in
     xdotool
   ];
 
-  # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
-
 
   programs.kitty = {
     enable = true;
