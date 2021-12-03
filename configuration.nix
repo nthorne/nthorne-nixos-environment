@@ -33,6 +33,10 @@ in
     zsh
   ];
 
+  fonts.fonts = with pkgs; [
+    jetbrains-mono
+  ];
+
   users.users.root.packages = with pkgs;
   [
     vim

@@ -31,6 +31,6 @@ in
   virtualisation.docker.enable = true;
   # The insecure-registry entries, and the first dns entry is for nexus.
   #virtualisation.docker.extraOptions = "--insecure-registry nexus.android.delphiauto.net:5050 --insecure-registry nexus.android.delphiauto.net:5000 --dns 10.236.88.104";
-  # For docker build
-  virtualisation.docker.extraOptions = "--dns 10.192.40.20 --dns 10.192.40.33";
+  # For docker build 
+  virtualisation.docker.extraOptions = "--insecure-registry nexus.android.delphiauto.net:5050 --insecure-registry nexus.android.delphiauto.net:5000 --dns 10.192.40.20 --dns 10.192.40.33";
 }
