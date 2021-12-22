@@ -28,12 +28,36 @@ in
   networking.hostName = "nixlaptop"; # Define your hostname.
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  boot.loader = {
+    # Use the GRUB 2 boot loader.
+    grub = {
+      enable = true;
+      version = 2;
+
+      # Define on which hard drive you want to install Grub.
+      device = "/dev/sda"; # or "nodev" for efi only
+
+      # efiSupport = true;
+      # efiInstallAsRemovable = true;
+    };
+
+    # efi.efiSysMountPoint = "/boot/efi";
+  };
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  services.xserver.displayManager.sessionCommands = ''
-  dropbox &
-  '';
+  services.xserver.displayManager = {
+    sessionCommands = ''
+      dropbox &
+    '';
+
+    autoLogin = {
+      enable = true;
+      user = "nthorne";
+    };
+  }
+
 
   services.xserver.synaptics = {
       enable = true;

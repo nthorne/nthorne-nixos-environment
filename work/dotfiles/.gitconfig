@@ -17,7 +17,6 @@
 	su = submodule update --recursive --rebase
 	sst = submodule status
 	ls = log --pretty=format:'%C(yellow)%h %C(green)%ad%C(red)%d %C(reset)%s%C(green) [%cn]' --decorate --date=short
-	standup = log --since '1 day ago' --oneline --author niklas.thorne@delphi.com
 	pg = log --graph --pretty=format':%C(yellow)%h%Cred%d%Creset %s %C(green) %an%C(reset), %ar'
 
         namedshort = !bash -c 'echo "$(basename $PWD): $(git log -1 --format=\"format:%H [%an: %s]\")"'
@@ -50,3 +49,6 @@
 
 [include]
 	path = .gitconfig-private
+[user]
+        email = niklas.thorne@netclean.com
+        name = "Niklas Thörne"

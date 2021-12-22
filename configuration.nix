@@ -42,24 +42,6 @@ in
     vim
   ];
 
-
-
-  boot.loader = {
-    # Use the GRUB 2 boot loader.
-    grub = {
-      enable = true;
-      version = 2;
-
-      # Define on which hard drive you want to install Grub.
-      device = "/dev/sda"; # or "nodev" for efi only
-
-      # efiSupport = true;
-      # efiInstallAsRemovable = true;
-    };
-
-    # efi.efiSysMountPoint = "/boot/efi";
-  };
-
   # Select internationalisation properties.
   console = {
     font = "Lat2-Terminus16";
@@ -96,10 +78,6 @@ in
     };
     displayManager = {
       defaultSession = "none+xmonad";
-      autoLogin = {
-        enable = true;
-        user = "nthorne";
-      };
       lightdm = {
 	enable = true;
       };

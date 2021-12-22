@@ -1,15 +1,74 @@
 { config, pkgs, ... }:
 
 let
+  # TODO:
+  #
+  # * Virtualbox
+  # * Vagrant
+  # * Screen lock (automatic?) - Perhaps drop slock. Again, maybe not. dm-tool lock
+  #     seems to be ignoring my wish to not power save screens :/
+  # * Docker
+  # * Full disk encryption, or is home enough?
+  # * Create nvidia-offload wrappers for teams and slack
+  # * Perhaps default display settings, at least when undocked.
+  # * Clean up and push this config, together with a skeleton ./private.nix
+  # * DisplayLink/evdi might work better in newer kernel versions, *but* evdi is currently broken,
+  #   so I can't really switch to boot.kernelPackages=pkgs.linuxPackages_latest;
+  #     REF: https://nixos.wiki/wiki/Linux_kernel
+  #     REF: https://bugs.archlinux.org/task/70135
+  #     REF: https://github.com/NixOS/nixpkgs/issues/78403
+  #     REF: https://github.com/NixOS/nixpkgs/issues/74698
+  # * Refactor the home/work scheme to a host based one instead.
+  #
+  # DOING:
+
   # This file contains non-public information.
-  private = /etc/nixos/private.nix;
+
+  # Needed for running e.g. slack and teams
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec -a "$0" "$@"
+  '';
 in
 {
   imports =
     [
-      # For Android development
-      ./containers/docker.nix
-    ] ++ (if builtins.pathExists private then [ private ] else []);
+    ] ++ (if builtins.pathExists ./private.nix then [ ./private.nix ] else []);
+
+  # EVALUATION:
+  #
+
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "nthorne" ];
+
+  # ^^
+
+  virtualisation.docker.enable = true;
+
+  # Below is needed for webcam, and to get teams to be able to select
+  # audio sources properly. uvcvideo needs to be modprobed, and I need
+  # to be in the audio group as well.
+  services.uvcvideo.dynctrl = {
+    enable = true;
+    packages = [ pkgs.tiscamera ];
+  };
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+  nixpkgs.config.pulseaudio = true;
+
+
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  networking.useDHCP = false;
+  networking.interfaces.enp0s13f0u4u4.useDHCP = true;
+  networking.interfaces.wlp0s20f3.useDHCP = true;
+  # network specific settings are in private.nix
+  networking.wireless.enable = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -25,92 +84,79 @@ in
     # Something, somewhere seems to want python3. Perhaps
     # a zsh plugin or something?
     (python37.withPackages(ps: with ps; [ pip setuptools ]))
+
+    # TODO: Write wrappers for slack and teams
+    nvidia-offload
   ];
 
-
   boot = {
-    kernelModules = [ "nbd" ];
+    # TODO: uvcvideo should be needed for webcam
+    kernelModules = [ "nbd" "uvcvideo" ];
     tmpOnTmpfs = true;
   };
 
-  networking.hostName = "nixos";
-
-  # Broken on 19.03 using BTRFS, apparently :(
-  # Virtualbox settings
-  virtualisation.virtualbox.guest.enable = true;
-
-  fileSystems = {
-    "/virtualboxshare" = {
-      fsType = "vboxsf";
-      device = "transfer";
-      options = [ "rw,uid=1000,gid=100,nofail" ];
-    };
-
-    "mnt/external" = {
-        fsType = "ext4";
-        device = "/dev/sdb1";
-        options = [ "rw,noauto,user,exec" ];
-
-    };
-
-    # "mnt/as" = {
-    #    device = "//10.239.124.56/nthorne";
-    #    fsType = "cifs";
-    #    options = let
-    #      # this line prevents hanging on network split
-    #      automount_opts = "rw,,uid=1000,gid=100,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-
-    #    in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
-    #};
-  };
-
-
-
-  # 05c6 is the IHU5 dev board, 18d1 is a newer iteration; 0403 is my Galaxy S9.
-  services.udev.extraRules = ''
-    # IHU
-    SUBSYSTEM=="usb", ATTR{idVendor}=="8087", MODE="0666", GROUP="plugdev"
-    SUBSYSTEM=="usb", ATTR{idVendor}=="05c6", MODE="0666", GROUP="plugdev"
-    SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", MODE="0666", GROUP="plugdev"
-    SUBSYSTEM=="usb", ATTR{idVendor}=="0403", MODE="0666", GROUP="plugdev"
-    '';
-
-  services.cron = {
-    enable = true;
-    systemCronJobs = [
-      "00 20 * * *      root    btrfs scrub start -q /dev/sda1"
-      "00 23 * * *      root    duperemove -dr --hashfile=/var/cache/dedupe-db/duperemove.db /home/nthorne/.ccache /home/nthorne/work/sem /home/nthorne/work/ihu > /tmp/dupremove.log"
-      "00 11 * * *      nthorne /home/nthorne/bin/backup.sh"
-      "00 19 * * *      nthorne /home/nthorne/bin/docker-prune.sh"
-    ];
-  };
-
-  security.sudo.extraConfig = ''
-    %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.bedup}/bin/bedup
-    %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.duperemove}/bin/duperemove
-    %wheel      ALL=(ALL:ALL) NOPASSWD: /run/current-system/sw/bin/btrfs
-    %wheel      ALL=(ALL:ALL) NOPASSWD: /run/current-system/sw/bin/mount
-    %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.qemu}/bin/qemu-nbd
-    %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.compsize}/bin/compsize
-    '';
+  networking.hostName = "vimes";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.nthorne.extraGroups =[ "wheel" "vboxsf" "docker" "dialout" "disk" ];
+  users.extraUsers.nthorne.extraGroups =[ "wheel" "docker" "dialout" "disk" "audio" ];
 
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
+  hardware.nvidia.prime = {
+    offload.enable = true;
+
+    # Bus ID of the Intel GPU. VGA controller found with lspci
+    intelBusId = "PCI:0:2:0";
+
+    # Bus ID of the NVIDIA GPU. 3D controller found with lspci
+    nvidiaBusId = "PCI:1:0:0";
+  };
+
+  # ^^
+
+  # Not sure about this one
+  hardware.nvidia.modesetting.enable = true;
+  # Worked decently without the nvidia driver
+  services.xserver = {
+    videoDrivers = [ "nvidia" "intel" "modesetting" "displaylink" ];
+
+    displayManager = {
+      autoLogin = {
+        enable = false;
+        user = "nthorne";
+      };
+
+      # https://linuxreviews.org/HOWTO_turn_Screensavers_and_Monitor_Power_Saving_on_and_off
+      sessionCommands = ''
+        xset s off
+        xset -dpms
+        '';
+    };
+  };
+
+  # Skip password for slock..
+  security.sudo.extraRules = [
+    {
+      users = [ "nthorne" ];
+      commands = [ {command = "/home/nthorne/.nix-profile/bin/slock" ; options = [ "NOPASSWD" ]; } ] ;
+    }
+  ];
+
+  # https://discourse.nixos.org/t/external-monitors-not-working-dell-xps/1799/7
+  # dropped uvcvideo from this list, since I do want a webcam..
+  boot.blacklistedKernelModules = [
+        "nouveau"
+        "rivafb"
+        "nvidiafb"
+        "rivatv"
+        "nv"
+      ];
+  # ^^
+
+  # Unless this one, (and no nvidia driver), kitty refuses to start.
+  hardware.opengl.enable = true;
+
 
   # Allow ssh forwarding
   programs.ssh.forwardX11 = true;
-
-  # allow for e.g. forwarding via adb to target
-  networking.firewall.allowedTCPPorts = [ 8888 ];
-  services.openssh = {
-    enable = true;
-    gatewayPorts = "yes";
-    openFirewall = true;
-  };
 
   nix.extraOptions = ''
       keep-outputs = true

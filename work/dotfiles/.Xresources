@@ -1,4 +1,7 @@
-xterm*faceName:        Terminus:style=Regular:size=12
+! To merge with current config: xrdb -merge ~/.Xresources
+! might be needed in .xinitrc
+
+xterm*faceName:        Terminus:style=Regular:size=14
 xterm*loginShell:      true
 xterm*saveLines:       2000
 xterm*termName:        xterm-256color
