@@ -51,5 +51,6 @@ in
     unstable.teams
     unstable.slack-dark
     vagrant
+    insomnia
   ];
 }
