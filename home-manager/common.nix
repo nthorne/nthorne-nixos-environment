@@ -7,6 +7,7 @@ in
   # to all profiles.
   home.packages = with pkgs; [
     ag
+    conky
     evince
     fasd
     fd

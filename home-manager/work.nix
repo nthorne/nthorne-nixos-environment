@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./common.nix
+    ./dotfiles/conky.nix
   ];
 
   # Let Home Manager install and manage itself.

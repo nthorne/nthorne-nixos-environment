@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./common.nix
+    ./dotfiles/conky.nix
   ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -27,7 +28,6 @@ in
   home.packages = with pkgs; [
     bashmount
     calibre
-    conky
     deluge
     sshfsFuse
     vlc
