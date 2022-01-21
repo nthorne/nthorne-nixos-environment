@@ -59,6 +59,9 @@ in
   hardware.pulseaudio.support32Bit = true;
   nixpkgs.config.pulseaudio = true;
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
