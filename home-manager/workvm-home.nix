@@ -6,7 +6,7 @@ in
   imports = [
     ./common.nix
     ./dotfiles
-    ./packages
+    ./packages/cppclean
     ./scripts
   ];
 
