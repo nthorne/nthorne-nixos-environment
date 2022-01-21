@@ -53,5 +53,6 @@ in
     unstable.slack-dark
     vagrant
     insomnia
+    thunderbird
   ];
 }
