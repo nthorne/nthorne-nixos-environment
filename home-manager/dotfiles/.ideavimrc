@@ -1,0 +1,86 @@
+
+""" .vimrc
+"""   - Vim initialization settings
+"""
+
+
+"""
+""" general setup {{{
+"""
+
+set showmode
+set so=5
+set incsearch
+set nu
+set relativenumber
+set number
+set ignorecase
+set smartcase
+
+" IdeaVim specific settings
+set ideajoin
+set ideastatusicon=gray
+set ideastrictmode
+
+"""
+""" plugins {{{
+"""
+
+set surround
+set multiple-cursors
+" set commentary
+set argtextobj
+set easymotion
+" set textobj-entire
+" set ReplaceWithRegister
+" set exchange
+
+let g:argtextobj_pairs="[:],(:),<:>"
+
+"""
+""" keymapping {{{
+"""
+
+" NOTE: To find the action id, either use
+"
+"   :actionlist
+" OR
+"   Use the <S-S> search, search for ideaVim and enable tracking of
+"   action id.
+
+
+let mapleader = ','
+let maplocalleader = ','
+
+map <space> <leader>
+map <space><space> <leader><leader>
+
+map <silent> <F1> <Action>(ActivateProjectToolWindow)
+map <silent> <F2> <Action>(ActivateStructureToolWindow)
+map <silent> <F3> <Action>(ActivateVersionControlToolWindow)
+
+map <silent> o <Action>(HideAllWindows)
+
+map gd <Action>(GotoDeclaration)
+map ge <Action>(GotoNextError)
+map gi <Action>(GotoImplementation)
+map gt <Action>(GotoTest)
+map gu <Action>(FindUsages)
+map gt :tabnext<CR>
+
+map <C-n> <Plug>NextWholeOccurrence
+
+"map <leader>f <Plug>(easymotion-s)
+"map <leader>e <Plug>(easymotion-f)
+"
+map <leader>b <Action>(ToggleLineBreakpoint)
+map <leader>d <Action>(Debug)
+map <leader>m <Action>(Build)
+map <leader>r <Action>(Run)
+map <leader>s <Action>(Stop)
+
+map <CR><CR> <Action>(ShowIntentionActions)
+
+map U <C-R>
+
+""" }}}

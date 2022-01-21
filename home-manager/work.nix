@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 #
 # TODO:
 #
 # * Migrate tmux config here
 # * Migrate xmonad config here
+# * Restructure subfolders. Inconsistencies in default.nix vs named.nix
 #
 let
   unstable = import <nixos-unstable> {config={allowUnfree=true;};};
@@ -12,6 +13,7 @@ in
   imports = [
     ./common.nix
     ./dotfiles/conky.nix
+    ./packages/clion
   ];
 
   # Let Home Manager install and manage itself.
