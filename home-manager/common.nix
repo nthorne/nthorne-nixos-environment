@@ -23,6 +23,7 @@ in
     shellcheck
     tldr
     tmux
+    todoist
     tree
     xsel
     yank
