@@ -19,6 +19,8 @@ let
   #     REF: https://github.com/NixOS/nixpkgs/issues/78403
   #     REF: https://github.com/NixOS/nixpkgs/issues/74698
   # * Refactor the home/work scheme to a host based one instead.
+  # * Samba mount for diskmaskinen
+  # * Samba mount for netcleantech.local/dfs
   #
   # DOING:
 
