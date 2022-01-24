@@ -42,6 +42,10 @@ in
 
   # EVALUATION:
   #
+  # I needed this one to get a IPv4 on wired. Why?!
+  # +group
+  #networking.networkmanager.enable = true;
+  #users.extraGroups.networkmanager.members = [ "nthorne" ];
 
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "nthorne" ];
