@@ -56,5 +56,6 @@ in
     vagrant
     insomnia
     thunderbird
+    xorg.xbacklight
   ];
 }
