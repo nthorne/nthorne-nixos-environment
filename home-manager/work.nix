@@ -14,6 +14,7 @@ in
     ./common.nix
     ./dotfiles/conky.nix
     ./packages/clion
+    ./dotfiles/vimes/xmonad.nix
   ];
 
   # Let Home Manager install and manage itself.

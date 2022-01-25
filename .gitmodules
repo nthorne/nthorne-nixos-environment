@@ -1,0 +1,3 @@
+[submodule "home-manager/submodules/xmonad"]
+	path = home-manager/submodules/xmonad
+	url = ../nthorne-xmonad-environment.git
