@@ -59,8 +59,6 @@ map <silent> <F1> <Action>(ActivateProjectToolWindow)
 map <silent> <F2> <Action>(ActivateStructureToolWindow)
 map <silent> <F3> <Action>(ActivateVersionControlToolWindow)
 
-map <silent> o <Action>(HideAllWindows)
-
 map gd <Action>(GotoDeclaration)
 map ge <Action>(GotoNextError)
 map gi <Action>(GotoImplementation)
