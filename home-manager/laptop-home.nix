@@ -6,6 +6,7 @@ in
   imports = [
     ./common.nix
     ./dotfiles/nixlaptop/conky.nix
+    ./dotfiles/nixlaptop/xmonad.nix
   ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
