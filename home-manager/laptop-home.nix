@@ -5,7 +5,7 @@ in
 {
   imports = [
     ./common.nix
-    ./dotfiles/conky.nix
+    ./dotfiles/nixlaptop/conky.nix
   ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

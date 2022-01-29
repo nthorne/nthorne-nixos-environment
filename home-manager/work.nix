@@ -12,7 +12,7 @@ in
 {
   imports = [
     ./common.nix
-    ./dotfiles/conky.nix
+    ./dotfiles/vimes/conky.nix
     ./packages/clion
     ./dotfiles/vimes/xmonad.nix
   ];
