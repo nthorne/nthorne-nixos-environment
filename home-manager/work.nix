@@ -14,6 +14,7 @@ in
     ./common.nix
     ./dotfiles/vimes/conky.nix
     ./packages/clion
+    ./dotfiles/vimes/tmux.nix
     ./dotfiles/vimes/xmonad.nix
   ];
 

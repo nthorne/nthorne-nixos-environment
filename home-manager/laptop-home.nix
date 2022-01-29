@@ -6,6 +6,7 @@ in
   imports = [
     ./common.nix
     ./dotfiles/nixlaptop/conky.nix
+    ./dotfiles/nixlaptop/tmux.nix
     ./dotfiles/nixlaptop/xmonad.nix
   ];
   # Let Home Manager install and manage itself.
