@@ -56,7 +56,7 @@ in
       enable = true;
       user = "nthorne";
     };
-  }
+  };
 
 
   services.xserver.synaptics = {
