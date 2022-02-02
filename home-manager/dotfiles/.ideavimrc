@@ -67,6 +67,7 @@ map gu <Action>(FindUsages)
 map gt :tabnext<CR>
 
 map <C-n> <Plug>NextWholeOccurrence
+map <C-o> <Action>(Back)
 
 "map <leader>f <Plug>(easymotion-s)
 "map <leader>e <Plug>(easymotion-f)
