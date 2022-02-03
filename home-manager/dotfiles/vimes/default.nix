@@ -5,5 +5,6 @@
     ./gitconfig.nix
     ./tmux.nix
     ./xmonad.nix
+    ./xresources.nix
   ];
 }
