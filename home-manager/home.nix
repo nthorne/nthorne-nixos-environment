@@ -54,6 +54,7 @@ in
     hyperfine
     irssi
     mosh
+    niv
     nvd
     qalculate-gtk
     ranger
