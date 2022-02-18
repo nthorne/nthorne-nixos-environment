@@ -1,4 +1,3 @@
-{ pkgs, ...}:
 {
   # TODO: Check if I can do some of these  in a nicer way..
   home.file = {

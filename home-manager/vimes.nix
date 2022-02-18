@@ -1,20 +1,17 @@
-{ config, pkgs, lib, ... }:
+args@{ stable, unstable, lib, ... }:
 #
 # TODO:
 #
 # * Restructure subfolders. Inconsistencies in default.nix vs named.nix
 #
-let
-  unstable = import <nixos-unstable> {config={allowUnfree=true;};};
-in
 {
   imports = [
-    ./packages/clion
+    (import ./packages/clion args)
   ];
 
   # TODO: Figure out these odd developers' dependencies; are
   #   they because of a nvim plugin or something?
-  home.packages = with pkgs; [
+  home.packages = with stable; [
     bashdb      # Shell script debugger
     cppcheck    # Why did I have this one in my system config?
     ctags       # Why did I have this one in my system config?

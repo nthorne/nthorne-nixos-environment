@@ -1,18 +1,18 @@
-{pkgs, stdenv, ...}:
+{ stable, stdenv, ... }:
 let
   plantuml-filter = import ./plantumlfilter;
 in
 stdenv.mkDerivation {
   name = "ddoc";
 
-  buildInputs = with pkgs;[
+  buildInputs = with stable;[
     bash
     texlive.combined.scheme-small
     pandoc
     plantuml-filter
   ];
 
-  buildCommand = with pkgs;''
+  buildCommand = with stable;''
     mkdir -p $out/bin
     cat <<EOT > $out/bin/ddoc
 #!${bash}/bin/bash

@@ -1,13 +1,13 @@
-with import <nixpkgs> {};
+{ stable, ... }:
 let
-  remote = pkgs.fetchFromGitHub {
+  remote = stable.fetchFromGitHub {
     owner = "jgm";
     repo = "pandocfilters";
     rev = "9638d1d956e85e0729b714c8713d553466982034";
     sha256 = "1x2z2rr33kfhdvwvq05glfvbvvh1d1sa2mw8j8ys5laczc1j5295";
   };
 
-  pandocfilters = pkgs.python27Packages.buildPythonPackage rec {
+  pandocfilters = stable.python27Packages.buildPythonPackage rec {
     name = "pandocfilters";
 
     src = remote;
@@ -15,14 +15,14 @@ let
     buildInputs = [ ];
     propagatedBuildInputs = [ ];
   };
-  pythonWrapper = (pkgs.python27.withPackages (ps: [pandocfilters]));
+  pythonWrapper = (stable.python27.withPackages (ps: [pandocfilters]));
 in
 stdenv.mkDerivation {
   name = "plantumlfilter";
 
   src = remote;
 
-  buildInputs = [ pandocfilters pkgs.plantuml ];
+  buildInputs = [ pandocfilters stable.plantuml ];
 
   buildCommand = ''
   mkdir -p $out/bin

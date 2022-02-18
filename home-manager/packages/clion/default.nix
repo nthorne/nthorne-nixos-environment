@@ -1,14 +1,10 @@
-{pkgs, lib, ...}:
+{ stable, lib, ... }:
 {
   imports = [
     ../../dotfiles/clion.nix
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "clion"
-  ];
-
-  home.packages = with pkgs; [
+  home.packages = with stable; [
     jetbrains.clion
   ];
 }

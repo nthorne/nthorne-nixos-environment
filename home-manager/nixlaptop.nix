@@ -1,6 +1,6 @@
-{ config, pkgs, ... }:
+{ config, stable, ... }:
 {
-  home.packages = with pkgs; [
+  home.packages = with stable; [
     bashmount
     calibre
     deluge

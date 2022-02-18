@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ stable, ... }:
 let
-  splitter = pkgs.writeShellScriptBin "splitter" (builtins.readFile ./splitter);
+  splitter = stable.writeShellScriptBin "splitter" (builtins.readFile ./splitter);
 
-  aosp = pkgs.writeShellScriptBin "aosp" (builtins.readFile ./aosp);
+  aosp = stable.writeShellScriptBin "aosp" (builtins.readFile ./aosp);
 
-  ntvim = with pkgs; stdenv.mkDerivation {
+  ntvim = with stable; stdenv.mkDerivation {
     name = "ntvim";
     version = "1.0";
 
@@ -30,6 +30,6 @@ in
     ntvim
     splitter
 
-    (pkgs.callPackage ./ddoc {pkgs=pkgs;})
+    (stable.callPackage ./ddoc {stable=stable;})
   ];
 }

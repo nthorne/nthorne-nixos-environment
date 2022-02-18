@@ -4,14 +4,12 @@ This repository contains my home manager configurations.
 
 # Installation
 
-
 First symlink the home manager declaration into place:
     $ ln -s ${PWD}/home.nix ${HOME}/.config/nixpkgs/home.nix
 
 Then install home manager:
 
-    $ nix-channel --add https://github.com/rycee/home-manager/archive/release-20.09.tar.gz home-manager
-    $ nix-channel --add https://nixos.org/channels/nixos-unstable nixos-unstable
+    $ nix-channel --add https://github.com/rycee/home-manager/archive/release-21.11.tar.gz home-manager
     $ nix-channel --update
     # Logoff might be required for these settings to take effect
     $ nix-shell '<home-manager>' -A install
@@ -19,3 +17,12 @@ Then install home manager:
 To build and install the home environment:
 
     $ home-manager switch
+
+# Updating
+
+    $ niv update
+    $ home-manager switch
+
+To see what an upgrade will bring in
+
+    $ nix run nixpkgs.nvd -c nvd diff /nix/var/nix/profiles/per-user/<USER>/home-manager $(home-manager build)

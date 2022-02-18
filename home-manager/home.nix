@@ -1,8 +1,12 @@
 # This derivation should contain configurations that are common
 # to all profiles.
-{ pkgs, lib, ... }:
+args@{ pkgs, lib, ... }:
 let
-  unstable = import <nixos-unstable> {};
+  # pull pkgs and unstable from niv
+  sources = import ./nix/sources.nix;
+  stable = import sources.nixpkgs {config.allowUnfree = true;};
+  unstable = import sources.unstable {config.allowUnfree = true;};
+
   # NOTE: Will only work on Linux systems 🤷
   hostname = lib.strings.removeSuffix "\n" (builtins.readFile /etc/hostname);
 
@@ -15,8 +19,11 @@ in
   imports = [
     ./dotfiles/zsh.nix
 
-    # Automatically include <hostname>.nix for host specific configurations ..
-    (./. + ("/" + hostname + ".nix"))
+    # Automatically include <hostname>.nix for host specific configurations,
+    # supplying the niv stable and unstable sources as arguments
+    (
+      import (./. + ("/" + hostname + ".nix")) (args // {stable = stable; unstable = unstable;})
+    )
 
     # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
     #    here to keep the host specific config files short
@@ -42,7 +49,7 @@ in
   # changes in each release.
   home.stateVersion = "21.11";
 
-  home.packages = with pkgs; [
+  home.packages = with stable; [
     ag
     conky
     evince
