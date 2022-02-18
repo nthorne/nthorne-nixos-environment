@@ -50,6 +50,11 @@ in
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "nthorne" ];
 
+  # To allow for nixos-containers to access the network
+  networking.nat.enable = true;
+  networking.nat.internalInterfaces = ["ve-+"];
+  # TODO: Wired at office.
+  networking.nat.externalInterface = "wlp0s20f3";
   # ^^
 
   virtualisation.docker.enable = true;
