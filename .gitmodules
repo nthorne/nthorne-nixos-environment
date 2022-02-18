@@ -7,3 +7,6 @@
 [submodule "home-manager/dotfiles/tmux"]
 	path = home-manager/dotfiles/tmux
 	url = ../nthorne-tmux-environment
+[submodule "blurcam/Linux-Fake-Background-Webcam"]
+	path = blurcam/Linux-Fake-Background-Webcam
+	url = https://github.com/fangfufu/Linux-Fake-Background-Webcam.git

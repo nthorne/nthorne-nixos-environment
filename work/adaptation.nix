@@ -96,13 +96,25 @@ in
 
     # TODO: Write wrappers for slack and teams
     nvidia-offload
+
+    # TODO: Will this allow me to blur the webcam?
+    webcamoid
   ];
 
   boot = {
     # TODO: uvcvideo should be needed for webcam
-    kernelModules = [ "nbd" "uvcvideo" ];
+    kernelModules = [ "nbd" "uvcvideo" "akvcam" "v4l2loopback" ];
     tmpOnTmpfs = true;
+    extraModulePackages = [ config.boot.kernelPackages.v4l2loopback.out ];
   };
+
+    # Set initial kernel module settings
+  boot.extraModprobeConfig = ''
+    # exclusive_caps: Skype, Zoom, Teams etc. will only show device when actually streaming
+    # card_label: Name of virtual camera, how it'll show up in Skype, Zoom, Teams
+    # https://github.com/umlaeute/v4l2loopback
+    options v4l2loopback devices=1 video_nr=10 card_label="OBS Cam" exclusive_caps=1
+  '';
 
   networking.hostName = "vimes";
 
