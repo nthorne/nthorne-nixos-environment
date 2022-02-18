@@ -78,11 +78,30 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.useDHCP = false;
-  networking.interfaces.enp0s13f0u4u4.useDHCP = true;
-  networking.interfaces.wlp0s20f3.useDHCP = true;
-  # network specific settings are in private.nix
-  networking.wireless.enable = true;
+  networking = {
+    hostName = "vimes";
+
+    useDHCP = false;
+
+    interfaces = {
+      enp0s13f0u4u4.useDHCP = true;
+      wlp0s20f3.useDHCP = true;
+    };
+
+    wireless = {
+      enable = true;
+      userControlled.enable = true;
+      networks = {
+        # NOTE: PSK is given by wpa_passphrase <SSID> <PSK>
+        SKYNET = {
+           pskRaw = builtins.readFile /etc/nixos/.skynetpsk;
+        };
+        SaferSociety = {
+           pskRaw = builtins.readFile /etc/nixos/.safersocietypsk;
+        };
+      };
+    };
+  };
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -108,8 +127,6 @@ in
     kernelModules = [ "nbd" "uvcvideo" ];
     tmpOnTmpfs = true;
   };
-
-  networking.hostName = "vimes";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.nthorne.extraGroups =[ "wheel" "docker" "dialout" "disk" "audio" ];
