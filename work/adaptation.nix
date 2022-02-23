@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   # TODO:
@@ -34,6 +34,7 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec -a "$0" "$@"
   '';
+  ethernetDevice = "enp0s13f0u4u4";
 in
 {
   imports =
@@ -47,12 +48,20 @@ in
   #networking.networkmanager.enable = true;
   #users.extraGroups.networkmanager.members = [ "nthorne" ];
 
+  # Don't require ethernet to be connected when booting
+  systemd.services = {
+    "network-link-${ethernetDevice}".wantedBy = lib.mkForce [];
+    "network-addresses-${ethernetDevice}".wantedBy = lib.mkForce [];
+  };
+
+  # ^^ EVALUATION
+
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "nthorne" ];
 
   # To allow for nixos-containers to access the network
   networking.nat.enable = true;
-  networking.nat.internalInterfaces = ["ve-+"];
+  networking.nat.internalInterfaces = ["ve-*"];
   # TODO: Wired at office.
   networking.nat.externalInterface = "wlp0s20f3";
   # ^^
