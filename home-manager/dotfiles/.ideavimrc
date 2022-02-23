@@ -77,6 +77,7 @@ map <leader>d <Action>(Debug)
 map <leader>m <Action>(Build)
 map <leader>r <Action>(Run)
 map <leader>s <Action>(Stop)
+map <leader>f <Action>(ReformatCode)
 
 map <CR><CR> <Action>(ShowIntentionActions)
 
