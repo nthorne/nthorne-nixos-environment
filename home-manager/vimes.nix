@@ -32,5 +32,7 @@ args@{ stable, unstable, lib, ... }:
     insomnia
     thunderbird
     xorg.xbacklight
+    gdb
+    rr
   ];
 }

@@ -5,5 +5,7 @@
     ./tmux.nix
     ./xmonad.nix
     ./xresources.nix
+
+    ../rr.nix
   ];
 }
