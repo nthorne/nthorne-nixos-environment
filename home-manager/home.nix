@@ -63,6 +63,7 @@ in
     mosh
     niv
     nvd
+    pavucontrol
     qalculate-gtk
     ranger
     shellcheck
