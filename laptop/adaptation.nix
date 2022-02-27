@@ -72,6 +72,10 @@ in
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
   nixpkgs.config.pulseaudio = true;
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   users.extraUsers.nthorne.extraGroups = [ "wheel" "audio" "docker" "dialout" ];
 
   virtualisation.docker.enable = true;
