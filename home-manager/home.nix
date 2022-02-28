@@ -76,6 +76,9 @@ in
 
     unstable.firefox
     unstable.neovim
+
+    # evaluation
+    autorandr
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
