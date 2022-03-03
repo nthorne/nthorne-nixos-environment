@@ -34,5 +34,6 @@ args@{ stable, unstable, lib, ... }:
     xorg.xbacklight
     gdb
     rr
+    jetbrains.rider
   ];
 }
