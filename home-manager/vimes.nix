@@ -35,5 +35,10 @@ args@{ stable, unstable, lib, ... }:
     gdb
     rr
     jetbrains.rider
+
+    # For trying out flakes
+    (pkgs.writeShellScriptBin "nixFlakes" ''
+      exec ${pkgs.nixFlakes}/bin/nix --experimental-features "nix-command flakes" "$@"
+    '')
   ];
 }
