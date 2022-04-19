@@ -35,6 +35,7 @@ args@{ stable, unstable, lib, ... }:
     gdb
     rr
     jetbrains.rider
+    jetbrains.pycharm-community
 
     # For trying out flakes
     (pkgs.writeShellScriptBin "nixFlakes" ''
