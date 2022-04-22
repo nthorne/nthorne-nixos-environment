@@ -1,0 +1,46 @@
+{
+  "toaster": {
+    "title": "Toaster log",
+    "description": "Toaster log format",
+    "timestamp-format": [
+      "%Y-%m-%d %H:%M:%S,%L"
+    ],
+    "regex": {
+      "toaster-log": {
+        "pattern": "^(?<timestamp>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\,\\d{3}) - (?<tag>\\S+) - (?<level>\\S+) - (?<body>.*)"
+      }
+    },
+    "level-field": "level",
+    "level": {
+      "fatal": "FATAL",
+      "error": "ERROR",
+      "warning": "WARNING",
+      "info": "INFO",
+      "debug": "DEBUG",
+      "trace": "VERBOSE"
+    },
+    "value": {
+      "level": {
+        "kind": "string",
+        "foreign-key": true
+      }, 
+      "tag" : {"kind":"string", "identifier": true},
+      "body": {"kind":"string", "identifier": false}
+    },
+    "highlights": {
+      "step_start":  {"pattern": "Running step.*", "underline": true},
+      "step_stop":  {"pattern": "Completed step.*", "underline": true}
+    },
+    "sample": [
+      {
+        "line": "1980-01-01 01:01:01,002 - this.is.a_tag - DEBUG - This is a debug message",
+        "level": "debug"
+      },
+      {
+
+        "line": "1980-01-01 01:01:01,002 - this.is.a_tag - INFO - This is a debug message",
+        "level": "info"
+      }
+    ]
+  }
+}
