@@ -3,11 +3,6 @@
 let
   # TODO:
   #
-  # * Virtualbox
-  # * Vagrant
-  # * Screen lock (automatic?) - Perhaps drop slock. Again, maybe not. dm-tool lock
-  #     seems to be ignoring my wish to not power save screens :/
-  # * Docker
   # * Full disk encryption, or is home enough?
   # * Create nvidia-offload wrappers for teams and slack
   # * Perhaps default display settings, at least when undocked.
@@ -23,8 +18,6 @@ let
   # * Samba mount for netcleantech.local/dfs
   #
   # DOING:
-
-  # This file contains non-public information.
 
   # Needed for running e.g. slack and teams
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
