@@ -47,6 +47,10 @@ in
     "network-addresses-${ethernetDevice}".wantedBy = lib.mkForce [];
   };
 
+  boot.kernel.sysctl."kernel.ftrace_enabled" = true;
+  boot.kernel.sysctl."kernel.perf_event_paranoid" = 1;
+  boot.kernel.sysctl."kernel.kptr_restrict" = true;
+
   # ^^ EVALUATION
 
   virtualisation.virtualbox.host.enable = true;
