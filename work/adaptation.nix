@@ -35,11 +35,6 @@ in
     ] ++ (if builtins.pathExists ./private.nix then [ ./private.nix ] else []);
 
   # EVALUATION:
-  #
-  # I needed this one to get a IPv4 on wired. Why?!
-  # +group
-  #networking.networkmanager.enable = true;
-  #users.extraGroups.networkmanager.members = [ "nthorne" ];
 
   # Don't require ethernet to be connected when booting
   systemd.services = {
@@ -66,10 +61,6 @@ in
   users.extraGroups.vboxusers.members = [ "nthorne" ];
 
   # To allow for nixos-containers to access the network
-  networking.nat.enable = true;
-  networking.nat.internalInterfaces = ["ve-*"];
-  # TODO: Wired at office.
-  networking.nat.externalInterface = "wlp0s20f3";
   # ^^
 
   # Below is needed for webcam, and to get teams to be able to select
@@ -94,12 +85,21 @@ in
   networking = {
     hostName = "vimes";
 
-    useDHCP = false;
-
     interfaces = {
       enp0s13f0u4u4.useDHCP = true;
       wlp0s20f3.useDHCP = true;
     };
+
+    nat = {
+      enable = true;
+      internalInterfaces = ["ve-*"];
+      # TODO: Wired at office.
+      externalInterface = "wlp0s20f3";
+    };
+
+    networkmanager.enable = true;
+
+    useDHCP = false;
 
     wireless = {
       enable = true;
@@ -143,6 +143,7 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.nthorne.extraGroups =[ "wheel" "docker" "dialout" "disk" "audio" ];
+  users.extraGroups.networkmanager.members = [ "nthorne" ];
 
   hardware.nvidia.prime = {
     offload.enable = true;
