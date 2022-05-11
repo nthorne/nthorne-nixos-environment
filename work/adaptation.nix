@@ -51,6 +51,15 @@ in
   boot.kernel.sysctl."kernel.perf_event_paranoid" = 1;
   boot.kernel.sysctl."kernel.kptr_restrict" = true;
 
+  virtualisation = {
+    podman = {
+      enable = true;
+      # docker alias for podman..
+      dockerCompat = true;
+    };
+    docker.enable = false;
+  };
+
   # ^^ EVALUATION
 
   virtualisation.virtualbox.host.enable = true;
@@ -62,8 +71,6 @@ in
   # TODO: Wired at office.
   networking.nat.externalInterface = "wlp0s20f3";
   # ^^
-
-  virtualisation.docker.enable = true;
 
   # Below is needed for webcam, and to get teams to be able to select
   # audio sources properly. uvcvideo needs to be modprobed, and I need
