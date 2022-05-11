@@ -133,7 +133,7 @@ in
   ];
 
   boot = {
-    # TODO: uvcvideo should be needed for webcam
+    # NOTE: uvcvideo should be needed for webcam
     kernelModules = [ "nbd" "uvcvideo" ];
     tmpOnTmpfs = true;
   };
