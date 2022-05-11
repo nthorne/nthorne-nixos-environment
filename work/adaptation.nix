@@ -121,9 +121,6 @@ in
   environment.systemPackages = with pkgs; [
     afuse
     arandr
-    bedup
-    compsize
-    duperemove
     gnupg
     sshfsFuse
 
