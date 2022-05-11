@@ -104,15 +104,6 @@ in
     wireless = {
       enable = true;
       userControlled.enable = true;
-      networks = {
-        # NOTE: PSK is given by wpa_passphrase <SSID> <PSK>
-        SKYNET = {
-           pskRaw = builtins.readFile /etc/nixos/.skynetpsk;
-        };
-        SaferSociety = {
-           pskRaw = builtins.readFile /etc/nixos/.safersocietypsk;
-        };
-      };
     };
   };
 
