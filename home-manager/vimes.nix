@@ -7,6 +7,7 @@ args@{ stable, unstable, lib, ... }:
 {
   imports = [
     (import ./packages/clion args)
+    (import ./packages/insomnia args)
   ];
 
   # TODO: Figure out these odd developers' dependencies; are
@@ -29,7 +30,6 @@ args@{ stable, unstable, lib, ... }:
     unstable.teams
     unstable.slack-dark
     vagrant
-    insomnia
     thunderbird
     xorg.xbacklight
     gdb
