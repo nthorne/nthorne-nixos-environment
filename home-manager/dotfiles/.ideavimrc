@@ -16,6 +16,8 @@ set relativenumber
 set number
 set ignorecase
 set smartcase
+set visualbell
+set noerrorbells
 
 " IdeaVim specific settings
 set ideajoin
