@@ -8,6 +8,8 @@ args@{ stable, unstable, lib, ... }:
   imports = [
     (import ./packages/clion args)
     (import ./packages/insomnia args)
+    (import ./packages/teams args)
+    (import ./packages/slack args)
   ];
 
   # TODO: Figure out these odd developers' dependencies; are
@@ -16,26 +18,21 @@ args@{ stable, unstable, lib, ... }:
     bashdb      # Shell script debugger
     cppcheck    # Why did I have this one in my system config?
     ctags       # Why did I have this one in my system config?
+    gdb
     glances
+    jetbrains.pycharm-community
+    jetbrains.rider
     kdiff3
     lnav
     p7zip
+    rr
     slock
+    vagrant
     wget
     xdotool
+    xorg.xbacklight
 
     # Evaluation
-    # Teams and Slack must be executed with nvidia-offload, write
-    # a function that generates a wrapper script for this.
-    unstable.teams
-    unstable.slack-dark
-    vagrant
-    thunderbird
-    xorg.xbacklight
-    gdb
-    rr
-    jetbrains.rider
-    jetbrains.pycharm-community
 
     # For trying out flakes
     (pkgs.writeShellScriptBin "nixFlakes" ''
