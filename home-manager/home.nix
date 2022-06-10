@@ -50,7 +50,6 @@ in
   home.stateVersion = "21.11";
 
   home.packages = with stable; [
-    ag
     conky
     evince
     fasd
@@ -67,6 +66,7 @@ in
     qalculate-gtk
     ranger
     shellcheck
+    silver-searcher
     tldr
     tmux
     todoist

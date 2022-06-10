@@ -66,10 +66,10 @@ in
   # Below is needed for webcam, and to get teams to be able to select
   # audio sources properly. uvcvideo needs to be modprobed, and I need
   # to be in the audio group as well.
-  services.uvcvideo.dynctrl = {
-    enable = true;
-    packages = [ pkgs.tiscamera ];
-  };
+  #services.uvcvideo.dynctrl = {
+  #  enable = true;
+  #  #packages = [ pkgs.tiscamera ];
+  #};
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
   nixpkgs.config.pulseaudio = true;
@@ -113,7 +113,7 @@ in
     afuse
     arandr
     gnupg
-    sshfsFuse
+    sshfs-fuse
 
     # Something, somewhere seems to want python3. Perhaps
     # a zsh plugin or something?

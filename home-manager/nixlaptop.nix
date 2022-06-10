@@ -4,7 +4,7 @@
     bashmount
     calibre
     deluge
-    sshfsFuse
+    sshfs-fuse
     vlc
   ];
 }
