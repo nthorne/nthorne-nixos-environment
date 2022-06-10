@@ -33,10 +33,5 @@ args@{ stable, unstable, lib, ... }:
     xorg.xbacklight
 
     # Evaluation
-
-    # For trying out flakes
-    (pkgs.writeShellScriptBin "nixFlakes" ''
-      exec ${pkgs.nixFlakes}/bin/nix --experimental-features "nix-command flakes" "$@"
-    '')
   ];
 }
