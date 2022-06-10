@@ -50,9 +50,9 @@ in
     podman = {
       enable = true;
       # docker alias for podman..
-      dockerCompat = true;
+      # dockerCompat = true;
     };
-    docker.enable = false;
+    docker.enable = true;
   };
 
   # ^^ EVALUATION
