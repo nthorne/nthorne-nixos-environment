@@ -79,5 +79,9 @@ in
   users.extraUsers.nthorne.extraGroups = [ "wheel" "audio" "docker" "dialout" ];
 
   virtualisation.docker.enable = true;
+
+  nix.extraOptions = ''
+      experimental-features = nix-command flakes
+      '';
 }
 
