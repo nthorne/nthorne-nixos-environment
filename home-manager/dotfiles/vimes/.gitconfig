@@ -11,6 +11,7 @@
 [mergetool "vimdiff"]
         cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [alias]
+        br = branch --format='%(if)%(upstream:short)%(then)%(else)%(color:bold red)%(end)%(if)%(HEAD)%(then)* %(color:bold yellow)%(else)%(end)%(refname:short) - %(contents:subject) %(color:yellow)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
 	graph = log --graph --pretty=oneline --abbrev-commit --decorate
 	ds = diff --staged
 	st = status -sb
