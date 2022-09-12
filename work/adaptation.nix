@@ -16,6 +16,8 @@ let
   # * Refactor the home/work scheme to a host based one instead.
   # * Samba mount for diskmaskinen
   # * Samba mount for netcleantech.local/dfs
+  # * docker0 interface - inet -> 10.10.2.54 (not 172.17.0.1). Not set up; wonder where it got pulled from (daemon.json:{"bip":"10.10.254.1/24"})
+  # * Set up VPN (~/.vpn)
   #
   # DOING:
 
