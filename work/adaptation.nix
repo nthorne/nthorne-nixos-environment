@@ -198,4 +198,20 @@ in
       keep-derivations = true
       experimental-features = nix-command flakes
       '';
+
+  # VPN services, start with `systemctl start openvpn-<CONFIG-NAME>-.service`
+  # Full paths here is perhaps not too nice, but 🤷
+  services = {
+    openvpn.servers = {
+      office = {
+        config = ''
+          config /home/nthorne/.vpn/vpnconfig_cert.ovpn
+          cert /home/nthorne/.vpn/niklas.pem
+          key /home/nthorne/.vpn/niklas.pem
+        '';
+        autoStart = false;
+        updateResolvConf = true;
+      };
+    };
+  };
 }
