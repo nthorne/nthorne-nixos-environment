@@ -20,7 +20,6 @@ args@{ stable, unstable, lib, ... }:
     ctags       # Why did I have this one in my system config?
     gdb
     glances
-    jetbrains.pycharm-community
     jetbrains.rider
     kdiff3
     lnav
