@@ -32,9 +32,10 @@ let
   ethernetDevice = "enp0s13f0u4u4";
 in
 {
-  imports =
-    [
-    ] ++ (if builtins.pathExists ./private.nix then [ ./private.nix ] else []);
+  # TODO(flakify): Drop this.
+  #imports =
+  #  [
+  #  ] ++ (if builtins.pathExists ./private.nix then [ ./private.nix ] else []);
 
   # EVALUATION:
 
