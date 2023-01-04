@@ -1,5 +1,5 @@
 # Test as eg.
-#   nixos-rebuild build-vm --flake .#vimes
+#   nixos-rebuild build-vm --flake .#vimes-vm
 {
   description = "Declares my host configurations";
 
