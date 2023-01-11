@@ -172,7 +172,7 @@ in
   security.sudo.extraRules = [
     {
       users = [ "nthorne" ];
-      commands = [ {command = "/home/nthorne/.nix-profile/bin/slock" ; options = [ "NOPASSWD" ]; } ] ;
+      commands = [ {command = "${pkgs.slock}/bin/slock" ; options = [ "NOPASSWD" ]; } ] ;
     }
   ];
 

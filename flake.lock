@@ -1,12 +1,33 @@
 {
   "nodes": {
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1673343300,
+        "narHash": "sha256-5Xdj6kpXYMie0MlnGwqK5FaMdsedxvyuakWtyKB3zaQ=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "176e455371a8371586e8a3ff0d56ee9f3ca2324e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1672616430,
-        "narHash": "sha256-e18rRwDUaW/Uw1tBmtsVueJ2SVI5DLhrEGwhkIo+c50=",
+        "lastModified": 1673345971,
+        "narHash": "sha256-4DfFcKLRfVUTyuGrGNNmw37IeIZSoku9tgTVmu/iD98=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "0bf3109eeb61780965c27f4a0a4affdcd0cd4d3d",
+        "rev": "54644f409ab471e87014bb305eac8c50190bcf48",
         "type": "github"
       },
       "original": {
@@ -16,9 +37,93 @@
         "type": "github"
       }
     },
+    "nthorne-tmux": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1640157565,
+        "narHash": "sha256-87Ooe9qB/07GbhtxJppfSzqbawDtjTcvEtZxmaajpZc=",
+        "owner": "nthorne",
+        "repo": "nthorne-tmux-environment",
+        "rev": "059ce12b493ffa35ccb0dc2b430913a1c2cbaa9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nthorne",
+        "repo": "nthorne-tmux-environment",
+        "type": "github"
+      }
+    },
+    "nthorne-xmonad": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1655118865,
+        "narHash": "sha256-lvd6Ye46xLnUzmxZdpJFet0NBwrpz+31ojs+UPjqIOY=",
+        "owner": "nthorne",
+        "repo": "nthorne-xmonad-environment",
+        "rev": "6208beb1acb79932f8680398d0a28f5ff1d4ac0d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nthorne",
+        "repo": "nthorne-xmonad-environment",
+        "type": "github"
+      }
+    },
+    "nthorne-zsh": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1673434442,
+        "narHash": "sha256-TTyCRm5vUvt8wzaqaQW1jMfv3lr4FwnR7rA4giAm3LQ=",
+        "owner": "nthorne",
+        "repo": "nthorne-zsh-environment",
+        "rev": "d0817117f14c5bc61d224a7edf9aed7c5f7585d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nthorne",
+        "repo": "nthorne-zsh-environment",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs",
+        "nthorne-tmux": "nthorne-tmux",
+        "nthorne-xmonad": "nthorne-xmonad",
+        "nthorne-zsh": "nthorne-zsh",
+        "unstable": "unstable"
+      }
+    },
+    "unstable": {
+      "locked": {
+        "lastModified": 1673301451,
+        "narHash": "sha256-0IvOqAXZ+dHjOV7dQl4iEcCUmzqg8VvGg+UZ68ONDIg=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "35f1f865c03671a4f75a6996000f03ac3dc3e472",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
       }
     }
   },

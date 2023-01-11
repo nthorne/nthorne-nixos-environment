@@ -1,6 +1,7 @@
+{flake-inputs, ...}:
 {
   home.file = {
-    ".tmux.conf".source = ./../tmux/.tmux-work.conf;
+    ".tmux.conf".source = "${flake-inputs.nthorne-tmux}/.tmux-work.conf";
   };
 }
 

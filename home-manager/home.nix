@@ -1,19 +1,23 @@
 # This derivation should contain configurations that are common
 # to all profiles.
-args@{ pkgs, lib, ... }:
+args@{ pkgs, lib, flake-inputs, ... }:
 let
-  # pull pkgs and unstable from niv
-  sources = import ./nix/sources.nix;
-  stable = import sources.nixpkgs {config.allowUnfree = true;};
-  unstable = import sources.unstable {config.allowUnfree = true;};
-
-  # NOTE: Will only work on Linux systems 🤷
-  hostname = lib.strings.removeSuffix "\n" (builtins.readFile /etc/hostname);
+  hostname = flake-inputs.hostname;
 
   hostCollection = path: (path + ("/" + hostname));
   hostDotfiles = (hostCollection ./dotfiles);
   hostPackages = (hostCollection ./packages);
   hostScripts =  (hostCollection ./scripts);
+
+  system = flake-inputs.system;
+  stable = import flake-inputs.nixpkgs {
+    config.allowUnfree = true;
+    system = "${system}";
+  };
+  unstable = import flake-inputs.unstable {
+    config.allowUnfree = true;
+    system = "${system}";
+  };
 in
 {
   imports = [
@@ -30,6 +34,7 @@ in
   ] ++ (if builtins.pathExists hostDotfiles then [ hostDotfiles ] else [])
     ++ (if builtins.pathExists hostPackages then [ hostPackages ] else [])
     ++ (if builtins.pathExists hostScripts then [ hostScripts ] else []);
+    
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -49,7 +54,7 @@ in
   # changes in each release.
   home.stateVersion = "21.11";
 
-  home.packages = with stable; [
+  home.packages = with pkgs; [
     conky
     evince
     fasd

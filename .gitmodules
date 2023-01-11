@@ -1,9 +1,0 @@
-[submodule "home-manager/submodules/xmonad"]
-	path = home-manager/dotfiles/xmonad
-	url = ../nthorne-xmonad-environment.git
-[submodule "home-manager/dotfiles/zsh"]
-	path = home-manager/dotfiles/zsh
-	url = ../nthorne-zsh-environment.git
-[submodule "home-manager/dotfiles/tmux"]
-	path = home-manager/dotfiles/tmux
-	url = ../nthorne-tmux-environment
