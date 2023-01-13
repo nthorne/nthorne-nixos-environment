@@ -3,20 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-let
-  # TOOD(flakify): Drop this
-  # The adaptation file details configuration items that are unique
-  # to the particular target (e.g. guest additions for work vm).
-  #adaptation = /etc/nixos/adaptation.nix;
-in
 {
-  # TOOD(flakify): Drop this
-  #imports =
-  #  [ # Include the results of the hardware scan.
-  #    /etc/nixos/hardware-configuration.nix
-  #  ] ++ (if builtins.pathExists adaptation then [ adaptation ] else []);
-
   nixpkgs.config = {
     # :(
     allowUnfree = true;
@@ -111,11 +98,6 @@ in
   system = {
     # The NixOS release to be compatible with for stateful data such as databases.
     stateVersion = "21.11";
-
-    # TODO(flakify): This is impure. Drop it.
-    # This snapshots configuration.nix into /run/current-system/configuration.nix
-    # (excluding imports, unfortunately).
-    # copySystemConfiguration = true;
   };
 
   # Enable this one when building derivations intented for NixPkgs
