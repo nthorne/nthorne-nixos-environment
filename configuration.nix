@@ -97,7 +97,7 @@
 
   system = {
     # The NixOS release to be compatible with for stateful data such as databases.
-    stateVersion = "21.11";
+    stateVersion = "22.05";
   };
 
   # Enable this one when building derivations intented for NixPkgs
