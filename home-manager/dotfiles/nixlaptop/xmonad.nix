@@ -1,6 +1,7 @@
+{flake-inputs, ...}:
 {
   home.file = {
-    ".xmonad/xmonad.hs".source = ./../xmonad/xmonad-nixos.hs;
+    ".xmonad/xmonad.hs".source = "${flake-inputs.nthorne-xmonad}/xmonad-nixos.hs";
   };
 }
 

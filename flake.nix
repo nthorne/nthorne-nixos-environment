@@ -42,6 +42,13 @@
       ./configuration.nix
       ./hardware-configuration.nix
       ./laptop/adaptation.nix
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.nthorne = import ./home-manager/home.nix;
+        home-manager.extraSpecialArgs.flake-inputs = inputs // {hostname="nixlaptop";system="${system}";};
+      }
     ];
     wifiDevice = "wlp0s20f3";
   in rec {
