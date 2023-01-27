@@ -23,13 +23,25 @@
       flake = false;
     };
   };
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: 
+  outputs = { self, nixpkgs, unstable, home-manager, ... }@inputs: 
   let
+    # Pin nixpkgs in the flake registry to what we use for the system
+    pin-registries = { pkgs, ... }: {
+      nix = {
+        registry = {
+          nixpkgs.flake = nixpkgs;
+          nixpkgs-unstable.flake = unstable;
+    };};};
+
     system = "x86_64-linux";
+
     vimes-modules = [
       ./configuration.nix
       ./work/hardware-config/hardware-config-generated.nix
       ./work/adaptation.nix
+
+      (pin-registries)
+
       home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -38,10 +50,14 @@
         home-manager.extraSpecialArgs.flake-inputs = inputs // {hostname="vimes";system="${system}";};
       }
     ];
+
     nixlaptop-modules = [
       ./configuration.nix
       ./hardware-configuration.nix
       ./laptop/adaptation.nix
+
+      (pin-registries)
+
       home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -50,6 +66,7 @@
         home-manager.extraSpecialArgs.flake-inputs = inputs // {hostname="nixlaptop";system="${system}";};
       }
     ];
+
     wifiDevice = "wlp0s20f3";
   in rec {
     nixosConfigurations.vimes = nixpkgs.lib.nixosSystem {
