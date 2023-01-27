@@ -74,7 +74,7 @@ in
     silver-searcher
     tldr
     tmux
-    todoist
+    unstable.todoist
     tree
     xsel
     yank
