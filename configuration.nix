@@ -102,4 +102,6 @@
 
   # Enable this one when building derivations intented for NixPkgs
   #nix.useSandbox = true;
+
+  nix.settings.auto-optimise-store = true;
 }
