@@ -104,4 +104,7 @@
   #nix.useSandbox = true;
 
   nix.settings.auto-optimise-store = true;
+
+  # For VS Code
+  services.gnome.gnome-keyring.enable = true;
 }

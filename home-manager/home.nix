@@ -55,6 +55,7 @@ in
   home.stateVersion = "21.11";
 
   home.packages = with pkgs; [
+    autorandr
     conky
     evince
     fasd
@@ -82,8 +83,8 @@ in
     unstable.firefox
     unstable.neovim
 
-    # evaluation
-    autorandr
+    # Under evaluation
+    vscode
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
