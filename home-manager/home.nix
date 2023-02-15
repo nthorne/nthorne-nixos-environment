@@ -85,6 +85,7 @@ in
 
     # Under evaluation
     vscode
+    gnome.seahorse     # For managing gnome-keyring
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
