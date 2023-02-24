@@ -32,5 +32,6 @@ args@{ stable, unstable, lib, ... }:
     xorg.xbacklight
 
     # Evaluation
+    rnix-lsp
   ];
 }
