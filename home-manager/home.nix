@@ -84,7 +84,7 @@ in
     unstable.neovim
 
     # Under evaluation
-    vscode
+    unstable.vscode
     gnome.seahorse     # For managing gnome-keyring
   ];
 
