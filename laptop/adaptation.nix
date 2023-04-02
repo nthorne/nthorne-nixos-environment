@@ -14,8 +14,9 @@ in
   #networking.wireless.interfaces = "wlp1s0";
 
   environment.systemPackages = with pkgs; [
-    dropbox
-    dropbox-cli
+    # TODO: Does not build right now
+    #dropbox
+    #dropbox-cli
 
     # Used in order to get deoplete up and running again, since
     # it requires a neovim python package that is not available
