@@ -86,6 +86,7 @@ in
     # Under evaluation
     unstable.vscode
     gnome.seahorse     # For managing gnome-keyring
+    nodejs # Needed for neovim+copilot
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
