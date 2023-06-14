@@ -9,15 +9,7 @@ in
     [
     ] ++ (if builtins.pathExists private then [ private ] else []);
 
-  # TODO: Got remark on this wile upgrading to 21.05, that there could be
-  #       random failures (which there are).
-  #networking.wireless.interfaces = "wlp1s0";
-
   environment.systemPackages = with pkgs; [
-    # TODO: Does not build right now
-    #dropbox
-    #dropbox-cli
-
     # Used in order to get deoplete up and running again, since
     # it requires a neovim python package that is not available
     # through Nix yet :/

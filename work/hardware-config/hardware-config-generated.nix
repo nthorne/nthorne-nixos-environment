@@ -31,9 +31,6 @@ in
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  # TODO: Wille this be a problem that I have to comment this out?
-  # high-resolution display
-  #hardware.video.hidpi.enable = lib.mkDefault true;
 
   hardware.opengl.extraPackages = with pkgs; [
       vaapiIntel

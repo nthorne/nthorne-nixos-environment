@@ -9,12 +9,6 @@ let
   qca9377_firmware = pkgs.callPackage ./qca9377_firmware.nix { };
 in
 {
-  # TODO(flakify): Drop this
-  #imports =
-  #  [
-  #    #"${inputs.nixpkgs}/nixos/modules/installer/scan/not-detected.nix"
-  #  ];
-  # Substitues not-detected.nix
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_usb_sdmmc" ];

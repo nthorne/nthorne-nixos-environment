@@ -7,25 +7,23 @@ args@{ stable, unstable, lib, ... }:
 {
   imports = [
     (import ./packages/clion args)
-    (import ./packages/insomnia args)
-    (import ./packages/teams args)
-    (import ./packages/slack args)
   ];
 
-  # TODO: Figure out these odd developers' dependencies; are
-  #   they because of a nvim plugin or something?
   home.packages = with stable; [
-    bashdb      # Shell script debugger
-    cppcheck    # Why did I have this one in my system config?
-    ctags       # Why did I have this one in my system config?
+    bashdb
+    cppcheck
+    ctags
     gdb
     glances
+    insomnia
     jetbrains.rider
     kdiff3
     lnav
     p7zip
     rr
+    slack
     slock
+    unstable.teams
     vagrant
     wget
     xdotool

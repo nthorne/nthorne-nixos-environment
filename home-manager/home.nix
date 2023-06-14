@@ -83,8 +83,6 @@ in
     unstable.firefox
     unstable.neovim
 
-    # Under evaluation
-    #unstable.vscode
     gnome.seahorse     # For managing gnome-keyring
     nodejs # Needed for neovim+copilot
     bitwarden
@@ -97,7 +95,7 @@ in
   programs.vscode = {
     enable = true;
 
-    # TODO: Trying to get insiders
+    # Comment out to stop using insiders build
     package = (pkgs.vscode.override{ isInsiders = true; }).overrideAttrs (oldAttrs: rec {
       src = (builtins.fetchTarball {
         url = "https://update.code.visualstudio.com/latest/linux-x64/insider";
@@ -105,9 +103,7 @@ in
       });
       version = "latest";
     });
-    # TODO: See if fhs version allows me to get Copilot Chat etc working.
-    #package = pkgs.vscode.fhs;
-    # TODO: Fill in with extensions..
+    # Extensions can be manages as follows, not sure if I like this..
     #extensions = with pkgs.vscode-extensions; [
     #  github.copilot
     #  vscodevim.vim

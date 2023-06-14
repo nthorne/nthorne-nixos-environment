@@ -4,7 +4,6 @@ let
   # TODO:
   #
   # * Full disk encryption, or is home enough?
-  # * Create nvidia-offload wrappers for teams and slack
   # * Perhaps default display settings, at least when undocked.
   # * Clean up and push this config, together with a skeleton ./private.nix
   # * DisplayLink/evdi might work better in newer kernel versions, *but* evdi is currently broken,
@@ -14,29 +13,14 @@ let
   #     REF: https://github.com/NixOS/nixpkgs/issues/78403
   #     REF: https://github.com/NixOS/nixpkgs/issues/74698
   # * Refactor the home/work scheme to a host based one instead.
-  # * Samba mount for diskmaskinen
-  # * Samba mount for netcleantech.local/dfs
   # * docker0 interface - inet -> 10.10.2.54 (not 172.17.0.1). Not set up; wonder where it got pulled from (daemon.json:{"bip":"10.10.254.1/24"})
   # * Set up VPN (~/.vpn)
   #
   # DOING:
 
-  # Needed for running e.g. slack and teams
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec -a "$0" "$@"
-  '';
   ethernetDevice = "enp0s13f0u4u4";
 in
 {
-  # TODO(flakify): Drop this.
-  #imports =
-  #  [
-  #  ] ++ (if builtins.pathExists ./private.nix then [ ./private.nix ] else []);
-
   # EVALUATION:
 
   # Don't require ethernet to be connected when booting
@@ -96,7 +80,7 @@ in
     nat = {
       enable = true;
       internalInterfaces = ["ve-*"];
-      # TODO: Wired at office.
+      # Wired at office.
       externalInterface = "wlp0s20f3";
     };
 
@@ -121,13 +105,9 @@ in
     # Something, somewhere seems to want python3. Perhaps
     # a zsh plugin or something?
     (python39.withPackages(ps: with ps; [ pip setuptools ]))
-
-    # TODO: Write wrappers for slack and teams
-    nvidia-offload
   ];
 
   boot = {
-    # TODO: uvcvideo should be needed for webcam
     kernelModules = [ "nbd" "uvcvideo" "akvcam" "v4l2loopback" ];
     tmp.useTmpfs = true;
     extraModulePackages = [ config.boot.kernelPackages.v4l2loopback.out ];
