@@ -84,7 +84,7 @@ in
     unstable.neovim
 
     # Under evaluation
-    unstable.vscode
+    #unstable.vscode
     gnome.seahorse     # For managing gnome-keyring
     nodejs # Needed for neovim+copilot
     bitwarden
@@ -93,6 +93,26 @@ in
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+
+  programs.vscode = {
+    enable = true;
+
+    # TODO: Trying to get insiders
+    package = (pkgs.vscode.override{ isInsiders = true; }).overrideAttrs (oldAttrs: rec {
+      src = (builtins.fetchTarball {
+        url = "https://update.code.visualstudio.com/latest/linux-x64/insider";
+        sha256 = "05pmcva2mphphvixkv89n541hkvhwgfbz2bh6xnib8h338swa63r";
+      });
+      version = "latest";
+    });
+    # TODO: See if fhs version allows me to get Copilot Chat etc working.
+    #package = pkgs.vscode.fhs;
+    # TODO: Fill in with extensions..
+    #extensions = with pkgs.vscode-extensions; [
+    #  github.copilot
+    #  vscodevim.vim
+    #];
+  };
 
 
   programs.kitty = {
