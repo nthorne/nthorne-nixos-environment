@@ -71,11 +71,16 @@
 	enable = true;
       };
     };
-    synaptics = {
-      enable = true;
-      accelFactor = "0.1";
-      fingersMap = [ 1 3 2 ];
-      palmDetect = true;
+    # TODO: Try switching this to libinput
+    #synaptics = {
+    #  enable = true;
+    #  accelFactor = "0.1";
+    #  fingersMap = [ 1 3 2 ];
+    #  palmDetect = true;
+    #};
+    # TODO: Check if i need more settings: https://mynixos.com/nixpkgs/options/services.xserver.libinput.touchpad
+    libinput.touchpad = {
+      disableWhileTyping = true;
     };
   };
 

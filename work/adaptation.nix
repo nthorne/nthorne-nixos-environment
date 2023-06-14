@@ -120,7 +120,7 @@ in
 
     # Something, somewhere seems to want python3. Perhaps
     # a zsh plugin or something?
-    (python37.withPackages(ps: with ps; [ pip setuptools ]))
+    (python39.withPackages(ps: with ps; [ pip setuptools ]))
 
     # TODO: Write wrappers for slack and teams
     nvidia-offload
@@ -129,7 +129,7 @@ in
   boot = {
     # TODO: uvcvideo should be needed for webcam
     kernelModules = [ "nbd" "uvcvideo" "akvcam" "v4l2loopback" ];
-    tmpOnTmpfs = true;
+    tmp.useTmpfs = true;
     extraModulePackages = [ config.boot.kernelPackages.v4l2loopback.out ];
   };
 
