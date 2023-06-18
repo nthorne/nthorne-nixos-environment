@@ -13,7 +13,7 @@ in
     # Used in order to get deoplete up and running again, since
     # it requires a neovim python package that is not available
     # through Nix yet :/
-    (python37.withPackages(ps: with ps; [ pip setuptools ]))
+    (python39.withPackages(ps: with ps; [ pip setuptools ]))
   ];
 
 
@@ -25,7 +25,6 @@ in
     # Use the GRUB 2 boot loader.
     grub = {
       enable = true;
-      version = 2;
 
       # Define on which hard drive you want to install Grub.
       device = "/dev/sda"; # or "nodev" for efi only
@@ -49,14 +48,6 @@ in
       enable = true;
       user = "nthorne";
     };
-  };
-
-
-  services.xserver.synaptics = {
-      enable = true;
-      accelFactor = "0.1";
-      fingersMap = [ 1 3 2 ];
-      palmDetect = true;
   };
 
   hardware.opengl.enable = true;
