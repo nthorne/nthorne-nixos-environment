@@ -99,7 +99,7 @@ in
     package = (pkgs.vscode.override{ isInsiders = true; }).overrideAttrs (oldAttrs: rec {
       src = (builtins.fetchTarball {
         url = "https://update.code.visualstudio.com/latest/linux-x64/insider";
-        sha256 = "12742c48sxb3ywvvffn48vinpgl156aq8ijnab11v882x8x4k0hw";
+        sha256 = "05pmcva2mphphvixkv89n541hkvhwgfbz2bh6xnib8h338swa63r";
       });
       version = "latest";
     });
