@@ -1,5 +1,6 @@
 {
   "toaster": {
+    "$schema": "https://lnav.org/schemas/format-v1.schema.json",
     "title": "Toaster log",
     "description": "Toaster log format",
     "timestamp-format": [

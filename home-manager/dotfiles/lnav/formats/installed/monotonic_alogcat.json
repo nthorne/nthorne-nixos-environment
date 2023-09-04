@@ -1,5 +1,6 @@
 {
     "monotonic_alogcat" : {
+        "$schema": "https://lnav.org/schemas/format-v1.schema.json",
         "title" : "Android logcat format, monotonic timestamps",
         "description" : "Log format used by Android's logcat tool",
         "url" : "https://developer.android.com/studio/command-line/logcat",
