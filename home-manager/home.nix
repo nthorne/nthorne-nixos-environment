@@ -86,6 +86,7 @@ in
     gnome.seahorse     # For managing gnome-keyring
     nodejs # Needed for neovim+copilot
     bitwarden
+    emoji-picker
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
