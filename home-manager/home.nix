@@ -87,6 +87,7 @@ in
     nodejs # Needed for neovim+copilot
     bitwarden
     emoji-picker
+    comma
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
@@ -148,4 +149,6 @@ in
       selection_foreground #93a1a1
       '';
   };
+
+  programs.nix-index.enable = true;
 }

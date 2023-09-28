@@ -95,7 +95,14 @@
   system = {
     # The NixOS release to be compatible with for stateful data such as databases.
     stateVersion = "22.05";
+
+    # Fix for getting NIX_PATH to work after having deleted channels
+    extraSystemBuilderCmds = ''
+      ln -sv ${pkgs.path} $out/nixpkgs
+    '';
   };
+
+  nix.nixPath = ["nixpkgs=/run/current-system/nixpkgs"];
 
   # Enable this one when building derivations intented for NixPkgs
   #nix.useSandbox = true;
