@@ -11,7 +11,12 @@ let
 
   system = flake-inputs.system;
   stable = import flake-inputs.nixpkgs {
-    config.allowUnfree = true;
+    config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [
+        "teams-1.5.00.23861"
+      ];
+    };
     system = "${system}";
   };
   unstable = import flake-inputs.unstable {

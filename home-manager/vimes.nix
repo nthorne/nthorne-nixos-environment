@@ -23,7 +23,7 @@ args@{ stable, unstable, lib, ... }:
     rr
     slack
     slock
-    unstable.teams
+    stable.teams
     vagrant
     wget
     xdotool
