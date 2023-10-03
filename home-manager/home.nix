@@ -93,6 +93,7 @@ in
     bitwarden
     emoji-picker
     comma
+    gh
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
