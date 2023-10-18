@@ -1,9 +1,5 @@
 { stable, ... }:
 let
-  splitter = stable.writeShellScriptBin "splitter" (builtins.readFile ./splitter);
-
-  aosp = stable.writeShellScriptBin "aosp" (builtins.readFile ./aosp);
-
   ntvim = with stable; stdenv.mkDerivation {
     name = "ntvim";
     version = "1.0";
@@ -26,9 +22,7 @@ EOF
 in
 {
   home.packages = [
-    aosp
     ntvim
-    splitter
 
     (stable.callPackage ./ddoc {stable=stable;})
   ];

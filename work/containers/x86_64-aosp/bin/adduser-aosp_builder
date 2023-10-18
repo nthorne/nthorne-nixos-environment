@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bash
-PUID=${PUID:-911}
-PGID=${PGID:-911}
-groupmod -o -g "$PGID" aosp_builder
-usermod -o -u "$PUID" aosp_builder
-chown aosp_builder:aosp_builder /home/aosp_builder

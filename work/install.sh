@@ -43,9 +43,6 @@ echo "Installing scripts.."
 mkdir $HOME/bin
 ln -s ${PWD}/scripts/*.sh ${HOME}/bin/
 ln -s ${PWD}/scripts/*.xdo ${HOME}/bin/
-mkdir p ${HOME}/work/aosp_bin
-ln -s ${PWD}/aosp_scripts/*.sg ${HOME}/work/aosp_bin/
-ln -s ${PWD}/scripts/*.xdo ${HOME}/aosp_bin/
 
 test -d ${HOME}/.ssh && error "${HOME}/.ssh exists. Bailing out."
 echo "Installing dotfiles"
