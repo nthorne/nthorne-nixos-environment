@@ -16,7 +16,6 @@ args@{ stable, unstable, lib, ... }:
     gdb
     glances
     insomnia
-    jetbrains.rider
     kdiff3
     lnav
     p7zip
