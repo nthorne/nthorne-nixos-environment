@@ -111,4 +111,7 @@
 
   # For VS Code
   services.gnome.gnome-keyring.enable = true;
+
+  # This one is caused by bitwarden 😒 (nix-store -q --tree /run/current-system)
+  nixpkgs.config.permittedInsecurePackages = [ "electron-24.8.6" ];
 }

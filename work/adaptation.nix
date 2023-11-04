@@ -202,7 +202,4 @@ in
       };
     };
   };
-
-  # TODO: Maybe I should drop whoever pulls this one in, instead.. 🤷
-  nixpkgs.config.permittedInsecurePackages = [ "electron-24.8.6" ];
 }
