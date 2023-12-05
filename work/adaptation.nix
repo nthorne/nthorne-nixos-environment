@@ -102,7 +102,7 @@ in
 
     # Something, somewhere seems to want python3. Perhaps
     # a zsh plugin or something?
-    (python39.withPackages(ps: with ps; [ pip setuptools ]))
+    (python310.withPackages(ps: with ps; [ pip setuptools ]))
   ];
 
   boot = {
@@ -159,7 +159,7 @@ in
   security.sudo.extraRules = [
     {
       users = [ "nthorne" ];
-      commands = [ {command = "${pkgs.slock}/bin/slock" ; options = [ "NOPASSWD" ]; } ] ;
+      commands = [ {command = "/etc/profiles/per-user/nthorne/bin/slock" ; options = [ "NOPASSWD" ]; } ] ;
     }
   ];
 
@@ -187,6 +187,7 @@ in
       experimental-features = nix-command flakes
       '';
 
+  # TODO: This does not seem to work now. Why?
   # VPN services, start with `systemctl start openvpn-<CONFIG-NAME>-.service`
   # Full paths here is perhaps not too nice, but 🤷
   services = {

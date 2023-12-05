@@ -13,9 +13,6 @@ let
   stable = import flake-inputs.nixpkgs {
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "teams-1.5.00.23861"
-      ];
     };
     system = "${system}";
   };
