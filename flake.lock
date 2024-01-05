@@ -72,11 +72,11 @@
     "nthorne-zsh": {
       "flake": false,
       "locked": {
-        "lastModified": 1685345717,
-        "narHash": "sha256-Ma5wGy+NYE12YNhVIyaey6yQ1g72qv4QY110gxIwe/A=",
+        "lastModified": 1704461984,
+        "narHash": "sha256-OXbztsoxB4TeJpg7MzuzQhzY+Mdxy4nrM5ebZp6+QtI=",
         "owner": "nthorne",
         "repo": "nthorne-zsh-environment",
-        "rev": "239e3209a1ab3dd8a64218900d16b92ec5753c33",
+        "rev": "3e57f6306282125a5d5ba94ecd4c7f2337b03297",
         "type": "github"
       },
       "original": {
