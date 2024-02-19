@@ -91,6 +91,7 @@ in
     emoji-picker
     comma
     gh
+    ripgrep # needed by obsidian.nvim
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
