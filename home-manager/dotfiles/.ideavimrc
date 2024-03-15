@@ -22,7 +22,8 @@ set noerrorbells
 " IdeaVim specific settings
 set ideajoin
 set ideastatusicon=gray
-set ideastrictmode
+" Is this the cause for keybindings not working properly?
+" set ideastrictmode
 
 """
 """ plugins {{{
