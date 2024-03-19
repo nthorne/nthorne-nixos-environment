@@ -22,7 +22,6 @@ args@{ stable, unstable, lib, ... }:
     rr
     slack
     slock
-    vagrant
     wget
     xdotool
     xorg.xbacklight

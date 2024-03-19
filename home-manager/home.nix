@@ -66,16 +66,11 @@ in
     gparted
     htop
     hyperfine
-    irssi
-    mosh
-    niv
     nvd
     pavucontrol
-    qalculate-gtk
     ranger
     shellcheck
     silver-searcher
-    tldr
     tmux
     unstable.todoist
     tree

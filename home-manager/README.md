@@ -20,9 +20,10 @@ To build and install the home environment:
 
 # Updating
 
-    $ niv update
-    $ home-manager switch
+    $ nix flake update-lock-file .#
+    $ _ nixos-rebuild build --flake .#
+    $ _ nixos-rebuild switch --flake .#
 
 To see what an upgrade will bring in
 
-    $ nix run nixpkgs.nvd -c nvd diff /nix/var/nix/profiles/per-user/<USER>/home-manager $(home-manager build)
+    $ nvd diff nix/var/nix/profiles/system result
