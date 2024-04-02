@@ -93,25 +93,6 @@ in
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
-  programs.vscode = {
-    enable = true;
-
-    # Comment out to stop using insiders build
-    package = (pkgs.vscode.override{ isInsiders = true; }).overrideAttrs (oldAttrs: rec {
-      src = (builtins.fetchTarball {
-        url = "https://update.code.visualstudio.com/latest/linux-x64/insider";
-        sha256 = "05pmcva2mphphvixkv89n541hkvhwgfbz2bh6xnib8h338swa63r";
-      });
-      version = "latest";
-    });
-    # Extensions can be manages as follows, not sure if I like this..
-    #extensions = with pkgs.vscode-extensions; [
-    #  github.copilot
-    #  vscodevim.vim
-    #];
-  };
-
-
   programs.kitty = {
     enable = true;
 

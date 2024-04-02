@@ -112,7 +112,6 @@
 
   nix.settings.auto-optimise-store = true;
 
-  # For VS Code
   services.gnome.gnome-keyring.enable = true;
 
   # Needed for e.g. privleged operations in Clion
