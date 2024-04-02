@@ -25,8 +25,5 @@ args@{ stable, unstable, lib, ... }:
     wget
     xdotool
     xorg.xbacklight
-
-    # Evaluation
-    rnix-lsp
   ];
 }
