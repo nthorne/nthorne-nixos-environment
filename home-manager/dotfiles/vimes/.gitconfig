@@ -37,6 +37,7 @@
         forkdiff = !bash -c 'git diff $(git merge-base "$1" "$2") "$2" "${@: 3}" ' -
         bs = for-each-ref --sort=-committerdate refs/heads/
 	graphall = !bash -c 'git log --graph --pretty=oneline --abbrev-commit --decorate $(git rev-list -g --all)'
+        hidden = !git ls-files -v | grep \"^[a-z]\"
 [core]
 	excludesfile = ~/.gitignore-global
 [pack]
