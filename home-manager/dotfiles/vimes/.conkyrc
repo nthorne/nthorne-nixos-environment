@@ -7,5 +7,5 @@ conky.config = {
 };
 
 conky.text = [[
-${time %Y-%m-%d} ${time %R} | ESSID:${exec iwconfig wlp0s20f3 | sed -ne "s/.*ESSID:\"\([0-9A-Za-z]*\).*\".*/\1/p"} | BATTERY:$battery
+${time %Y-%m-%d} ${time %R} | ESSID:${exec iwconfig wlp0s20f3 | sed -ne "s/.*ESSID:\"\([0-9A-Za-z]*\).*\".*/\1/p"} ${if_up tun0}[VPN]${endif} | BATTERY:$battery
 ]];
