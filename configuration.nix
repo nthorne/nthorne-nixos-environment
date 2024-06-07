@@ -58,24 +58,27 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    layout = "se";
-    # Don't use xterm as a desktop manager..
-    desktopManager.xterm.enable = false;
-    windowManager.xmonad = {
+  services = {
+    xserver = {
       enable = true;
-      enableContribAndExtras = true;
-    };
-    displayManager = {
-      defaultSession = "none+xmonad";
-      lightdm = {
-	enable = true;
+      xkb.layout = "se";
+      # Don't use xterm as a desktop manager..
+      desktopManager.xterm.enable = false;
+      displayManager = {
+        lightdm = {
+          enable = true;
+        };
+      };
+      windowManager.xmonad = {
+        enable = true;
+        enableContribAndExtras = true;
       };
     };
     libinput.touchpad = {
       disableWhileTyping = true;
+    };
+    displayManager = {
+      defaultSession = "none+xmonad";
     };
   };
 

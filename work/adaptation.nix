@@ -137,21 +137,23 @@ in
 
   # Not sure about this one
   hardware.nvidia.modesetting.enable = true;
-  # Worked decently without the nvidia driver
-  services.xserver = {
-    videoDrivers = [ "nvidia" "intel" "modesetting" "displaylink" ];
-
+  services = {
     displayManager = {
       autoLogin = {
         enable = false;
         user = "nthorne";
       };
-
-      # https://linuxreviews.org/HOWTO_turn_Screensavers_and_Monitor_Power_Saving_on_and_off
-      sessionCommands = ''
-        xset s off
-        xset -dpms
-        '';
+    };
+    xserver = {
+      displayManager = {
+        # https://linuxreviews.org/HOWTO_turn_Screensavers_and_Monitor_Power_Saving_on_and_off
+        sessionCommands = ''
+          xset s off
+          xset -dpms
+          '';
+      };
+      # Worked decently without the nvidia driver
+      videoDrivers = [ "nvidia" "intel" "modesetting" "displaylink" ];
     };
   };
 
