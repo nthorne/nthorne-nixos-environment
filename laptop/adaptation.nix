@@ -39,15 +39,9 @@ in
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  services.xserver.displayManager = {
-    sessionCommands = ''
-      dropbox &
-    '';
-
-    autoLogin = {
+  services.displayManager.autoLogin = {
       enable = true;
       user = "nthorne";
-    };
   };
 
   hardware.opengl.enable = true;
