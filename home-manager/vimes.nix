@@ -25,6 +25,6 @@ args@{ stable, unstable, lib, ... }:
     wget
     xdotool
     xorg.xbacklight
-    chromium
+    ungoogled-chromium
   ];
 }
