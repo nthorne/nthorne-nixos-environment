@@ -180,8 +180,11 @@ in
   hardware.opengl.enable = true;
 
 
-  # Allow ssh forwarding
-  programs.ssh.forwardX11 = true;
+  # Needed for cargo to be able to pull from private Github repositories
+  programs.ssh = {
+    forwardX11 = true;
+    startAgent = true;
+  };
 
   nix.extraOptions = ''
       keep-outputs = true
