@@ -186,6 +186,11 @@ in
     startAgent = true;
   };
 
+   services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  }; 
+
   nix.extraOptions = ''
       keep-outputs = true
       keep-derivations = true
