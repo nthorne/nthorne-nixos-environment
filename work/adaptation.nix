@@ -189,6 +189,9 @@ in
    services.ollama = {
     enable = true;
     acceleration = "cuda";
+    environmentVariables = {
+      OLLAMA_ORIGINS="app://obsidian.md*";
+    };
   }; 
 
   nix.extraOptions = ''
