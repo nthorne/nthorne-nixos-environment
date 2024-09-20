@@ -191,6 +191,7 @@ in
     acceleration = "cuda";
     environmentVariables = {
       OLLAMA_ORIGINS="app://obsidian.md*";
+      CUDA_VISIBLE_DEVICES="0,1";
     };
   }; 
 
