@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, unstable, lib, ... }:
 
 let
   # TODO:
@@ -193,6 +193,7 @@ in
       OLLAMA_ORIGINS="app://obsidian.md*";
       CUDA_VISIBLE_DEVICES="0,1";
     };
+    package = unstable.ollama;
   }; 
 
   nix.extraOptions = ''

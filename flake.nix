@@ -33,12 +33,21 @@
           nixpkgs-unstable.flake = unstable;
     };};};
 
+    pkgs-unstable = import unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
+
     system = "x86_64-linux";
 
     vimes-modules = [
       ./configuration.nix
       ./work/hardware-config/hardware-config-generated.nix
-      ./work/adaptation.nix
+      ./work/adaptation.nix {
+        _module.args = {
+          unstable = pkgs-unstable;
+        };
+      }
 
       (pin-registries)
 
