@@ -26,5 +26,6 @@ args@{ stable, unstable, lib, ... }:
     xdotool
     xorg.xbacklight
     ungoogled-chromium
+    nvtopPackages.full
   ];
 }
