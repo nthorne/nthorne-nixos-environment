@@ -30,5 +30,6 @@ args@{
     xorg.xbacklight
     ungoogled-chromium
     nvtopPackages.full
+    jq
   ];
 }
