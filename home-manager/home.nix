@@ -97,6 +97,7 @@ in
     comma
     gh
     ripgrep # needed by obsidian.nvim
+    just
   ];
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
