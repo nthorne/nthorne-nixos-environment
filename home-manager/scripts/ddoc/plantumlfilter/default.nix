@@ -15,19 +15,22 @@ let
     buildInputs = [ ];
     propagatedBuildInputs = [ ];
   };
-  pythonWrapper = (stable.python27.withPackages (ps: [pandocfilters]));
+  pythonWrapper = (stable.python27.withPackages (ps: [ pandocfilters ]));
 in
 stdenv.mkDerivation {
   name = "plantumlfilter";
 
   src = remote;
 
-  buildInputs = [ pandocfilters stable.plantuml ];
+  buildInputs = [
+    pandocfilters
+    stable.plantuml
+  ];
 
   buildCommand = ''
-  mkdir -p $out/bin
-  echo "#!${pythonWrapper}/bin/python" > $out/bin/plantuml.py
-  sed 's|"java", "-jar", "plantuml.jar"|"${plantuml}/bin/plantuml"|' $src/examples/plantuml.py | sed 's|, latex="eps"||' >> $out/bin/plantuml.py
-  chmod +x $out/bin/plantuml.py
+    mkdir -p $out/bin
+    echo "#!${pythonWrapper}/bin/python" > $out/bin/plantuml.py
+    sed 's|"java", "-jar", "plantuml.jar"|"${plantuml}/bin/plantuml"|' $src/examples/plantuml.py | sed 's|, latex="eps"||' >> $out/bin/plantuml.py
+    chmod +x $out/bin/plantuml.py
   '';
 }

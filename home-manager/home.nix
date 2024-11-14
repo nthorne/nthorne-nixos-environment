@@ -1,13 +1,18 @@
 # This derivation should contain configurations that are common
 # to all profiles.
-args@{ pkgs, lib, flake-inputs, ... }:
+args@{
+  pkgs,
+  lib,
+  flake-inputs,
+  ...
+}:
 let
   hostname = flake-inputs.hostname;
 
   hostCollection = path: (path + ("/" + hostname));
   hostDotfiles = (hostCollection ./dotfiles);
   hostPackages = (hostCollection ./packages);
-  hostScripts =  (hostCollection ./scripts);
+  hostScripts = (hostCollection ./scripts);
 
   system = flake-inputs.system;
   stable = import flake-inputs.nixpkgs {
@@ -22,21 +27,26 @@ let
   };
 in
 {
-  imports = [
-    ./dotfiles/zsh.nix
+  imports =
+    [
+      ./dotfiles/zsh.nix
 
-    # Automatically include <hostname>.nix for host specific configurations,
-    # supplying the niv stable and unstable sources as arguments
-    (
-      import (./. + ("/" + hostname + ".nix")) (args // {stable = stable; unstable = unstable;})
-    )
+      # Automatically include <hostname>.nix for host specific configurations,
+      # supplying the niv stable and unstable sources as arguments
+      (import (./. + ("/" + hostname + ".nix")) (
+        args
+        // {
+          stable = stable;
+          unstable = unstable;
+        }
+      ))
 
-    # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
-    #    here to keep the host specific config files short
-  ] ++ (if builtins.pathExists hostDotfiles then [ hostDotfiles ] else [])
-    ++ (if builtins.pathExists hostPackages then [ hostPackages ] else [])
-    ++ (if builtins.pathExists hostScripts then [ hostScripts ] else []);
-    
+      # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
+      #    here to keep the host specific config files short
+    ]
+    ++ (if builtins.pathExists hostDotfiles then [ hostDotfiles ] else [ ])
+    ++ (if builtins.pathExists hostPackages then [ hostPackages ] else [ ])
+    ++ (if builtins.pathExists hostScripts then [ hostScripts ] else [ ]);
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -80,7 +90,7 @@ in
     unstable.firefox
     unstable.neovim
 
-    gnome.seahorse     # For managing gnome-keyring
+    gnome.seahorse # For managing gnome-keyring
     nodejs # Needed for neovim+copilot
     bitwarden
     emoji-picker
@@ -127,7 +137,7 @@ in
       color7 #e9e2cb
       color15 #fcf4dc
       selection_foreground #93a1a1
-      '';
+    '';
   };
 
   programs.nix-index.enable = true;

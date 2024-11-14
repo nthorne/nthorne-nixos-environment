@@ -1,4 +1,10 @@
-{ config, pkgs, unstable, lib, ... }:
+{
+  config,
+  pkgs,
+  unstable,
+  lib,
+  ...
+}:
 
 let
   # TODO:
@@ -23,8 +29,8 @@ in
 
   # Don't require ethernet to be connected when booting
   systemd.services = {
-    "network-link-${ethernetDevice}".wantedBy = lib.mkForce [];
-    "network-addresses-${ethernetDevice}".wantedBy = lib.mkForce [];
+    "network-link-${ethernetDevice}".wantedBy = lib.mkForce [ ];
+    "network-addresses-${ethernetDevice}".wantedBy = lib.mkForce [ ];
   };
 
   boot.kernel.sysctl."kernel.ftrace_enabled" = true;
@@ -62,7 +68,6 @@ in
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -77,7 +82,7 @@ in
 
     nat = {
       enable = true;
-      internalInterfaces = ["ve-*"];
+      internalInterfaces = [ "ve-*" ];
       # Wired at office.
       externalInterface = "wlp0s20f3";
     };
@@ -102,11 +107,21 @@ in
 
     # Something, somewhere seems to want python3. Perhaps
     # a zsh plugin or something?
-    (python310.withPackages(ps: with ps; [ pip setuptools ]))
+    (python310.withPackages (
+      ps: with ps; [
+        pip
+        setuptools
+      ]
+    ))
   ];
 
   boot = {
-    kernelModules = [ "nbd" "uvcvideo" "akvcam" "v4l2loopback" ];
+    kernelModules = [
+      "nbd"
+      "uvcvideo"
+      "akvcam"
+      "v4l2loopback"
+    ];
     tmp.useTmpfs = true;
     extraModulePackages = [ config.boot.kernelPackages.v4l2loopback.out ];
   };
@@ -120,7 +135,13 @@ in
   '';
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.nthorne.extraGroups =[ "wheel" "docker" "dialout" "disk" "audio" ];
+  users.extraUsers.nthorne.extraGroups = [
+    "wheel"
+    "docker"
+    "dialout"
+    "disk"
+    "audio"
+  ];
   users.extraGroups.networkmanager.members = [ "nthorne" ];
 
   hardware.nvidia.prime = {
@@ -150,10 +171,15 @@ in
         sessionCommands = ''
           xset s off
           xset -dpms
-          '';
+        '';
       };
       # Worked decently without the nvidia driver
-      videoDrivers = [ "nvidia" "intel" "modesetting" "displaylink" ];
+      videoDrivers = [
+        "nvidia"
+        "intel"
+        "modesetting"
+        "displaylink"
+      ];
     };
   };
 
@@ -161,24 +187,28 @@ in
   security.sudo.extraRules = [
     {
       users = [ "nthorne" ];
-      commands = [ {command = "/etc/profiles/per-user/nthorne/bin/slock" ; options = [ "NOPASSWD" ]; } ] ;
+      commands = [
+        {
+          command = "/etc/profiles/per-user/nthorne/bin/slock";
+          options = [ "NOPASSWD" ];
+        }
+      ];
     }
   ];
 
   # https://discourse.nixos.org/t/external-monitors-not-working-dell-xps/1799/7
   # dropped uvcvideo from this list, since I do want a webcam..
   boot.blacklistedKernelModules = [
-        "nouveau"
-        "rivafb"
-        "nvidiafb"
-        "rivatv"
-        "nv"
-      ];
+    "nouveau"
+    "rivafb"
+    "nvidiafb"
+    "rivatv"
+    "nv"
+  ];
   # ^^
 
   # Unless this one, (and no nvidia driver), kitty refuses to start.
   hardware.opengl.enable = true;
-
 
   # Needed for cargo to be able to pull from private Github repositories
   programs.ssh = {
@@ -186,21 +216,21 @@ in
     startAgent = true;
   };
 
-   services.ollama = {
+  services.ollama = {
     enable = true;
     acceleration = "cuda";
     environmentVariables = {
-      OLLAMA_ORIGINS="app://obsidian.md*";
-      CUDA_VISIBLE_DEVICES="0,1";
+      OLLAMA_ORIGINS = "app://obsidian.md*";
+      CUDA_VISIBLE_DEVICES = "0,1";
     };
     package = unstable.ollama;
-  }; 
+  };
 
   nix.extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
-      experimental-features = nix-command flakes
-      '';
+    keep-outputs = true
+    keep-derivations = true
+    experimental-features = nix-command flakes
+  '';
 
   # TODO: This does not seem to work now. Why?
   # VPN services, start with `systemctl start openvpn-<CONFIG-NAME>-.service`

@@ -5,21 +5,22 @@ let
   private = /etc/nixos/private.nix;
 in
 {
-  imports =
-    [
-    ] ++ (if builtins.pathExists private then [ private ] else []);
+  imports = [ ] ++ (if builtins.pathExists private then [ private ] else [ ]);
 
   environment.systemPackages = with pkgs; [
     # Used in order to get deoplete up and running again, since
     # it requires a neovim python package that is not available
     # through Nix yet :/
-    (python310.withPackages(ps: with ps; [ pip setuptools ]))
+    (python310.withPackages (
+      ps: with ps; [
+        pip
+        setuptools
+      ]
+    ))
   ];
 
-
-
   networking.hostName = "nixlaptop"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
 
   boot.loader = {
     # Use the GRUB 2 boot loader.
@@ -40,8 +41,8 @@ in
   services.openssh.enable = true;
 
   services.displayManager.autoLogin = {
-      enable = true;
-      user = "nthorne";
+    enable = true;
+    user = "nthorne";
   };
 
   hardware.opengl.enable = true;
@@ -54,13 +55,18 @@ in
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
-  users.extraUsers.nthorne.extraGroups = [ "wheel" "audio" "docker" "dialout" ];
+  users.extraUsers.nthorne.extraGroups = [
+    "wheel"
+    "audio"
+    "docker"
+    "dialout"
+  ];
 
   virtualisation.docker.enable = true;
 
   nix.extraOptions = ''
-      experimental-features = nix-command flakes
-      '';
+    experimental-features = nix-command flakes
+  '';
 
   programs.steam = {
     enable = true;
@@ -72,8 +78,7 @@ in
   services.ollama = {
     enable = true;
     environmentVariables = {
-      OLLAMA_ORIGINS="app://obsidian.md*";
+      OLLAMA_ORIGINS = "app://obsidian.md*";
     };
-  }; 
+  };
 }
-

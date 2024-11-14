@@ -5,10 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    /etc/nixos/hardware-configuration.nix
+  ];
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -27,7 +27,7 @@
     options = [ "rw" ];
   };
 
-   networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Select internationalisation properties.
@@ -38,7 +38,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Set your time zone.
-   time.timeZone = "Europe/Stockholm";
+  time.timeZone = "Europe/Stockholm";
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -52,7 +52,6 @@
   # List services that you want to enable:
 
   services.nixosManual.showManual = true;
-
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
@@ -72,8 +71,8 @@
     displayManager = {
       slim = {
         enable = true;
-	autoLogin = true;
-	defaultUser = "nthorne";
+        autoLogin = true;
+        defaultUser = "nthorne";
       };
     };
   };

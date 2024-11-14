@@ -1,4 +1,4 @@
-{flake-inputs, ...}:
+{ flake-inputs, ... }:
 {
   home.file = {
     ".zsh".source = "${flake-inputs.nthorne-zsh}";
@@ -7,4 +7,3 @@
     ".zshenv".source = "${flake-inputs.nthorne-zsh}/.zshenv";
   };
 }
-

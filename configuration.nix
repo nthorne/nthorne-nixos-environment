@@ -25,14 +25,9 @@
     polkit_gnome
   ];
 
-  fonts.packages = with pkgs; [
-    jetbrains-mono
-  ];
+  fonts.packages = with pkgs; [ jetbrains-mono ];
 
-  users.users.root.packages = with pkgs;
-  [
-    vim
-  ];
+  users.users.root.packages = with pkgs; [ vim ];
 
   # Select internationalisation properties.
   console = {
@@ -82,7 +77,6 @@
     };
   };
 
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.nthorne = {
     isNormalUser = true;
@@ -108,7 +102,7 @@
     '';
   };
 
-  nix.nixPath = ["nixpkgs=/run/current-system/nixpkgs"];
+  nix.nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
 
   # Enable this one when building derivations intented for NixPkgs
   #nix.useSandbox = true;
@@ -126,15 +120,15 @@
       wants = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
       serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-          Restart = "on-failure";
-          RestartSec = 1;
-          TimeoutStopSec = 10;
-        };
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
     };
     extraConfig = ''
       DefaultTimeoutStopSec=10s
-   '';
-};
+    '';
+  };
 }

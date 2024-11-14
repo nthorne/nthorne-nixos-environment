@@ -3,4 +3,3 @@
     ".config/lnav/formats/installed".source = ./../lnav/formats/installed;
   };
 }
-
