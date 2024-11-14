@@ -1,5 +1,10 @@
+default: build diff
+
 build:
   sudo nixos-rebuild build --flake .#  
+
+diff:
+  nvd diff /nix/var/nix/profiles/system result
 
 switch:
   sudo nixos-rebuild switch --flake .# && rm result 
