@@ -141,4 +141,6 @@ in
   };
 
   programs.nix-index.enable = true;
+
+  services.copyq.enable = true;
 }
