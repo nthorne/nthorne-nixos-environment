@@ -144,4 +144,9 @@ in
   programs.nix-index.enable = true;
 
   services.copyq.enable = true;
+
+  programs.bat = {
+    enable = true;
+    config.theme = "gruvbox-dark";
+  };
 }
