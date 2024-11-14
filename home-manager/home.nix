@@ -98,7 +98,14 @@ in
     gh
     ripgrep # needed by obsidian.nvim
     just
+
+    unstable.obsidian
+    unstable.git-crypt
   ];
+
+  sessionVariables = {
+    OLLAMA_ORIGINS="app://obsidian.md*"
+  }
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
   programs.direnv.enable = true;
