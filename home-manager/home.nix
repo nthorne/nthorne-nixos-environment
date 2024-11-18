@@ -103,9 +103,9 @@ in
     unstable.git-crypt
   ];
 
-  sessionVariables = {
-    OLLAMA_ORIGINS="app://obsidian.md*"
-  }
+  home.sessionVariables = {
+    OLLAMA_ORIGINS="app://obsidian.md*";
+  };
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
   programs.direnv.enable = true;
