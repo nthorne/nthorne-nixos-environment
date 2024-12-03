@@ -90,7 +90,7 @@ in
     unstable.firefox
     unstable.neovim
 
-    gnome.seahorse # For managing gnome-keyring
+    seahorse # For managing gnome-keyring
     nodejs # Needed for neovim+copilot
     bitwarden
     emoji-picker

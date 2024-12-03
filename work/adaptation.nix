@@ -61,9 +61,10 @@ in
   #  enable = true;
   #  #packages = [ pkgs.tiscamera ];
   #};
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  nixpkgs.config.pulseaudio = true;
+  # TODO: I Try to uncomment these, but things migh break 👆 
+  #hardware.pulseaudio.enable = true;
+  #hardware.pulseaudio.support32Bit = true;
+  #nixpkgs.config.pulseaudio = true;
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -144,7 +145,10 @@ in
   ];
   users.extraGroups.networkmanager.members = [ "nthorne" ];
 
-  hardware.nvidia.prime = {
+  hardware.nvidia = {
+    # Keep using the closed source, proprietary driver.
+    open = false;
+    prime = {
     offload.enable = true;
 
     # Bus ID of the Intel GPU. VGA controller found with lspci
@@ -153,6 +157,7 @@ in
     # Bus ID of the NVIDIA GPU. 3D controller found with lspci
     nvidiaBusId = "PCI:1:0:0";
   };
+};
 
   # ^^
 
@@ -208,7 +213,7 @@ in
   # ^^
 
   # Unless this one, (and no nvidia driver), kitty refuses to start.
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # Needed for cargo to be able to pull from private Github repositories
   programs.ssh = {

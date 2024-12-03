@@ -13,7 +13,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    alsaUtils
+    alsa-utils
     dmenu
     dzen2
     git
@@ -42,7 +42,8 @@
   # List services that you want to enable:
   documentation.nixos.enable = true;
 
-  sound.enable = true;
+  # TODO: Do I need to replace this with anything?
+  #sound.enable = true;
 
   # Enable the OpenSSH daemon.
   #services.openssh.enable = true;
