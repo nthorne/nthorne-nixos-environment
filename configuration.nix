@@ -14,8 +14,6 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     alsa-utils
-    dmenu
-    dzen2
     git
     terminus_font
     unzip
@@ -42,9 +40,6 @@
   # List services that you want to enable:
   documentation.nixos.enable = true;
 
-  # TODO: Do I need to replace this with anything?
-  #sound.enable = true;
-
   # Enable the OpenSSH daemon.
   #services.openssh.enable = true;
 
@@ -54,28 +49,18 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  services = {
-    xserver = {
-      enable = true;
-      xkb.layout = "se";
-      # Don't use xterm as a desktop manager..
-      desktopManager.xterm.enable = false;
-      displayManager = {
-        lightdm = {
-          enable = true;
-        };
-      };
-      windowManager.xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --asterisks --remember --remember-user-session --sessions ${pkgs.hyprland}/bin/Hyprland";
       };
     };
-    libinput.touchpad = {
-      disableWhileTyping = true;
-    };
-    displayManager = {
-      defaultSession = "none+xmonad";
-    };
+  };
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

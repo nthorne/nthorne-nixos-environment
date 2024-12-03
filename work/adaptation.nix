@@ -149,43 +149,27 @@ in
     # Keep using the closed source, proprietary driver.
     open = false;
     prime = {
-    offload.enable = true;
+      offload.enable = true;
 
-    # Bus ID of the Intel GPU. VGA controller found with lspci
-    intelBusId = "PCI:0:2:0";
+      # Bus ID of the Intel GPU. VGA controller found with lspci
+      intelBusId = "PCI:0:2:0";
 
-    # Bus ID of the NVIDIA GPU. 3D controller found with lspci
-    nvidiaBusId = "PCI:1:0:0";
+      # Bus ID of the NVIDIA GPU. 3D controller found with lspci
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
-};
 
   # ^^
 
   # Not sure about this one
   hardware.nvidia.modesetting.enable = true;
   services = {
-    displayManager = {
-      autoLogin = {
-        enable = false;
-        user = "nthorne";
-      };
-    };
-    xserver = {
-      displayManager = {
-        # https://linuxreviews.org/HOWTO_turn_Screensavers_and_Monitor_Power_Saving_on_and_off
-        sessionCommands = ''
-          xset s off
-          xset -dpms
-        '';
-      };
-      # Worked decently without the nvidia driver
-      videoDrivers = [
-        "nvidia"
-        "intel"
-        "modesetting"
-        "displaylink"
-      ];
-    };
+    xserver.videoDrivers = [
+      "nvidia"
+      "intel"
+      "modesetting"
+      "displaylink"
+    ];
   };
 
   # Skip password for slock..
@@ -236,21 +220,4 @@ in
     keep-derivations = true
     experimental-features = nix-command flakes
   '';
-
-  # TODO: This does not seem to work now. Why?
-  # VPN services, start with `systemctl start openvpn-<CONFIG-NAME>-.service`
-  # Full paths here is perhaps not too nice, but 🤷
-  services = {
-    openvpn.servers = {
-      office = {
-        config = ''
-          config /home/nthorne/.vpn/vpnconfig_cert.ovpn
-          cert /home/nthorne/.vpn/niklas.pem
-          key /home/nthorne/.vpn/niklas.pem
-        '';
-        autoStart = false;
-        updateResolvConf = true;
-      };
-    };
-  };
 }

@@ -14,10 +14,6 @@
       url = "github:nthorne/nthorne-tmux-environment";
       flake = false;
     };
-    nthorne-xmonad = {
-      url = "github:nthorne/nthorne-xmonad-environment";
-      flake = false;
-    };
     nthorne-zsh = {
       url = "github:nthorne/nthorne-zsh-environment";
       flake = false;
