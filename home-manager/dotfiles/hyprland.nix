@@ -201,7 +201,7 @@ device {
 # See https://wiki.hyprland.org/Configuring/Keywords/
 $mainMod = ALT
 
-bind = $mainMod, C, killactive,
+bind = $mainMod SHIFT, C, killactive,
 bind = $mainMod SHIFT, Q, exit
 
 bind = $mainMod SHIFT, RETURN, exec, $terminal
@@ -281,4 +281,4 @@ windowrulev2 = suppressevent maximize, class:.*
 windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
     '';
   };
-}
+
