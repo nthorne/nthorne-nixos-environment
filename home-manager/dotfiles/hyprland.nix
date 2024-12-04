@@ -22,7 +22,7 @@ monitor=DP-8,2560x1440@59.95,0x0, auto
 # Set programs that you use
 $terminal = kitty
 # $fileManager = dolphin
-$menu = wofi --show drun
+$menu = rofi -show drun
 $lock = hyprlock
 
 
@@ -281,4 +281,4 @@ windowrulev2 = suppressevent maximize, class:.*
 windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
     '';
   };
-
+}

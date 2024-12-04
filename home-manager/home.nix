@@ -106,7 +106,6 @@ in
     unstable.git-crypt
 
     # For hyprland
-    wofi
     waybar
     wl-clipboard
   ];
@@ -126,5 +125,10 @@ in
   programs.bat = {
     enable = true;
     config.theme = "gruvbox-dark";
+  };
+
+  programs.rofi = {
+    enable = true;
+    theme = "gruvbox-dark";
   };
 }
