@@ -8,8 +8,10 @@
 ################
 
 # See https://wiki.hyprland.org/Configuring/Monitors/
-monitor=,preferred,auto,auto
-
+#monitor=,preferred,auto,auto
+monitor=eDP-1,3840x2400@59.99,5120x0, auto
+monitor=DP-6,2560x1440@59.95,2560x0, auto
+monitor=DP-8,2560x1440@59.95,0x0, auto
 
 ###################
 ### MY PROGRAMS ###
