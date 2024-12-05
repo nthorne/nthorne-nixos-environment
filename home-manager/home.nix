@@ -2,7 +2,6 @@
 # to all profiles.
 args@{
   pkgs,
-  lib,
   flake-inputs,
   ...
 }:
@@ -30,6 +29,10 @@ in
   imports =
     [
       ./dotfiles/zsh.nix
+      ./dotfiles/waybar.nix
+      ./dotfiles/kitty.nix
+      ./dotfiles/hyprlock.nix
+      ./dotfiles/hyprland.nix
 
       # Automatically include <hostname>.nix for host specific configurations,
       # supplying the niv stable and unstable sources as arguments
@@ -67,8 +70,6 @@ in
   home.stateVersion = "23.05";
 
   home.packages = with pkgs; [
-    autorandr
-    conky
     evince
     fasd
     fd
@@ -90,7 +91,7 @@ in
     unstable.firefox
     unstable.neovim
 
-    gnome.seahorse # For managing gnome-keyring
+    seahorse # For managing gnome-keyring
     nodejs # Needed for neovim+copilot
     bitwarden
     emoji-picker
@@ -101,6 +102,10 @@ in
 
     unstable.obsidian
     unstable.git-crypt
+
+    # For hyprland
+    waybar
+    wl-clipboard
   ];
 
   home.sessionVariables = {
@@ -111,43 +116,6 @@ in
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
-  programs.kitty = {
-    enable = true;
-
-    extraConfig = ''
-      font_family      JetBrains Mono
-      bold_font        auto
-      italic_font      auto
-      bold_italic_font auto
-      font_size        12.0
-
-      enable_audio_bell no
-
-      # Solarized Dark
-      background #002b36
-      foreground #839496
-      cursor #708183
-      selection_background #073642
-      color0 #002731
-      color8 #001e26
-      color1 #d01b24
-      color9 #bd3612
-      color2 #728905
-      color10 #465a61
-      color3 #a57705
-      color11 #52676f
-      color4 #2075c7
-      color12 #708183
-      color5 #c61b6e
-      color13 #5856b9
-      color6 #259185
-      color14 #81908f
-      color7 #e9e2cb
-      color15 #fcf4dc
-      selection_foreground #93a1a1
-    '';
-  };
-
   programs.nix-index.enable = true;
 
   services.copyq.enable = true;
@@ -155,5 +123,10 @@ in
   programs.bat = {
     enable = true;
     config.theme = "gruvbox-dark";
+  };
+
+  programs.rofi = {
+    enable = true;
+    theme = "gruvbox-dark";
   };
 }

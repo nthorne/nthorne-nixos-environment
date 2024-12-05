@@ -61,9 +61,10 @@ in
   #  enable = true;
   #  #packages = [ pkgs.tiscamera ];
   #};
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  nixpkgs.config.pulseaudio = true;
+  # TODO: I Try to uncomment these, but things migh break 👆 
+  #hardware.pulseaudio.enable = true;
+  #hardware.pulseaudio.support32Bit = true;
+  #nixpkgs.config.pulseaudio = true;
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -144,14 +145,18 @@ in
   ];
   users.extraGroups.networkmanager.members = [ "nthorne" ];
 
-  hardware.nvidia.prime = {
-    offload.enable = true;
+  hardware.nvidia = {
+    # Keep using the closed source, proprietary driver.
+    open = false;
+    prime = {
+      offload.enable = true;
 
-    # Bus ID of the Intel GPU. VGA controller found with lspci
-    intelBusId = "PCI:0:2:0";
+      # Bus ID of the Intel GPU. VGA controller found with lspci
+      intelBusId = "PCI:0:2:0";
 
-    # Bus ID of the NVIDIA GPU. 3D controller found with lspci
-    nvidiaBusId = "PCI:1:0:0";
+      # Bus ID of the NVIDIA GPU. 3D controller found with lspci
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
   # ^^
@@ -159,28 +164,12 @@ in
   # Not sure about this one
   hardware.nvidia.modesetting.enable = true;
   services = {
-    displayManager = {
-      autoLogin = {
-        enable = false;
-        user = "nthorne";
-      };
-    };
-    xserver = {
-      displayManager = {
-        # https://linuxreviews.org/HOWTO_turn_Screensavers_and_Monitor_Power_Saving_on_and_off
-        sessionCommands = ''
-          xset s off
-          xset -dpms
-        '';
-      };
-      # Worked decently without the nvidia driver
-      videoDrivers = [
-        "nvidia"
-        "intel"
-        "modesetting"
-        "displaylink"
-      ];
-    };
+    xserver.videoDrivers = [
+      "nvidia"
+      "intel"
+      "modesetting"
+      "displaylink"
+    ];
   };
 
   # Skip password for slock..
@@ -208,7 +197,7 @@ in
   # ^^
 
   # Unless this one, (and no nvidia driver), kitty refuses to start.
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # Needed for cargo to be able to pull from private Github repositories
   programs.ssh = {
@@ -231,21 +220,4 @@ in
     keep-derivations = true
     experimental-features = nix-command flakes
   '';
-
-  # TODO: This does not seem to work now. Why?
-  # VPN services, start with `systemctl start openvpn-<CONFIG-NAME>-.service`
-  # Full paths here is perhaps not too nice, but 🤷
-  services = {
-    openvpn.servers = {
-      office = {
-        config = ''
-          config /home/nthorne/.vpn/vpnconfig_cert.ovpn
-          cert /home/nthorne/.vpn/niklas.pem
-          key /home/nthorne/.vpn/niklas.pem
-        '';
-        autoStart = false;
-        updateResolvConf = true;
-      };
-    };
-  };
 }
