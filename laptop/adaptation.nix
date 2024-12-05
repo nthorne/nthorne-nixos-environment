@@ -46,7 +46,7 @@ in
   };
 
   hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
+  #hardware.opengl.driSupport = true;
 
   # TODO: Verify sound..
   #hardware.pulseaudio.enable = true;
