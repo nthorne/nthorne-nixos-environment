@@ -43,7 +43,7 @@
         };
 
         pulseaudio = {
-          format = "{volume}% {icon}";
+          format = "{icon} {volume}%";
           format-bluetooth = "{volume}% {icon}";
           format-muted = "🔇";
           format-icons = {
@@ -68,7 +68,7 @@
         };
 
         battery = {
-          format = "{capacity}% {icon}";
+          format = "{icon} {capacity}%";
           "format-icons" =  ["🪫" "🔋"];
         };
 
