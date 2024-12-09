@@ -10,23 +10,11 @@ let
   # TODO:
   #
   # * Full disk encryption, or is home enough?
-  # * Perhaps default display settings, at least when undocked.
-  # * Clean up and push this config, together with a skeleton ./private.nix
-  # * DisplayLink/evdi might work better in newer kernel versions, *but* evdi is currently broken,
-  #   so I can't really switch to boot.kernelPackages=pkgs.linuxPackages_latest;
-  #     REF: https://nixos.wiki/wiki/Linux_kernel
-  #     REF: https://bugs.archlinux.org/task/70135
-  #     REF: https://github.com/NixOS/nixpkgs/issues/78403
-  #     REF: https://github.com/NixOS/nixpkgs/issues/74698
   # * docker0 interface - inet -> 10.10.2.54 (not 172.17.0.1). Not set up; wonder where it got pulled from (daemon.json:{"bip":"10.10.254.1/24"})
-  #
-  # DOING:
 
   ethernetDevice = "enp0s13f0u4u4";
 in
 {
-  # EVALUATION:
-
   # Don't require ethernet to be connected when booting
   systemd.services = {
     "network-link-${ethernetDevice}".wantedBy = lib.mkForce [ ];
@@ -40,31 +28,12 @@ in
   virtualisation = {
     podman = {
       enable = true;
-      # docker alias for podman..
-      # dockerCompat = true;
     };
     docker.enable = true;
   };
 
-  # ^^ EVALUATION
-
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "nthorne" ];
-
-  # To allow for nixos-containers to access the network
-  # ^^
-
-  # Below is needed for webcam, and to get teams to be able to select
-  # audio sources properly. uvcvideo needs to be modprobed, and I need
-  # to be in the audio group as well.
-  #services.uvcvideo.dynctrl = {
-  #  enable = true;
-  #  #packages = [ pkgs.tiscamera ];
-  #};
-  # TODO: I Try to uncomment these, but things migh break 👆 
-  #hardware.pulseaudio.enable = true;
-  #hardware.pulseaudio.support32Bit = true;
-  #nixpkgs.config.pulseaudio = true;
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;

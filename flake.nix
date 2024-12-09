@@ -30,7 +30,7 @@
     let
       # Pin nixpkgs in the flake registry to what we use for the system
       pin-registries =
-        { pkgs, ... }:
+        { ... }:
         {
           nix = {
             registry = {
