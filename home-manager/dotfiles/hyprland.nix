@@ -212,7 +212,7 @@ bind = $mainMod, J, togglesplit, # dwindle
 bind = $mainMod, V, togglefloating,
 bind = $mainMod, space, fullscreen, 1
 
-bind = $mainMod SHIFT, L, exec, $lock
+bind = $mainMod SHIFT, Escape, exec, $lock
 
 bind = $mainMod SHIFT, F, exec, firefox
 bind = $mainMod SHIFT, S, exec, slack
@@ -224,6 +224,11 @@ bind = $mainMod, k, movefocus, u
 bind = $mainMod, j, movefocus, d
 bind=$mainMod, tab, cyclenext, next
 bind=$mainMod SHIFT, tab, cyclenext, prev
+
+bind = $mainMod SHIFT, H, movewindow, l
+bind = $mainMod SHIFT, J, movewindow, d
+bind = $mainMod SHIFT, K, movewindow, u
+bind = $mainMod SHIFT, L, movewindow, r
 
 # Switch workspaces with mainMod + [0-9]
 bind = $mainMod, 1, workspace, 1
@@ -250,16 +255,22 @@ bind = $mainMod SHIFT, 9, movetoworkspace, 9
 bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
 # Monitor handling
-bind = $mainMod, w, focusmonitor, 0
+bind = $mainMod, w, focusmonitor, 2
 bind = $mainMod, e, focusmonitor, 1
-bind = $mainMod, r, focusmonitor, 2
-bind = $mainMod SHIFT, w, movecurrentworkspacetomonitor, 0
+bind = $mainMod, r, focusmonitor, 0
+bind = $mainMod SHIFT, w, movecurrentworkspacetomonitor, 2
 bind = $mainMod SHIFT, e, movecurrentworkspacetomonitor, 1
-bind = $mainMod SHIFT, r, movecurrentworkspacetomonitor, 2
+bind = $mainMod SHIFT, r, movecurrentworkspacetomonitor, 0
 
 # Move/resize windows with mainMod + LMB/RMB and dragging
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
+
+# Multimedia keybinds
+bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindel = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 ##############################
 ### WINDOWS AND WORKSPACES ###
