@@ -212,7 +212,7 @@ bind = $mainMod, J, togglesplit, # dwindle
 bind = $mainMod, V, togglefloating,
 bind = $mainMod, space, fullscreen, 1
 
-bind = $mainMod SHIFT, Escape, exec, $lock
+bind = $mainMod, Scroll_Lock, exec, $lock
 
 bind = $mainMod SHIFT, F, exec, firefox
 bind = $mainMod SHIFT, S, exec, slack
