@@ -34,6 +34,9 @@ in
       ./dotfiles/hyprlock.nix
       ./dotfiles/hyprland.nix
 
+      flake-inputs.nixvim.homeManagerModules.nixvim
+      ./dotfiles/nixvim
+
       # Automatically include <hostname>.nix for host specific configurations,
       # supplying the niv stable and unstable sources as arguments
       (import (./. + ("/" + hostname + ".nix")) (
@@ -89,15 +92,12 @@ in
     yank
 
     unstable.firefox
-    unstable.neovim
 
     seahorse # For managing gnome-keyring
-    nodejs # Needed for neovim+copilot
     bitwarden
     emoji-picker
     comma
     gh
-    ripgrep # needed by obsidian.nvim
     just
 
     unstable.obsidian

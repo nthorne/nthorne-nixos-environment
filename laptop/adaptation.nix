@@ -7,18 +7,6 @@ in
 {
   imports = [ ] ++ (if builtins.pathExists private then [ private ] else [ ]);
 
-  environment.systemPackages = with pkgs; [
-    # Used in order to get deoplete up and running again, since
-    # it requires a neovim python package that is not available
-    # through Nix yet :/
-    (python310.withPackages (
-      ps: with ps; [
-        pip
-        setuptools
-      ]
-    ))
-  ];
-
   networking.hostName = "nixlaptop"; # Define your hostname.
   networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
 

@@ -1,6 +1,0 @@
-background yes
-out_to_console yes
-update_interval 1
-
-TEXT
-${time %Y-%m-%d} ${time %R}
