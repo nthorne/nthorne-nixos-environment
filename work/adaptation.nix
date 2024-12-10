@@ -71,7 +71,6 @@ in
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     afuse
-    arandr
     gnupg
     sshfs-fuse
 

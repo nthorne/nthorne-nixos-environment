@@ -11,10 +11,7 @@
     p7zip
     rr
     slack
-    slock
     wget
-    xdotool
-    xorg.xbacklight
     ungoogled-chromium
     nvtopPackages.full
     jq
