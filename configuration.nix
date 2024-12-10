@@ -1,9 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-{
+{pkgs, ...}: {
   nixpkgs.config = {
     # :(
     allowUnfree = true;
@@ -23,9 +21,9 @@
     polkit_gnome
   ];
 
-  fonts.packages = with pkgs; [ jetbrains-mono ];
+  fonts.packages = with pkgs; [jetbrains-mono];
 
-  users.users.root.packages = with pkgs; [ vim ];
+  users.users.root.packages = with pkgs; [vim];
 
   # Select internationalisation properties.
   console = {
@@ -67,7 +65,7 @@
   users.extraUsers.nthorne = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" ];
+    extraGroups = ["wheel"];
     createHome = true;
     home = "/home/nthorne";
     shell = "/run/current-system/sw/bin/zsh";
@@ -88,7 +86,7 @@
     '';
   };
 
-  nix.nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
+  nix.nixPath = ["nixpkgs=/run/current-system/nixpkgs"];
 
   # Enable this one when building derivations intented for NixPkgs
   #nix.useSandbox = true;
@@ -102,9 +100,9 @@
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";

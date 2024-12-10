@@ -1,5 +1,4 @@
-{ config, stable, ... }:
-{
+{stable, ...}: {
   home.packages = with stable; [
     bashmount
     calibre

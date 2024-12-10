@@ -1,17 +1,4 @@
-args@{
-  stable,
-  unstable,
-  lib,
-  ...
-}:
-#
-# TODO:
-#
-# * Restructure subfolders. Inconsistencies in default.nix vs named.nix
-#
-{
-  imports = [ (import ./packages/clion args) ];
-
+{stable, ...}: {
   home.packages = with stable; [
     bashdb
     cppcheck

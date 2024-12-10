@@ -1,17 +1,16 @@
 # This derivation should contain configurations that are common
 # to all profiles.
-args@{
+args @ {
   pkgs,
   flake-inputs,
   ...
-}:
-let
+}: let
   hostname = flake-inputs.hostname;
 
   hostCollection = path: (path + ("/" + hostname));
-  hostDotfiles = (hostCollection ./dotfiles);
-  hostPackages = (hostCollection ./packages);
-  hostScripts = (hostCollection ./scripts);
+  hostDotfiles = hostCollection ./dotfiles;
+  hostPackages = hostCollection ./packages;
+  hostScripts = hostCollection ./scripts;
 
   system = flake-inputs.system;
   stable = import flake-inputs.nixpkgs {
@@ -24,8 +23,7 @@ let
     config.allowUnfree = true;
     system = "${system}";
   };
-in
-{
+in {
   imports =
     [
       ./dotfiles/zsh.nix
@@ -50,9 +48,21 @@ in
       # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
       #    here to keep the host specific config files short
     ]
-    ++ (if builtins.pathExists hostDotfiles then [ hostDotfiles ] else [ ])
-    ++ (if builtins.pathExists hostPackages then [ hostPackages ] else [ ])
-    ++ (if builtins.pathExists hostScripts then [ hostScripts ] else [ ]);
+    ++ (
+      if builtins.pathExists hostDotfiles
+      then [hostDotfiles]
+      else []
+    )
+    ++ (
+      if builtins.pathExists hostPackages
+      then [hostPackages]
+      else []
+    )
+    ++ (
+      if builtins.pathExists hostScripts
+      then [hostScripts]
+      else []
+    );
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -109,7 +119,7 @@ in
   ];
 
   home.sessionVariables = {
-    OLLAMA_ORIGINS="app://obsidian.md*";
+    OLLAMA_ORIGINS = "app://obsidian.md*";
   };
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
