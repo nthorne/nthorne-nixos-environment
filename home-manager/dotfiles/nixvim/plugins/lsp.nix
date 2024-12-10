@@ -27,6 +27,16 @@
       };
     };
 
+    # TODO: Why can't I get this binding to work inside lspBuf?
+    keymaps = [
+      {
+        mode = "n";
+        key = "<leader>a";
+        action = "<cmd>:lua vim.lsp.buf.code_action({filter=function(a) return a.isPreferred end, apply=true})<CR>";
+        options.desc = "[A]pply suggested code action";
+      }
+    ];
+
     plugins.lsp-format = {
       enable = true;
     };
