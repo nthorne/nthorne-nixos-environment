@@ -29,7 +29,7 @@ in {
       ./dotfiles/zsh.nix
       ./dotfiles/waybar.nix
       ./dotfiles/hyprlock.nix
-      ./dotfiles/hyprland.nix
+      (import ./dotfiles/hyprland.nix args)
 
       flake-inputs.nixvim.homeManagerModules.nixvim
       ./dotfiles/nixvim
@@ -97,8 +97,6 @@ in {
     tmux
     unstable.todoist
     tree
-    xsel
-    yank
 
     unstable.firefox
 

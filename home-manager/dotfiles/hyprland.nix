@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, lib,...}: {
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
@@ -23,6 +23,7 @@
       # $fileManager = dolphin
       $menu = rofi -show drun
       $lock = hyprlock
+      $nmapplet = ${lib.getExe pkgs.networkmanagerapplet}
 
 
       #################
@@ -37,7 +38,7 @@
       # exec-once = waybar & hyprpaper & firefox
 
       # TODO: These icons are not working.
-      exec-once = waybar & swaync
+      exec-once = waybar & swaync & $nmapplet
 
 
       #############################
