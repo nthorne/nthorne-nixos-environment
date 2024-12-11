@@ -115,6 +115,7 @@ in {
     # For hyprland
     waybar
     wl-clipboard
+    swaynotificationcenter
   ];
 
   home.sessionVariables = {
