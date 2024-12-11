@@ -28,7 +28,6 @@ in {
     [
       ./dotfiles/zsh.nix
       ./dotfiles/waybar.nix
-      ./dotfiles/kitty.nix
       ./dotfiles/hyprlock.nix
       ./dotfiles/hyprland.nix
 
@@ -128,15 +127,14 @@ in {
 
   programs.nix-index.enable = true;
 
+  programs.kitty = {
+    enable = true;
+    settings.enable_audio_bell = false;
+  };
+
   services.copyq.enable = true;
 
-  programs.bat = {
-    enable = true;
-    config.theme = "gruvbox-dark";
-  };
+  programs.bat.enable = true;
 
-  programs.rofi = {
-    enable = true;
-    theme = "gruvbox-dark";
-  };
+  programs.rofi.enable = true;
 }

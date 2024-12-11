@@ -25,12 +25,15 @@
       # url = "github:nix-community/nixvim/nixos-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix.url = "github:danth/stylix";
   };
   outputs = {
     self,
     nixpkgs,
     unstable,
     home-manager,
+    stylix,
     ...
   } @ inputs: let
     # Pin nixpkgs in the flake registry to what we use for the system
@@ -60,6 +63,8 @@
         };
       }
 
+      stylix.nixosModules.stylix
+
       pin-registries
 
       home-manager.nixosModules.home-manager
@@ -80,6 +85,8 @@
       ./configuration.nix
       ./hardware-configuration.nix
       ./laptop/adaptation.nix
+
+      stylix.nixosModules.stylix
 
       pin-registries
 

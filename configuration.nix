@@ -1,7 +1,14 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{pkgs, ...}: {
+{pkgs, ...}: let
+  theme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+  wallpaper = pkgs.runCommand "image.png" {} ''
+    COLOR=$(${pkgs.yq}/bin/yq -r .palette.base00 ${theme})
+    COLOR="#"$COLOR
+    ${pkgs.imagemagick}/bin/magick convert -size 1920x1080 xc:$COLOR $out
+  '';
+in {
   nixpkgs.config = {
     # :(
     allowUnfree = true;
@@ -114,5 +121,38 @@
     extraConfig = ''
       DefaultTimeoutStopSec=10s
     '';
+  };
+
+  stylix = {
+    enable = true;
+    image = wallpaper;
+    base16Scheme = theme;
+
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Original-Ice";
+    };
+
+    fonts = {
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
+      };
+
+      sansSerif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
+      };
+
+      monospace = {
+        package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+        name = "JetBrainsMono Nerd Font Mono";
+      };
+
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+    };
   };
 }
