@@ -1,4 +1,6 @@
-{stable, ...}: {
+{stable, ...} @ args: {
+  imports = [(import ./packages/clion args)];
+
   home.packages = with stable; [
     bashdb
     cppcheck
