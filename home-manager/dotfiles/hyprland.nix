@@ -207,11 +207,11 @@
       bind = $mainMod SHIFT, RETURN, exec, $terminal
       bind = $mainMod, X, exec, $menu
       bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, J, togglesplit, # dwindle
-      bind = $mainMod, t, exec, swaync-client -t
+      bind = $mainMod SHIFT, n, exec, swaync-client -t
 
-      bind = $mainMod, V, togglefloating,
-      bind = $mainMod, space, fullscreen, 1
+      bind = $mainMod, f, togglefloating,
+      bind = $mainMod SHIFT, space, togglesplit, # dwindle
+      bind = $mainMod, space, fullscreen, 2
 
       bind = $mainMod, Scroll_Lock, exec, $lock
 
@@ -219,10 +219,10 @@
       bind = $mainMod SHIFT, S, exec, slack
 
       # Manage window focus
-      bind = $mainMod, l, movefocus, l
-      bind = $mainMod, h, movefocus, r
-      bind = $mainMod, k, movefocus, u
+      bind = $mainMod, h, movefocus, l
       bind = $mainMod, j, movefocus, d
+      bind = $mainMod, k, movefocus, u
+      bind = $mainMod, l, movefocus, r
       bind=$mainMod, tab, cyclenext, next
       bind=$mainMod SHIFT, tab, cyclenext, prev
 
