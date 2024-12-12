@@ -6,24 +6,10 @@
       mainBar = {
         layer = "bottom";
         position = "top";
-        #output = [
-        #  "DP-3" "DP-4" "DP-5"
-        #  "DP-6" "DP-7" "DP-8"
-        #  "DP-1"
-        #  "eDP-1"
-        #];
 
         modules-left = ["hyprland/workspaces" "hyprland/mode"];
         modules-center = ["hyprland/window"];
         modules-right = ["cpu" "memory" "temperature" "pulseaudio" "network" "battery" "tray" "clock"];
-
-        "hyprland/workspaces" = {
-          format = "{icon}{}{icon}";
-          format-icons = {
-            default = "";
-            active = "|";
-          };
-        };
 
         cpu = {
           interval = 15;
