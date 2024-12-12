@@ -1,9 +1,9 @@
-{pkgs, ...}@args: {
+{pkgs, ...}: {
   imports = [
     ./conform.nix
     ./cmp.nix
     ./lsp.nix
-    (import ./luasnip.nix args)
+    ./luasnip.nix
     ./oil.nix
     ./telescope.nix
   ];
