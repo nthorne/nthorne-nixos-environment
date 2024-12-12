@@ -29,6 +29,7 @@ in {
       ./dotfiles/zsh.nix
       ./dotfiles/waybar.nix
       ./dotfiles/hyprlock.nix
+      ./dotfiles/hypridle.nix
       (import ./dotfiles/hyprland.nix args)
 
       flake-inputs.nixvim.homeManagerModules.nixvim
