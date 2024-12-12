@@ -61,7 +61,7 @@
 
         network = {
           format = "{ifname}";
-          format-wifi = "{essid} ({signalStrength}%)";
+          format-wifi = "{essid} {ifname} ({signalStrength}%)";
           format-ethernet = "{essid} {ifname} {ipaddr}/{cidr} ";
           format-disconnected = "Disconnected"; 
           max-length = 50;
