@@ -73,15 +73,6 @@ in
     afuse
     gnupg
     sshfs-fuse
-
-    # Something, somewhere seems to want python3. Perhaps
-    # a zsh plugin or something?
-    (python310.withPackages (
-      ps: with ps; [
-        pip
-        setuptools
-      ]
-    ))
   ];
 
   boot = {
