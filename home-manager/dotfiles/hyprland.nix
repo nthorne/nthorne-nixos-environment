@@ -211,7 +211,7 @@
 
       bind = $mainMod, f, togglefloating,
       bind = $mainMod SHIFT, space, togglesplit, # dwindle
-      bind = $mainMod, space, fullscreen, 2
+      bind = $mainMod, space, fullscreen, 1
 
       bind = $mainMod, Scroll_Lock, exec, $lock
 
