@@ -448,22 +448,6 @@
         "type": "github"
       }
     },
-    "nthorne-tmux": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1733305197,
-        "narHash": "sha256-EaW8iY/Ut8rbJXIP8AvCeBovt05VsYxiIcXWr636FYs=",
-        "owner": "nthorne",
-        "repo": "nthorne-tmux-environment",
-        "rev": "8ceaa061a023c77317a2c4b44015f126a5c2fa8a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nthorne",
-        "repo": "nthorne-tmux-environment",
-        "type": "github"
-      }
-    },
     "nthorne-zsh": {
       "flake": false,
       "locked": {
@@ -508,7 +492,6 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
-        "nthorne-tmux": "nthorne-tmux",
         "nthorne-zsh": "nthorne-zsh",
         "stylix": "stylix",
         "unstable": "unstable"

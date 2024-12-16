@@ -10,10 +10,6 @@
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nthorne-tmux = {
-      url = "github:nthorne/nthorne-tmux-environment";
-      flake = false;
-    };
     nthorne-zsh = {
       url = "github:nthorne/nthorne-zsh-environment";
       flake = false;

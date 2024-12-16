@@ -31,6 +31,7 @@ in {
       ./dotfiles/hyprlock.nix
       ./dotfiles/hypridle.nix
       (import ./dotfiles/hyprland.nix args)
+      (import ./dotfiles/tmux.nix args)
 
       flake-inputs.nixvim.homeManagerModules.nixvim
       ./dotfiles/nixvim
@@ -95,7 +96,6 @@ in {
     ranger
     shellcheck
     silver-searcher
-    tmux
     unstable.todoist
     tree
 

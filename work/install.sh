@@ -55,15 +55,6 @@ ln -s ${PWD}/dotfiles/.Xresources ${HOME}/
 
 echo "Cloning environment repos if needed.."
 pushd ${HOME}/repos
-test -d nthorne-tmux-environment   || git clone https://github.com/nthorne/nthorne-tmux-environment
 test -d nthorne-xmonad-environment || git clone https://github.com/nthorne/nthorne-xmonad-environment
 test -d nthorne-zsh-environment    || git clone https://github.com/nthorne/nthorne-zsh-environment
-popd
-
-echo "Installing environments"
-pushd ${HOME}/repos/nthorne-tmux-environment
-./install-work.sh
-popd
-pushd ${HOME}/repos/nthorne-xmonad-environment
-./install-work.sh
 popd
