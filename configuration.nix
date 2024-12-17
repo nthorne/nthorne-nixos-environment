@@ -22,7 +22,6 @@ in {
     git
     terminus_font
     unzip
-    zsh
 
     polkit
     polkit_gnome
@@ -84,11 +83,11 @@ in {
     extraGroups = ["wheel"];
     createHome = true;
     home = "/home/nthorne";
-    shell = "/run/current-system/sw/bin/zsh";
+    shell = pkgs.zsh;
   };
 
   programs.zsh.enable = true;
-  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
+  users.defaultUserShell = pkgs.zsh;
 
   security.sudo.enable = true;
 
@@ -164,4 +163,7 @@ in {
       };
     };
   };
+
+  # Get completions for system packages such as systemd
+  environment.pathsToLink = [ "/share/zsh" ];
 }
