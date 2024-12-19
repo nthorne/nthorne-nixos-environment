@@ -1,11 +1,12 @@
 {pkgs, ...}: {
   imports = [
-    ./conform.nix
     ./cmp.nix
+    ./conform.nix
     ./lsp.nix
     ./luasnip.nix
     ./oil.nix
     ./telescope.nix
+    ./treesitter.nix
   ];
 
   programs.nixvim = {
@@ -28,8 +29,6 @@
     plugins.rustaceanvim.enable = true;
 
     plugins.vim-surround.enable = true;
-
-    plugins.treesitter.enable = true;
 
     plugins.undotree.enable = true;
 
