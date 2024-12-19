@@ -1,7 +1,11 @@
-{ ... }:
-{
+{...}: {
   programs.nixvim = {
     enable = true;
+
+    localOpts = {
+      number = true;
+      relativenumber = true;
+    };
 
     globalOpts = {
       autoindent = true;
