@@ -98,6 +98,7 @@ in {
     silver-searcher
     unstable.todoist
     tree
+    fzf
 
     unstable.firefox
 
