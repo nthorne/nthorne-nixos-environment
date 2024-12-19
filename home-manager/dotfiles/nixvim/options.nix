@@ -25,5 +25,9 @@
     };
 
     colorschemes.gruvbox.enable = true;
+
+    extraConfigLua = ''
+      vim.o.foldlevelstart = 99
+    '';
   };
 }
