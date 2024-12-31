@@ -47,9 +47,9 @@
     };
 
     history = {
+      # path defaults to ~/.zsh_history
       size = 50000;
       save = 40000;
-      path = "~/.zsh_history";
       expireDuplicatesFirst = true;
       ignoreSpace = true;
       ignoreDups = true;
