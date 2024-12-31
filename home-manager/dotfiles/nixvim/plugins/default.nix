@@ -10,6 +10,8 @@
   ];
 
   programs.nixvim = {
+    plugins.comment.enable = true;
+
     plugins.copilot-chat.enable = true;
 
     plugins.copilot-vim.enable = true;
@@ -28,9 +30,9 @@
 
     plugins.rustaceanvim.enable = true;
 
-    plugins.vim-surround.enable = true;
-
     plugins.undotree.enable = true;
+
+    plugins.vim-surround.enable = true;
 
     plugins.which-key.enable = true;
   };
