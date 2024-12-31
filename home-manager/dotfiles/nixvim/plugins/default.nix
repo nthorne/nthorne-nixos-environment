@@ -4,6 +4,7 @@
     ./conform.nix
     ./lsp.nix
     ./luasnip.nix
+    ./multicursors.nix
     ./oil.nix
     ./telescope.nix
     ./treesitter.nix
@@ -21,8 +22,6 @@
     plugins.fugitive.enable = true;
 
     plugins.lualine.enable = true;
-
-    plugins.multicursors.enable = true;
 
     plugins.rainbow-delimiters.enable = true;
 
