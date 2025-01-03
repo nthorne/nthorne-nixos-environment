@@ -22,6 +22,7 @@
           "gD" = "references";
           "gt" = "type_definition";
           "gi" = "implementation";
+          "gr" = "rename";
           "K" = "hover";
         };
       };
@@ -40,5 +41,49 @@
     plugins.lsp-format = {
       enable = true;
     };
+
+    # Add descriptions to lsp keymaps
+    plugins.which-key.settings.spec = [
+      {
+        __unkeyed = "<leader>j";
+        mode = "n";
+        desc = "Go to next diagnostic";
+      }
+      {
+        __unkeyed = "<leader>k";
+        mode = "n";
+        desc = "Go to prev diagnostic";
+      }
+      {
+        __unkeyed = "gd";
+        mode = "n";
+        desc = "Go to [d]efinition";
+      }
+      {
+        __unkeyed = "gD";
+        mode = "n";
+        desc = "Go to references";
+      }
+      {
+        __unkeyed = "gt";
+        mode = "n";
+        desc = "Go to type definition";
+      }
+      {
+        __unkeyed = "gi";
+        mode = "n";
+        desc = "Go to implementation";
+      }
+      {
+        __unkeyed = "gr";
+        mode = "n";
+        desc = "Rename";
+      }
+      {
+        __unkeyed = "K";
+        mode = "n";
+        desc = "Hover";
+      }
+    ];
   };
 }
