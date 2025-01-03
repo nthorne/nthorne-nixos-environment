@@ -2,68 +2,51 @@
   programs.ripgrep.enable = true;
 
   programs.nixvim = {
-    plugins.telescope.enable = true;
     plugins.web-devicons.enable = true;
 
-    keymaps = [
-      {
-        mode = "n";
-        key = "<leader>sh";
-        action = "<cmd>Telescope help_tags<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>s.";
-        action = "<cmd>Telescope oldfiles<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>sr";
-        action = "<cmd>Telescope resume<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>sd";
-        action = "<cmd>Telescope diagnostics<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>sg";
-        action = "<cmd>Telescope live_grep<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>sw";
-        action = "<cmd>Telescope grep_string<CR>";
-        options.desc = "[S]earch current [W]ord";
-      }
-      {
-        mode = "n";
-        key = "<leader>ss";
-        action = "<cmd>Telescope builtin<CR>";
-        options.desc = "[S]earch [S]elect Telescope";
-      }
-      {
-        mode = "n";
-        key = "<leader>sf";
-        action = "<cmd>Telescope find_files<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>sk";
-        action = "<cmd>Telescope keymaps<CR>";
-      }
-      {
-        mode = "n";
-        key = "<leader>s/";
-        action = "<cmd>Telescope current_buffer_fuzzy_find<CR>";
-        options.desc = "[/] Fuzzily search in current buffer";
-      }
-      {
-        mode = "n";
-        key = "<leader>sb";
-        action = "<cmd>Telescope buffers<CR>";
-      }
-    ];
+    plugins.telescope = {
+      enable = true;
+
+      extensions.fzf-native.enable = true;
+
+      keymaps = {
+        "<leader>sh" = {
+          action = "help_tags";
+        };
+        "<leader>s." = {
+          action = "oldfiles";
+        };
+        "<leader>sr" = {
+          action = "resume";
+        };
+        "<leader>sd" = {
+          action = "diagnostics";
+        };
+        "<leader>sg" = {
+          action = "live_grep";
+        };
+        "<leader>sw" = {
+          action = "grep_string";
+          options.desc = "[S]earch current [W]ord";
+        };
+        "<leader>ss" = {
+          action = "builtin";
+          options.desc = "[S]earch [S]elect Telescope";
+        };
+        "<leader>sf" = {
+          action = "find_files";
+        };
+        "<leader>sk" = {
+          action = "keymaps";
+        };
+        "<leader>s/" = {
+          action = "current_buffer_fuzzy_find";
+          options.desc = "[/] Fuzzily search in current buffer";
+        };
+        "<leader>sb" = {
+          action = "buffers";
+        };
+      };
+    };
   };
 }
