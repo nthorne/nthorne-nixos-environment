@@ -47,7 +47,6 @@ ln -s ${PWD}/scripts/*.xdo ${HOME}/bin/
 test -d ${HOME}/.ssh && error "${HOME}/.ssh exists. Bailing out."
 echo "Installing dotfiles"
 ln -s ${PWD}/dotfiles/.ssh ${HOME}/
-ln -s ${PWD}/dotfiles/.tmuxinator ${HOME}/
 ln -s ${PWD}/dotfiles/.gitconfig ${HOME}/
 ln -s ${PWD}/dotfiles/.gitconfig-private ${HOME}/
 ln -s ${PWD}/dotfiles/.gitignore-global ${HOME}/

@@ -36,11 +36,6 @@ in
   hardware.graphics.enable = true;
   #hardware.opengl.driSupport = true;
 
-  # TODO: Verify sound..
-  #hardware.pulseaudio.enable = true;
-  #hardware.pulseaudio.support32Bit = true;
-  #nixpkgs.config.pulseaudio = true;
-
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 

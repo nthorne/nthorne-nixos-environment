@@ -37,7 +37,6 @@
       # exec-once = nm-applet &
       # exec-once = waybar & hyprpaper & firefox
 
-      # TODO: These icons are not working.
       exec-once = waybar & swaync & $nmapplet
 
 
