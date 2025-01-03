@@ -17,6 +17,8 @@
 
     plugins.copilot-vim.enable = true;
 
+    plugins.diffview.enable = true;
+
     plugins.fidget.enable = true;
 
     plugins.fugitive.enable = true;
