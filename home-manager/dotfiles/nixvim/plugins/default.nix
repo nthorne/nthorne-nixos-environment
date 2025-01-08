@@ -11,6 +11,8 @@
   ];
 
   programs.nixvim = {
+    plugins.cmake-tools.enable = true;
+
     plugins.comment.enable = true;
 
     plugins.copilot-chat.enable = true;
