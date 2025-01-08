@@ -1,5 +1,7 @@
 {...}: {
   programs.nixvim = {
+    plugins.cmp-emoji.enable = true;
+
     plugins.cmp = {
       enable = true;
       settings = {
@@ -29,6 +31,9 @@
           # https://nix-community.github.io/nixvim/plugins/cmp-path.html
           {
             name = "path";
+          }
+          {
+            name = "emoji";
           }
         ];
         mapping = {
