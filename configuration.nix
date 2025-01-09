@@ -29,10 +29,11 @@ in {
     # Something, somewhere seems to want python3. Perhaps
     # a zsh plugin or something?
     (python310.withPackages (
-      ps: with ps; [
-        pip
-        setuptools
-      ]
+      ps:
+        with ps; [
+          pip
+          setuptools
+        ]
     ))
   ];
 
@@ -108,6 +109,12 @@ in {
 
   nix.settings.auto-optimise-store = true;
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 3w";
+  };
+
   services.gnome.gnome-keyring.enable = true;
 
   # Needed for e.g. privleged operations in Clion
@@ -165,5 +172,5 @@ in {
   };
 
   # Get completions for system packages such as systemd
-  environment.pathsToLink = [ "/share/zsh" ];
+  environment.pathsToLink = ["/share/zsh"];
 }
