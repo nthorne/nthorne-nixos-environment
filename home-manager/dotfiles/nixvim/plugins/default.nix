@@ -11,32 +11,34 @@
   ];
 
   programs.nixvim = {
-    plugins.cmake-tools.enable = true;
+    plugins = {
+      cmake-tools.enable = true;
 
-    plugins.comment.enable = true;
+      comment.enable = true;
 
-    plugins.copilot-chat.enable = true;
+      copilot-chat.enable = true;
 
-    plugins.copilot-vim.enable = true;
+      copilot-vim.enable = true;
 
-    plugins.diffview.enable = true;
+      diffview.enable = true;
 
-    plugins.fidget.enable = true;
+      fidget.enable = true;
 
-    plugins.fugitive.enable = true;
+      fugitive.enable = true;
 
-    plugins.lualine.enable = true;
+      lualine.enable = true;
 
-    plugins.rainbow-delimiters.enable = true;
+      rainbow-delimiters.enable = true;
 
-    plugins.repeat.enable = true;
+      repeat.enable = true;
 
-    plugins.rustaceanvim.enable = true;
+      rustaceanvim.enable = true;
 
-    plugins.undotree.enable = true;
+      undotree.enable = true;
 
-    plugins.vim-surround.enable = true;
+      vim-surround.enable = true;
 
-    plugins.which-key.enable = true;
+      which-key.enable = true;
+    };
   };
 }
