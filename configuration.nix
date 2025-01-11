@@ -112,7 +112,7 @@ in {
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 3w";
+    options = "--delete-older-than 21d";
   };
 
   services.gnome.gnome-keyring.enable = true;
