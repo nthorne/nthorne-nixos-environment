@@ -131,19 +131,6 @@ in
     ];
   };
 
-  # Skip password for slock..
-  security.sudo.extraRules = [
-    {
-      users = [ "nthorne" ];
-      commands = [
-        {
-          command = "/etc/profiles/per-user/nthorne/bin/slock";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }
-  ];
-
   # https://discourse.nixos.org/t/external-monitors-not-working-dell-xps/1799/7
   # dropped uvcvideo from this list, since I do want a webcam..
   boot.blacklistedKernelModules = [
