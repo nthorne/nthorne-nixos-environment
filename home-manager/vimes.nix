@@ -8,14 +8,15 @@
     gdb
     glances
     insomnia
+    jq
     kdiff3
     lnav
+    nvtopPackages.full
     p7zip
+    remmina
     rr
     slack
-    wget
     ungoogled-chromium
-    nvtopPackages.full
-    jq
+    wget
   ];
 }
