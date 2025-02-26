@@ -46,6 +46,9 @@
         "<leader>sb" = {
           action = "buffers";
         };
+        "<leader>sc" = {
+          action = "commands";
+        };
       };
     };
   };
