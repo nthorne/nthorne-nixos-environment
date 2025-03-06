@@ -7,7 +7,6 @@
 }: let
   # TODO:
   #
-  # * Full disk encryption, or is home enough?
   # * docker0 interface - inet -> 10.10.2.54 (not 172.17.0.1). Not set up; wonder where it got pulled from (daemon.json:{"bip":"10.10.254.1/24"})
   ethernetDevice = "enp0s13f0u4u4";
 in {
@@ -30,6 +29,38 @@ in {
 
   # Seems to be needed for parallel PAM sessions (fingerprint OR password)
   security.pam.services.hyprlock = {};
+
+  # Enable fscrypt for home directory encryption
+  security.pam.enableFscrypt = true;
+  # NOTE: I NEED to login with password to descrypt my home directory.
+  security.pam.services.greetd.fprintAuth = false;
+
+  # PAM fails to lock protector in memory, causing unlock to fail, so we
+  # increase the memlock limit to infinity.
+  systemd.extraConfig = ''
+    DefaultLimitMEMLOCK=infinity
+  '';
+
+  # This sets memlock limits for all users to "unlimited"
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      item = "memlock";
+      type = "-";
+      value = "unlimited";
+    }
+  ];
+
+  # Have the home-manager service restart on failure, since it needs
+  # to have my home directory decrypted in order to exit successfully.
+  # Setting After etc does not work since we only append to that list.
+  # Wait 10s between restarts, and allow 30 restarts within a 5 minute window.
+  systemd.services."home-manager-nthorne".serviceConfig = {
+    Restart = "on-failure";
+    RestartSec = "10s";
+    StartLimitIntervalSec = "300";
+    StartLimitBurst = 30;
+  };
 
   boot.kernel.sysctl."kernel.ftrace_enabled" = true;
   boot.kernel.sysctl."kernel.perf_event_paranoid" = 1;
@@ -81,6 +112,7 @@ in {
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     afuse
+    fscrypt-experimental
     gnupg
     sshfs-fuse
   ];
