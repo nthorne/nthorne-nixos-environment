@@ -4,22 +4,32 @@
   unstable,
   lib,
   ...
-}:
-
-let
+}: let
   # TODO:
   #
   # * Full disk encryption, or is home enough?
   # * docker0 interface - inet -> 10.10.2.54 (not 172.17.0.1). Not set up; wonder where it got pulled from (daemon.json:{"bip":"10.10.254.1/24"})
-
   ethernetDevice = "enp0s13f0u4u4";
-in
-{
+in {
   # Don't require ethernet to be connected when booting
   systemd.services = {
-    "network-link-${ethernetDevice}".wantedBy = lib.mkForce [ ];
-    "network-addresses-${ethernetDevice}".wantedBy = lib.mkForce [ ];
+    "network-link-${ethernetDevice}".wantedBy = lib.mkForce [];
+    "network-addresses-${ethernetDevice}".wantedBy = lib.mkForce [];
   };
+
+  # Start the driver at boot
+  systemd.services.fprintd = {
+    wantedBy = ["multi-user.target"];
+    serviceConfig.Type = "simple";
+  };
+
+  # Install the driver
+  services.fprintd = {
+    enable = true;
+  };
+
+  # Seems to be needed for parallel PAM sessions (fingerprint OR password)
+  security.pam.services.hyprlock = {};
 
   boot.kernel.sysctl."kernel.ftrace_enabled" = true;
   boot.kernel.sysctl."kernel.perf_event_paranoid" = 1;
@@ -33,7 +43,7 @@ in
   };
 
   virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "nthorne" ];
+  users.extraGroups.vboxusers.members = ["nthorne"];
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -52,7 +62,7 @@ in
 
     nat = {
       enable = true;
-      internalInterfaces = [ "ve-*" ];
+      internalInterfaces = ["ve-*"];
       # Wired at office.
       externalInterface = "wlp0s20f3";
     };
@@ -83,7 +93,7 @@ in
       "v4l2loopback"
     ];
     tmp.useTmpfs = true;
-    extraModulePackages = [ config.boot.kernelPackages.v4l2loopback.out ];
+    extraModulePackages = [config.boot.kernelPackages.v4l2loopback.out];
   };
 
   # Set initial kernel module settings
@@ -102,7 +112,7 @@ in
     "disk"
     "audio"
   ];
-  users.extraGroups.networkmanager.members = [ "nthorne" ];
+  users.extraGroups.networkmanager.members = ["nthorne"];
 
   hardware.nvidia = {
     # Keep using the closed source, proprietary driver.
