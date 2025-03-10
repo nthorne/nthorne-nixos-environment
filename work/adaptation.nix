@@ -98,7 +98,10 @@ in {
       externalInterface = "wlp0s20f3";
     };
 
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.powersave = false;
+    };
 
     useDHCP = false;
 
