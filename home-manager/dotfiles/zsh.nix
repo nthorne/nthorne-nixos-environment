@@ -104,17 +104,6 @@
       }
 
       {
-        name = "zsh-alias-tips";
-        src = pkgs.fetchFromGitHub {
-          owner = "djui";
-          repo = "alias-tips";
-          rev = "41cb143ccc3b8cc444bf20257276cb43275f65c4";
-          sha256 = "1wgnx9v2yn6q8dspx0k60qlddgc4zyxfq96zwl7jdh9hrk0snmb4";
-        };
-        file = "alias-tips.plugin.zsh";
-      }
-
-      {
         name = pkgs.zsh-completions.pname;
         src = pkgs.zsh-completions.src;
       }
