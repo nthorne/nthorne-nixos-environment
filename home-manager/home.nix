@@ -84,38 +84,32 @@ in {
   home.stateVersion = "23.05";
 
   home.packages = with pkgs; [
+    bitwarden
+    comma
     evince
     fasd
     fd
     file
+    fzf
+    gh
     gparted
+    grimblast # Screen capture tool with hyprland support
     htop
     hyperfine
+    just
     nvd
     pavucontrol
-    ranger
+    seahorse # For managing gnome-keyring
     shellcheck
     silver-searcher
-    unstable.todoist
+    swaynotificationcenter
     tree
-    fzf
-
     unstable.firefox
-
-    seahorse # For managing gnome-keyring
-    bitwarden
-    emoji-picker
-    comma
-    gh
-    just
-
-    unstable.obsidian
     unstable.git-crypt
-
-    # For hyprland
+    unstable.obsidian
+    unstable.todoist
     waybar
     wl-clipboard
-    swaynotificationcenter
   ];
 
   home.sessionVariables = {
