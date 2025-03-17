@@ -86,7 +86,6 @@ in {
   home.packages = with pkgs; [
     bitwarden
     comma
-    evince
     fasd
     fd
     file
