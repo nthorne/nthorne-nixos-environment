@@ -1,5 +1,8 @@
 {stable, ...} @ args: {
-  imports = [(import ./packages/clion args)];
+  imports = [
+    (import ./packages/clion args)
+    (import ./packages/clamav-scan args)
+  ];
 
   home.packages = with stable; [
     cppcheck

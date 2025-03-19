@@ -115,10 +115,16 @@ in {
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     afuse
+    clamav
     fscrypt-experimental
     gnupg
     sshfs-fuse
   ];
+
+  services.clamav = {
+    daemon.enable = true;
+    updater.enable = true;
+  };
 
   boot = {
     kernelModules = [
