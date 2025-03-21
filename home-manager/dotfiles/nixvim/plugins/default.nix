@@ -8,6 +8,7 @@
     ./oil.nix
     ./telescope.nix
     ./treesitter.nix
+    ./yeet.nix
   ];
 
   programs.nixvim = {
@@ -21,6 +22,8 @@
       copilot-vim.enable = true;
 
       diffview.enable = true;
+
+      direnv.enable = true;
 
       fidget.enable = true;
 
