@@ -10,6 +10,7 @@
           installGhc = true;
         };
         nixd.enable = true;
+        pylsp.enable = true;
         ruff.enable = true;
       };
       keymaps = {
