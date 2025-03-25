@@ -5,6 +5,14 @@
       servers = {
         bashls.enable = true;
         clangd.enable = true;
+        # I need to install chsharp-ls locally in each repo, since
+        # I've got different versions of .NET Core installed in different
+        # projects.
+        csharp_ls = {
+          enable = true;
+          package = null;
+          cmd = ["dotnet" "tool" "run" "csharp-ls"];
+        };
         hls = {
           enable = true;
           installGhc = true;
