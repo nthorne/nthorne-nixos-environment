@@ -115,9 +115,11 @@ in {
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     afuse
+    age
     clamav
     fscrypt-experimental
     gnupg
+    sops
     sshfs-fuse
   ];
 
@@ -217,4 +219,14 @@ in {
     keep-derivations = true
     experimental-features = nix-command flakes
   '';
+
+  sops.age.keyFile = "/home/nthorne/.config/sops/age/keys.txt";
+  sops.secrets.unicorn-passwords = {
+    format = "binary";
+    sopsFile = ./secrets/unicorn-passwords.sh;
+
+    mode = "0440";
+    owner = config.users.users.nthorne.name;
+    group = config.users.users.nthorne.group;
+  };
 }

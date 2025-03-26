@@ -23,6 +23,8 @@
     };
 
     stylix.url = "github:danth/stylix/release-24.11";
+
+    sops-nix.url = "github:Mic92/sops-nix";
   };
   outputs = {
     self,
@@ -30,6 +32,7 @@
     unstable,
     home-manager,
     stylix,
+    sops-nix,
     ...
   } @ inputs: let
     # Pin nixpkgs in the flake registry to what we use for the system
@@ -75,6 +78,8 @@
             system = "${system}";
           };
       }
+
+      sops-nix.nixosModules.sops
     ];
 
     nixlaptop-modules = [
