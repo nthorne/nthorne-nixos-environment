@@ -229,4 +229,6 @@ in {
     owner = config.users.users.nthorne.name;
     group = config.users.users.nthorne.group;
   };
+
+  security.pki.certificateFiles = [ ./secrets/vimes.pem ];
 }

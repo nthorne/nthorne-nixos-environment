@@ -19,6 +19,7 @@ in {
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     git
+    git-agecrypt
     terminus_font
     unzip
 
