@@ -17,6 +17,7 @@
           enable = true;
           installGhc = true;
         };
+        jsonls.enable = true;
         nixd.enable = true;
         pylsp.enable = true;
         ruff.enable = true;
