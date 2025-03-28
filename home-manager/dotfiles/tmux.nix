@@ -3,7 +3,6 @@
     enable = true;
 
     plugins = with pkgs; [
-      tmuxPlugins.copycat
       tmuxPlugins.open
       tmuxPlugins.yank
       tmuxPlugins.resurrect
@@ -58,8 +57,8 @@ bind-key -T copy-mode-vi 'v' send -X begin-selection
 bind-key -T copy-mode-vi 'y' send -X copy-selection
 
 # Clipboard interaction
-bind C-y run "tmux save-buffer - | wl-copy -p"
-bind C-p run "tmux set-buffer \"$(wl-paste -pn)\"; tmux paste-buffer"
+bind C-y run "tmux save-buffer - | wl-copy"
+bind C-p run "tmux set-buffer \"$(wl-paste -n)\"; tmux paste-buffer"
 
 bind P pipe-pane -o "cat >>~/#W.log"\; display "Toggled logging to ~/#W.log" 
 
