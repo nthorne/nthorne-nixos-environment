@@ -16,11 +16,15 @@
         default_format_opts.lsp_format = "fallback";
         formatters_by_ft = {
           nix = ["alejandra"];
+          yaml = ["yamlfmt"];
         };
 
         formatters = {
           alejandra = {
             command = lib.getExe pkgs.alejandra;
+          };
+          yamlfmt = {
+            command = lib.getExe pkgs.yamlfmt;
           };
         };
       };

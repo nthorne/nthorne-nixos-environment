@@ -20,6 +20,7 @@
         nixd.enable = true;
         pylsp.enable = true;
         ruff.enable = true;
+        yamlls.enable = true;
       };
       keymaps = {
         diagnostic = {
