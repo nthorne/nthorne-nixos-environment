@@ -25,6 +25,8 @@
     stylix.url = "github:danth/stylix/release-24.11";
 
     sops-nix.url = "github:Mic92/sops-nix";
+
+    nix-secrets.url = "git+ssh://git@github.com/nthorne/nix-secrets.git?allRefs=true&ref=main";
   };
   outputs = {
     self,

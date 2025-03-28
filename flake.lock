@@ -438,6 +438,24 @@
         "type": "github"
       }
     },
+    "nix-secrets": {
+      "locked": {
+        "allRefs": false,
+        "lastModified": 1743147030,
+        "narHash": "sha256-3iHPXv16bsrh7L08EwN7R+s0niYDtRYaLNsn17qdu1I=",
+        "ref": "main",
+        "rev": "bf3dd8673e0c58c3862db1cfe6d4a2b94dc40390",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://git@github.com/nthorne/nix-secrets.git"
+      },
+      "original": {
+        "allRefs": false,
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/nthorne/nix-secrets.git"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1742512142,
@@ -557,6 +575,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "nix-secrets": "nix-secrets",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "nthorne-zsh": "nthorne-zsh",
