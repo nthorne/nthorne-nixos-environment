@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./auto-session.nix
     ./cmp.nix
     ./conform.nix
     ./lsp.nix
