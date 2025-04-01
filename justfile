@@ -9,6 +9,9 @@ diff:
 switch:
   sudo nixos-rebuild switch --flake .# && rm result 
 
+test:
+  sudo nixos-rebuild test --flake .# && rm result
+
 update:
   nix flake update --commit-lock-file --flake .#
 
