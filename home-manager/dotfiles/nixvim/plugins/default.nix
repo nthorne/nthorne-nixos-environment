@@ -3,6 +3,7 @@
     ./auto-session.nix
     ./cmp.nix
     ./conform.nix
+    ./copilot.nix
     ./dap.nix
     ./lsp.nix
     ./luasnip.nix
@@ -18,10 +19,6 @@
       cmake-tools.enable = true;
 
       comment.enable = true;
-
-      copilot-chat.enable = true;
-
-      copilot-vim.enable = true;
 
       diffview.enable = true;
 
