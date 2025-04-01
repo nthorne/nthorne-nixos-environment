@@ -11,6 +11,15 @@
         };
       })
     ];
+    plugins.which-key.settings = {
+      spec = [
+        {
+          __unkeyed = "<leader>y";
+          group = "[Y]eet";
+          mode = "n";
+        }
+      ];
+    };
     keymaps = [
       {
         mode = "n";

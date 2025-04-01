@@ -8,6 +8,16 @@
           dap-virtual-text.enable = true;
         };
       };
+
+      which-key.settings = {
+        spec = [
+          {
+            __unkeyed = "<leader>d";
+            group = "[D]ebugging";
+            mode = "n";
+          }
+        ];
+      };
     };
 
     keymaps = [
