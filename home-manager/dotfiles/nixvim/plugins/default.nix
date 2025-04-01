@@ -3,6 +3,7 @@
     ./auto-session.nix
     ./cmp.nix
     ./conform.nix
+    ./dap.nix
     ./lsp.nix
     ./luasnip.nix
     ./multicursors.nix
