@@ -16,6 +16,8 @@
 
   programs.nixvim = {
     plugins = {
+      nvim-bqf.enable = true;
+
       cmake-tools.enable = true;
 
       comment.enable = true;

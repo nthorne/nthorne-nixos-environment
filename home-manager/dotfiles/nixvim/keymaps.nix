@@ -9,6 +9,11 @@
       }
       {
         mode = "n";
+        key = "<F2>";
+        action = "<cmd>cw<CR>";
+      }
+      {
+        mode = "n";
         key = "<F3>";
         action = "<cmd>Git<CR>";
       }
