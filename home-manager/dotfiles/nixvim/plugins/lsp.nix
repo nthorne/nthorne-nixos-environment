@@ -43,7 +43,7 @@
     keymaps = [
       {
         mode = "n";
-        key = "<leader>a";
+        key = "ga";
         action = "<cmd>:lua vim.lsp.buf.code_action({filter=function(a) return a.isPreferred end, apply=true})<CR>";
         options.desc = "[A]pply suggested code action";
       }

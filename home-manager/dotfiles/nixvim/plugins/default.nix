@@ -1,7 +1,9 @@
 {...}: {
   imports = [
     ./auto-session.nix
+    ./avante.nix
     ./cmp.nix
+    ./codecompanion.nix
     ./conform.nix
     ./copilot.nix
     ./dap.nix
