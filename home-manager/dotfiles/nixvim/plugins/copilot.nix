@@ -16,6 +16,11 @@
             group = "Copilot [C]hat";
             mode = "n";
           }
+          {
+            __unkeyed = "<leader>c";
+            group = "Copilot [C]hat";
+            mode = "v";
+          }
         ];
       };
     };
@@ -27,19 +32,19 @@
         options.desc = "[T]oggle Copilot Chat";
       }
       {
-        mode = "n";
+        mode = "v";
         key = "<leader>ce";
         action = "<cmd>CopilotChatExplain<CR>";
         options.desc = "Copilot [E]xplain";
       }
       {
-        mode = "n";
+        mode = "v";
         key = "<leader>cr";
         action = "<cmd>CopilotChatReview<CR>";
         options.desc = "Copilot [R]eview";
       }
       {
-        mode = "n";
+        mode = "v";
         key = "<leader>co";
         action = "<cmd>CopilotChatOptimize<CR>";
         options.desc = "Copilot [O]ptimize";
@@ -47,7 +52,7 @@
       {
         mode = "n";
         key = "<leader>cu";
-        action = "<cmd>CopilotChatReview<CR>";
+        action = "<cmd>CopilotChatTests<CR>";
         options.desc = "Copilot [U]nit tests";
       }
       {
