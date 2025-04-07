@@ -20,7 +20,12 @@ general {
     hide_cursor = false
     grace = 0
     disable_loading_bar = true
-    enable_fingerprint = true
+}
+
+auth {
+    fingerprint {
+        enabled = true;
+    }
 }
 
 # INPUT FIELD

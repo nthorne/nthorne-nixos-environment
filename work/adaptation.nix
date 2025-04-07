@@ -26,9 +26,6 @@ in {
     enable = true;
   };
 
-  # Seems to be needed for parallel PAM sessions (fingerprint OR password)
-  security.pam.services.hyprlock = {};
-
   # Enable fscrypt for home directory encryption
   security.pam.enableFscrypt = true;
   # NOTE: I NEED to login with password to descrypt my home directory.
