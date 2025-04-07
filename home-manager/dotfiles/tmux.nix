@@ -2,13 +2,14 @@
   programs.tmux = {
     enable = true;
 
-    plugins = with pkgs; [
-      tmuxPlugins.open
-      tmuxPlugins.yank
-      tmuxPlugins.resurrect
-      tmuxPlugins.fingers
-      tmuxPlugins.cpu
-      tmuxPlugins.sessionist
+    plugins = with pkgs.tmuxPlugins; [
+      cpu
+      fingers
+      open
+      resurrect
+      sessionist
+      vim-tmux-navigator
+      yank
     ];
 
     extraConfig = ''

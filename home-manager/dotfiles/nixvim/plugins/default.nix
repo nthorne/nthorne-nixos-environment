@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
     ./auto-session.nix
     ./avante.nix
@@ -54,6 +54,10 @@
 
       which-key.enable = true;
     };
+
+    extraPlugins = with pkgs.vimPlugins; [
+      vim-tmux-navigator
+    ];
 
     keymaps = [
       {
