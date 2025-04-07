@@ -16,6 +16,10 @@
         mode = "n";
         key = "<F3>";
         action = "<cmd>Git<CR>";
+      }{
+        mode = "n";
+        key = "<F4>";
+        action = "<cmd>CMakeBuild<CR>";
       }
       {
         mode = "n";
