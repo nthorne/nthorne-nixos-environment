@@ -25,8 +25,8 @@
       };
       keymaps = {
         diagnostic = {
-          "<leader>j" = "goto_next";
-          "<leader>k" = "goto_prev";
+          "gj" = "goto_next";
+          "gk" = "goto_prev";
         };
         lspBuf = {
           "gd" = "definition";

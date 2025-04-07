@@ -26,6 +26,12 @@
 
     extraConfigLua = ''
       vim.o.foldlevelstart = 99
+      vim.diagnostic.config({
+        virtual_text = {
+          prefix = "●",
+          spacing = 4,
+        },
+      })
     '';
   };
 }
