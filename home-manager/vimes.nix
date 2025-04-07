@@ -1,4 +1,4 @@
-{stable, ...} @ args: 
+{pkgs, ...} @ args: 
 let
     secretsFolders = (builtins.toString args.flake-inputs.nix-secrets);
   in
@@ -11,7 +11,7 @@ let
     args.flake-inputs.sops-nix.homeManagerModules.sops
   ];
 
-  home.packages = with stable; [
+  home.packages = with pkgs; [
     cppcheck
     ctags
     gdb

@@ -4,10 +4,9 @@
   description = "Declares my host configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nthorne-zsh = {
@@ -16,10 +15,10 @@
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-24.11";
+      url = "github:nix-community/nixvim";
       # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
       # url = "github:nix-community/nixvim/nixos-23.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+			#inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix.url = "github:danth/stylix/release-24.11";
@@ -31,7 +30,6 @@
   outputs = {
     self,
     nixpkgs,
-    unstable,
     home-manager,
     stylix,
     sops-nix,
@@ -42,14 +40,10 @@
       nix = {
         registry = {
           nixpkgs.flake = nixpkgs;
-          nixpkgs-unstable.flake = unstable;
+          # TODO: Where is this one used?
+          nixpkgs-unstable.flake = nixpkgs;
         };
       };
-    };
-
-    pkgs-unstable = import unstable {
-      inherit system;
-      config.allowUnfree = true;
     };
 
     system = "x86_64-linux";
@@ -58,11 +52,6 @@
       ./configuration.nix
       ./work/hardware-config/hardware-config-generated.nix
       ./work/adaptation.nix
-      {
-        _module.args = {
-          unstable = pkgs-unstable;
-        };
-      }
 
       stylix.nixosModules.stylix
 
@@ -109,6 +98,8 @@
 
     wifiDevice = "wlp0s20f3";
   in {
+    nixpkgs.config.allowUnfree = true;
+
     formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
 
     nixosConfigurations.vimes = nixpkgs.lib.nixosSystem {

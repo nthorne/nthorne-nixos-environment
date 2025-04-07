@@ -1,22 +1,9 @@
-{pkgs, ...}: {
+{...}: {
   # EVAL: This one works decently, but its usefulness is more on par with copilot.
   #       Looks to be lively development, tough, so it will probably get better.
   # Docs: https://codecompanion.olimorris.dev/
   programs.nixvim = {
-    extraPlugins = [
-      (pkgs.vimUtils.buildVimPlugin {
-        pname = "codecompanion.nvim";
-        version = "2025-03-27";
-        src = pkgs.fetchFromGitHub {
-          owner = "olimorris";
-          repo = "codecompanion.nvim";
-          rev = "51fe5a782dbbd5cad8189420cb8d38fd7c245684";
-          sha256 = "09vjvbf5rxmj2fax0ddcinbvx6mhjdy58fw9d1nf8ll7x8dj5j2s";
-        };
-        meta.homepage = "https://github.com/olimorris/codecompanion.nvim/";
-        meta.hydraPlatforms = [];
-      })
-    ];
+    plugins.codecompanion.enable = true;
 
     extraConfigLua = ''
       require("codecompanion").setup({

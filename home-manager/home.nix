@@ -11,18 +11,6 @@ args @ {
   hostDotfiles = hostCollection ./dotfiles;
   hostPackages = hostCollection ./packages;
   hostScripts = hostCollection ./scripts;
-
-  system = flake-inputs.system;
-  stable = import flake-inputs.nixpkgs {
-    config = {
-      allowUnfree = true;
-    };
-    system = "${system}";
-  };
-  unstable = import flake-inputs.unstable {
-    config.allowUnfree = true;
-    system = "${system}";
-  };
 in {
   imports =
     [
@@ -36,16 +24,8 @@ in {
       flake-inputs.nixvim.homeManagerModules.nixvim
       ./dotfiles/nixvim
 
-      # Automatically include <hostname>.nix for host specific configurations,
-      # supplying the niv stable and unstable sources as arguments
-      (import (./. + ("/" + hostname + ".nix")) (
-        args
-        // {
-          stable = stable;
-          unstable = unstable;
-        }
-      ))
-
+      # Automatically include <hostname>.nix for host specific configurations.
+      (import (./. + ("/" + hostname + ".nix")) args)
       # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
       #    here to keep the host specific config files short
     ]
@@ -103,10 +83,10 @@ in {
     silver-searcher
     swaynotificationcenter
     tree
-    unstable.firefox
-    unstable.git-crypt
-    unstable.obsidian
-    unstable.todoist
+    firefox
+    git-crypt
+    obsidian
+    todoist
     waybar
     wl-clipboard
   ];

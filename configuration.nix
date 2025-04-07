@@ -5,8 +5,7 @@
   theme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
   wallpaper = pkgs.runCommand "image.png" {} ''
     COLOR=$(${pkgs.yq}/bin/yq -r .palette.base00 ${theme})
-    COLOR="#"$COLOR
-    ${pkgs.imagemagick}/bin/magick convert -size 1920x1080 xc:$COLOR $out
+    ${pkgs.imagemagick}/bin/magick -size 1920x1080 xc:$COLOR $out
   '';
 in {
   nixpkgs.config = {
@@ -150,7 +149,7 @@ in {
       };
 
       monospace = {
-        package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+        package = pkgs.jetbrains-mono;
         name = "JetBrainsMono Nerd Font Mono";
       };
 
