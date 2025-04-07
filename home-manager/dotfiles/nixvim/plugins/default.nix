@@ -16,6 +16,7 @@
     ./yeet.nix
   ];
 
+  # https://dotfyle.com/
   programs.nixvim = {
     plugins = {
       nvim-bqf.enable = true;
@@ -32,9 +33,16 @@
 
       fugitive.enable = true;
 
+      harpoon = {
+        enable = true;
+        enableTelescope = true;
+      };
+
       lualine.enable = true;
 
       rainbow-delimiters.enable = true;
+
+      render-markdown.enable = true;
 
       repeat.enable = true;
 
@@ -46,5 +54,20 @@
 
       which-key.enable = true;
     };
+
+    keymaps = [
+      {
+        mode = "n";
+        key = "<leader>hm";
+        action = "<cmd>lua require('harpoon.mark').add_file()<CR>";
+        options.desc = "Harpoon [M]ark";
+      }
+      {
+        mode = "n";
+        key = "<leader>hq";
+        action = "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>";
+        options.desc = "Harpoon [M]ark";
+      }
+    ];
   };
 }
