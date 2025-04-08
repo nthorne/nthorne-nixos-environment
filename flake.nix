@@ -6,20 +6,17 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nthorne-zsh = {
       url = "github:nthorne/nthorne-zsh-environment";
       flake = false;
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-      # url = "github:nix-community/nixvim/nixos-23.05";
-			#inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:nix-community/nixvim";
 
     stylix.url = "github:danth/stylix/release-24.11";
 
@@ -28,7 +25,6 @@
     nix-secrets.url = "git+ssh://git@github.com/nthorne/nix-secrets.git?allRefs=true&ref=main";
   };
   outputs = {
-    self,
     nixpkgs,
     home-manager,
     stylix,
@@ -40,7 +36,6 @@
       nix = {
         registry = {
           nixpkgs.flake = nixpkgs;
-          # TODO: Where is this one used?
           nixpkgs-unstable.flake = nixpkgs;
         };
       };
