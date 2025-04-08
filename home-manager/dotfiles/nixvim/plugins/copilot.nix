@@ -7,6 +7,13 @@
         enable = true;
         settings = {
           model = "claude-3.7-sonnet-thought";
+
+          mappings = {
+            reset = {
+              normal = "<C-r>";
+              insert = "<C-r>";
+            };
+          };
         };
       };
       which-key.settings = {
