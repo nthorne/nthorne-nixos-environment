@@ -1,9 +1,17 @@
-{pkgs, ...} @ args: 
-let
-    secretsFolders = (builtins.toString args.flake-inputs.nix-secrets);
-  in
-{
+{pkgs, ...} @ args: let
+  secretsFolders = builtins.toString args.flake-inputs.nix-secrets;
 
+  # Override lnav with specific commit. Revert to whatever is in unstable
+  # once the new release (0.13.0) has hit the unstable channel.
+  lnavOverride = pkgs.lnav.overrideAttrs (oldAttrs: {
+    src = pkgs.fetchFromGitHub {
+      owner = "tstack";
+      repo = "lnav";
+      rev = "9ba78a99cf38d39b32f9e1a50974450ccf90db4b";
+      sha256 = "sha256-Hsp745LMrTZERaOxM5W4pqoWuDNZLcYWBrRUSZUGVPQ=";
+    };
+  });
+in {
   imports = [
     (import ./packages/clion args)
     (import ./packages/clamav-scan args)
@@ -17,7 +25,7 @@ let
     gdb
     insomnia
     jq
-    lnav
+    lnavOverride
     nvtopPackages.full
     p7zip
     remmina
