@@ -7,6 +7,7 @@
     ./conform.nix
     ./copilot.nix
     ./dap.nix
+    ./harpoon.nix
     ./lsp.nix
     ./luasnip.nix
     ./multicursors.nix
@@ -33,11 +34,6 @@
 
       fugitive.enable = true;
 
-      harpoon = {
-        enable = true;
-        enableTelescope = true;
-      };
-
       lualine.enable = true;
 
       rainbow-delimiters.enable = true;
@@ -57,21 +53,6 @@
 
     extraPlugins = with pkgs.vimPlugins; [
       vim-tmux-navigator
-    ];
-
-    keymaps = [
-      {
-        mode = "n";
-        key = "<leader>hm";
-        action = "<cmd>lua require('harpoon.mark').add_file()<CR>";
-        options.desc = "Harpoon [M]ark";
-      }
-      {
-        mode = "n";
-        key = "<leader>hq";
-        action = "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>";
-        options.desc = "Harpoon [M]ark";
-      }
     ];
   };
 }
