@@ -41,23 +41,25 @@ in {
         package = avanteMain;
 
         settings = {
-          provider = "copilot";
+          provider = "copilotthink";
           copilot = {
             model = "claude-3.7-sonnet";
           };
-          copilotthink = {
-            __inherited_from = "copilot";
-            model = "claude-3.7-sonnet-thought";
-            timeout = 600000;
-            max_completion_tokens = 64000;
+          vendors = {
+            copilotthink = {
+              __inherited_from = "copilot";
+              model = "claude-3.7-sonnet-thought";
+              timeout = 600000;
+              max_completion_tokens = 64000;
+            };
           };
           ollama = {
             model = "qwen2.5-coder:latest";
           };
           # Recommended for ollama
-          behaviour = {
-            enable_cursor_planning_mode = false;
-          };
+          #behaviour = {
+          #  enable_cursor_planning_mode = false;
+          #};
         };
       };
     };
