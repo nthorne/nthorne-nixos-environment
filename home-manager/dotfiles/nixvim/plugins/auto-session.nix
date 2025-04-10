@@ -1,7 +1,12 @@
 {...}: {
   programs.nixvim = {
     plugins = {
-      auto-session.enable = true;
+      auto-session = {
+        enable = true;
+        settings = {
+          close_unsupported_windows = true;
+        };
+      };
     };
 
     keymaps = [
