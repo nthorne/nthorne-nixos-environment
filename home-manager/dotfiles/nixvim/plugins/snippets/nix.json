@@ -1,22 +1,47 @@
 {
-    "devshell": {
-        "prefix": "devshell",
-        "body": [
-          "{",
-          "  inputs.nixpkgs.url = \"nixpkgs/nixos-unstable\";",
-          "  outputs = {",
-          "    self,",
-          "    nixpkgs,",
-          "  }: let",
-          "    pkgs = nixpkgs.legacyPackages.x86_64-linux;",
-          "  in {",
-          "    devShell.x86_64-linux = pkgs.mkShellNoCC {",
-          "      buildInputs = with pkgs; [",
-          "      ];",
-          "    };",
-          "  };",
-          "}"
-        ],
-        "description": "devshell flake"
-    }
+  "devshell": {
+    "prefix": "devshell",
+    "body": [
+      "{",
+      "  inputs.nixpkgs.url = \"nixpkgs/nixos-unstable\";",
+      "  outputs = {",
+      "    self,",
+      "    nixpkgs,",
+      "  }: let",
+      "    pkgs = nixpkgs.legacyPackages.x86_64-linux;",
+      "  in {",
+      "    devShell.x86_64-linux = pkgs.mkShellNoCC {",
+      "      buildInputs = with pkgs; [",
+      "      ];",
+      "    };",
+      "  };",
+      "}"
+    ],
+    "description": "devshell flake"
+  },
+  "devshell-allsystems": {
+    "prefix": "devshell",
+    "body": [
+      "{",
+      "  inputs = {",
+      "    nixpkgs.url = \"nixpkgs/nixos-unstable\";",
+      "    flake-utils.url = \"github:numtide/flake-utils\";",
+      "  };",
+      "  outputs = {",
+      "    nixpkgs,",
+      "    flake-utils,",
+      "    ...",
+      "  }:",
+      "    flake-utils.lib.eachDefaultSystem (system: let",
+      "      pkgs = nixpkgs.legacyPackages.\\${system};",
+      "    in {",
+      "      devShells.default = pkgs.mkShellNoCC {",
+      "        buildInputs = with pkgs; [",
+      "        ];",
+      "      };",
+      "    });",
+      "}"
+    ],
+    "description": "devshell flake"
+  }
 }
