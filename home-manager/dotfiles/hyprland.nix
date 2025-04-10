@@ -201,7 +201,6 @@
       $mainMod = ALT
 
       bind = $mainMod SHIFT, C, killactive,
-      bind = $mainMod SHIFT, Q, exit
 
       bind = $mainMod SHIFT, RETURN, exec, $terminal
       bind = $mainMod, X, exec, $menu
