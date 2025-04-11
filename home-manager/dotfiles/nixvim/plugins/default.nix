@@ -12,6 +12,7 @@
     ./luasnip.nix
     ./multicursors.nix
     ./oil.nix
+    ./refactoring.nix
     ./telescope.nix
     ./treesitter.nix
     ./yeet.nix
