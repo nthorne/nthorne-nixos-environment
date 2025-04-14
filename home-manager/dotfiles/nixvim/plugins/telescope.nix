@@ -50,6 +50,9 @@
           "<leader>sc" = {
             action = "commands";
           };
+          "<leader>sy" = {
+            action = "lsp_document_symbols";
+          };
         };
       };
       which-key.settings = {
