@@ -1,23 +1,18 @@
-{pkgs, ...}: {
-  imports = [
-    ./auto-session.nix
-    ./avante.nix
-    ./cmp.nix
-    ./codecompanion.nix
-    ./conform.nix
-    ./copilot.nix
-    ./dap.nix
-    ./harpoon.nix
-    ./indent-blankline.nix
-    ./lsp.nix
-    ./luasnip.nix
-    ./multicursors.nix
-    ./oil.nix
-    ./refactoring.nix
-    ./telescope.nix
-    ./treesitter.nix
-    ./yeet.nix
-  ];
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  # We filter out this file and anything that is not a nix file
+  modulesFilter =
+    lib.filterAttrs (name: value:
+      value == "regular" && name != "default.nix" && (lib.strings.hasSuffix ".nix" name));
+
+  # Apply the filter to all files in the current directory
+  nixModules = builtins.attrNames (modulesFilter (builtins.readDir ./.));
+in {
+  # Convert all paths to absolute paths and import the modules
+  imports = builtins.map (path: ./. + "/${path}") nixModules;
 
   # https://dotfyle.com/
   programs.nixvim = {
