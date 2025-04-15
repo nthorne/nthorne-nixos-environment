@@ -23,7 +23,36 @@
           };
         };
       };
+
       treesitter-context.enable = true;
+
+      treesitter-textobjects = {
+        enable = true;
+
+        move = {
+          enable = true;
+          gotoNextStart.__raw = ''
+            {
+              ["](b"] = "@block.outer",
+              ["](f"] = "@function.outer",
+            }'';
+          gotoNextEnd.__raw = ''
+            {
+              ["])b"] = "@block.outer",
+              ["])f"] = "@function.outer",
+            }'';
+          gotoPreviousStart.__raw = ''
+            {
+              ["[(b"] = "@block.outer",
+              ["[(f"] = "@function.outer",
+            }'';
+          gotoPreviousEnd.__raw = ''
+            {
+              ["[)b"] = "@block.outer",
+              ["[)f"] = "@function.outer",
+            }'';
+        };
+      };
     };
   };
 }
