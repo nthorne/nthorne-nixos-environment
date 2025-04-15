@@ -8,6 +8,7 @@
     ./copilot.nix
     ./dap.nix
     ./harpoon.nix
+    ./indent-blankline.nix
     ./lsp.nix
     ./luasnip.nix
     ./multicursors.nix
