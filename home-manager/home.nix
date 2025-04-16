@@ -111,4 +111,9 @@ in {
   programs.bat.enable = true;
 
   programs.rofi.enable = true;
+
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 21d";
+  };
 }
