@@ -33,7 +33,6 @@
           "gD" = "references";
           "gt" = "type_definition";
           "gi" = "implementation";
-          "gr" = "rename";
           "K" = "hover";
         };
       };
