@@ -1,5 +1,4 @@
-{ flake-inputs, ... }:
-{
+{...}: {
   programs.waybar = {
     enable = true;
     settings = {
@@ -49,13 +48,13 @@
           format = "{ifname}";
           format-wifi = "{essid} {ifname} ({signalStrength}%)";
           format-ethernet = "{essid} {ifname} {ipaddr}/{cidr} ";
-          format-disconnected = "Disconnected"; 
+          format-disconnected = "Disconnected";
           max-length = 50;
         };
 
         battery = {
           format = "{icon} {capacity}%";
-          "format-icons" =  ["🪫" "🔋"];
+          "format-icons" = ["🪫" "🔋"];
         };
 
         clock = {
