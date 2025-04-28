@@ -1,4 +1,5 @@
 {pkgs, ...}: let
+  # Wait for 0.0.24 to be released to unstable
   avanteMain = pkgs.vimPlugins.avante-nvim.overrideAttrs (old: {
     src = pkgs.fetchFromGitHub {
       owner = "yetone";
