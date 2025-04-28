@@ -12,12 +12,6 @@ args @ {
   hostPackages = hostCollection ./packages;
   hostScripts = hostCollection ./scripts;
 
-  # Overlay for CopyQ from specific commit
-  copyqCommit = "be621a4f602a4011bf55d4db367cc662d7e56924";
-  copyqPkgs = import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/${copyqCommit}.tar.gz";
-    sha256 = "sha256:1svjhkc1kxnyxrda01wc21475b54f5faazklnqzxbp50h7vjz7m8";
-  }) { inherit (pkgs) system; };
 in {
   imports =
     [
@@ -113,10 +107,7 @@ in {
     settings.enable_audio_bell = false;
   };
 
-  services.copyq = {
-    enable = true;
-    package = copyqPkgs.copyq;
-  };
+  services.copyq.enable = true;
 
   programs.bat.enable = true;
 
