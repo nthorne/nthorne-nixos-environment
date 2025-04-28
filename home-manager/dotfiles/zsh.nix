@@ -119,7 +119,7 @@
     '';
 
     # .zshrc
-    initExtra = ''
+    initContent = ''
       ### .zshrc
       ###   - sourced for interactive shells
       ###
