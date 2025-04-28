@@ -31,6 +31,7 @@ in {
     remmina
     rr
     slack
+    tmuxinator
     ungoogled-chromium
     wget
   ];

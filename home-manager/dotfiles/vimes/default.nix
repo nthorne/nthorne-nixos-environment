@@ -5,4 +5,6 @@
 
     ../rr.nix
   ];
+
+  home.file.".tmuxinator".source = ./.tmuxinator;
 }
