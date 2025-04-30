@@ -1,0 +1,12 @@
+name: agent-az-local-release
+root: ~/src/agent
+
+windows:
+  - run:
+      panes:
+        - daemon:
+          - cd /home/nthorne/src/agent/daemons/out/Release/src/apps/
+          - sudo ./fsdaemon --log-stdout --data-directory=/home/nthorne/.local/share/netclean/agent-az --agent-identifier 0c45142a-23fa-4d2b-b1ea-b3677755768f
+        - agent:
+          - cd /home/nthorne/src/agent/agent/src/agent/
+          - DOTNET_ENVIRONMENT=computer;Installation__ApplicationDataPath=/home/nthorne/.local/share/netclean/agent-az dotnet run -c Release -- --console --static-zmq-ports --server https://vimes:15102 --agent-auth-secret "$(cat /home/nthorne/.local/share/netclean/pams/AgentAuthSecret.txt)"
