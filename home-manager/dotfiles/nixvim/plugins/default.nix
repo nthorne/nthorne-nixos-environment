@@ -17,6 +17,8 @@ in {
   # https://dotfyle.com/
   programs.nixvim = {
     plugins = {
+      nvim-autopairs.enable = true;
+
       nvim-bqf.enable = true;
 
       cmake-tools.enable = true;
