@@ -1,9 +1,8 @@
 {...}: {
   programs.nixvim = {
     plugins = {
-      trouble = {
-        enable = true;
-      };
+      todo-comments.enable = true;
+      trouble.enable = true;
     };
 
     keymaps = [
@@ -18,6 +17,12 @@
         key = "<leader>ud";
         action = "<cmd>Trouble diagnostics toggle filter.buf=0<cr>";
         options.desc = "Buffer [D]iagnostics";
+      }
+      {
+        mode = "n";
+        key = "<leader>ut";
+        action = "<cmd>TodoTrouble<cr>";
+        options.desc = "Show [T]ODOs in Trouble";
       }
     ];
     plugins.which-key.settings = {
