@@ -63,6 +63,14 @@
             hostname = "vimes";
             system = "${system}";
           };
+
+        # Mako fails to build on main, so I disable it for now.
+        home-manager.sharedModules = [
+          {
+            stylix.autoEnable = true;
+            stylix.targets.mako.enable = false;
+          }
+        ];
       }
 
       sops-nix.nixosModules.sops
@@ -88,6 +96,14 @@
             hostname = "nixlaptop";
             system = "${system}";
           };
+
+        # Mako fails to build on main, so I disable it for now.
+        home-manager.sharedModules = [
+          {
+            stylix.autoEnable = true;
+            stylix.targets.mako.enable = false;
+          }
+        ];
       }
     ];
 
