@@ -59,6 +59,12 @@
         action = "<cmd>lua require('dapui').eval()<CR>";
         options.desc = "[E]valuate expression";
       }
+      {
+        mode = "n";
+        key = "<leader>dC";
+        action = "<cmd>lua require('dap').run_to_cursor()<CR>";
+        options.desc = "Run to [C]ursor";
+      }
     ];
 
     extraConfigLua = ''
