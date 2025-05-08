@@ -61,9 +61,15 @@
       }
       {
         mode = "n";
-        key = "<leader>dC";
+        key = "<leader>dh";
         action = "<cmd>lua require('dap').run_to_cursor()<CR>";
-        options.desc = "Run to [C]ursor";
+        options.desc = "Run to [H]ere";
+      }
+      {
+        mode = "n";
+        key = "<leader>dk";
+        action = "<cmd>lua require('dap.ui.widgets').hover()<CR>";
+        options.desc = "Run to [H]ere";
       }
     ];
 
