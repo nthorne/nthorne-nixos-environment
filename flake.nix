@@ -23,6 +23,9 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     nix-secrets.url = "git+ssh://git@github.com/nthorne/nix-secrets.git?allRefs=true&ref=main";
+
+    mcphub-nvim.url = "github:ravitemer/mcphub.nvim";
+    mcp-hub.url = "github:ravitemer/mcp-hub";
   };
   outputs = {
     nixpkgs,

@@ -42,7 +42,7 @@ in {
         package = avanteMain;
 
         settings = {
-          provider = "copilotthink";
+          provider = "copilot";
           copilot = {
             model = "claude-3.7-sonnet";
           };
@@ -61,6 +61,17 @@ in {
           #behaviour = {
           #  enable_cursor_planning_mode = false;
           #};
+
+          # Allow for mcphub to update the prompt
+          system_prompt.__raw = ''function()
+            local hub = require("mcphub").get_hub_instance()
+            return hub:get_active_servers_prompt()
+          end'';
+          custom_tools.__raw = ''function()
+            return {
+              require("mcphub.extensions.avante").mcp_tool(),
+            }
+          end'';
         };
       };
     };
