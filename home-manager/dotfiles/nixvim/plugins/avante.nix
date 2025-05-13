@@ -4,16 +4,18 @@
     src = pkgs.fetchFromGitHub {
       owner = "yetone";
       repo = "avante.nvim";
-      rev = "87ea15bb94f0707a5fd154f11f5ed419c17392d1";
-      sha256 = "sha256-zZzLDfxAe7SAwVqDoTAO9SFc0OdS0wctzoN+E/qZu8E=";
+      rev = "adae032f5fbc611d59545792d3c5bb1c9ddc3fdb";
+      sha256 = "sha256-v99yu5LvwdmHBcH61L6JIqjQkZR8Lm2fR/uzQZNPo38=";
     };
-    version = "2025-04-09";
+    version = "2025-05-10";
     # Require setup so we skip these.
     nvimSkipModules = [
-      "avante.providers.vertex_claude"
       "avante.providers.azure"
-      "avante.providers.ollama"
       "avante.providers.copilot"
+      "avante.providers.gemini"
+      "avante.providers.ollama"
+      "avante.providers.vertex_claude"
+      "avante.providers.vertex"
     ];
 
     dependencies = with pkgs.vimPlugins; [
@@ -63,15 +65,17 @@ in {
           #};
 
           # Allow for mcphub to update the prompt
-          system_prompt.__raw = ''function()
-            local hub = require("mcphub").get_hub_instance()
-            return hub:get_active_servers_prompt()
-          end'';
-          custom_tools.__raw = ''function()
-            return {
-              require("mcphub.extensions.avante").mcp_tool(),
-            }
-          end'';
+          system_prompt.__raw = ''
+            function()
+              local hub = require("mcphub").get_hub_instance()
+              return hub:get_active_servers_prompt()
+            end'';
+          custom_tools.__raw = ''
+            function()
+              return {
+                require("mcphub.extensions.avante").mcp_tool(),
+              }
+            end'';
         };
       };
     };

@@ -71,7 +71,12 @@
         home-manager.sharedModules = [
           {
             stylix.autoEnable = true;
-            stylix.targets.mako.enable = false;
+            stylix.targets = {
+              mako.enable = false;
+                wpaperd.enable = false;
+                vscode.enable = false;
+
+            };
           }
         ];
       }
