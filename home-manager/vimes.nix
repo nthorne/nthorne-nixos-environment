@@ -64,6 +64,16 @@ in {
         hostname = "192.168.102.248";
         user = "ture";
       };
+      "farmer-agent-0-ubuntu2204" = {
+        hostname = "nthorne-agent-0-ubuntu2204.swedencentral.cloudapp.azure.com";
+        user = "adminuser";
+        identityFile = "/home/nthorne/.ssh/id_ed25519";
+      };
+      "farmer-agent-0-ubuntu2404" = {
+        hostname = "nthorne-agent-0-ubuntu2404.swedencentral.cloudapp.azure.com";
+        user = "adminuser";
+        identityFile = "/home/nthorne/.ssh/id_ed25519";
+      };
     };
   };
 }
