@@ -7,12 +7,10 @@
   pkgs,
   modulesPath,
   ...
-}:
-let
+}: let
   thermald-conf = ./thermald-conf.xml;
-in
-{
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+in {
+  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
@@ -23,12 +21,15 @@ in
     "sd_mod"
     "rtsx_pci_sdmmc"
   ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [];
   boot.kernelModules = [
     "kvm-intel"
     "i915"
   ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [];
+  # Prevent kvm-intel from taking control over VT-x at boot, to allow
+  # VirtualBox to use it when needed.
+  boot.kernelParams = ["kvm.enable_virt_at_load=0"];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/56a8e334-2f3a-49ae-bd23-de6cb0c165d9";
@@ -40,7 +41,7 @@ in
     fsType = "vfat";
   };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/5c55cb02-8019-4813-9715-c800fc3728f3"; } ];
+  swapDevices = [{device = "/dev/disk/by-uuid/5c55cb02-8019-4813-9715-c800fc3728f3";}];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
