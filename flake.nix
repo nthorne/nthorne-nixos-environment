@@ -117,6 +117,37 @@
       }
     ];
 
+    hex-modules = [
+      ./configuration.nix
+      ./hex/hardware-configuration.nix
+      ./hex/adaptation.nix
+
+      stylix.nixosModules.stylix
+
+      pin-registries
+
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.nthorne = import ./home-manager/home.nix;
+        home-manager.extraSpecialArgs.flake-inputs =
+          inputs
+          // {
+            hostname = "hex";
+            system = "${system}";
+          };
+
+        # Mako fails to build on main, so I disable it for now.
+        home-manager.sharedModules = [
+          {
+            stylix.autoEnable = true;
+            stylix.targets.mako.enable = false;
+          }
+        ];
+      }
+    ];
+
     wifiDevice = "wlp0s20f3";
   in {
     nixpkgs.config.allowUnfree = true;
@@ -130,6 +161,10 @@
     nixosConfigurations.nixlaptop = nixpkgs.lib.nixosSystem {
       system = "${system}";
       modules = nixlaptop-modules;
+    };
+    nixosConfigurations.hex = nixpkgs.lib.nixosSystem {
+      system = "${system}";
+      modules = hex-modules;
     };
 
     # Theese are for testing purposes
