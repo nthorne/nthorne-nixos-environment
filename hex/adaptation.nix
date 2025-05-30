@@ -1,14 +1,16 @@
-{ ... }:
-
-let
-  # This file contains non-public information.
+{...}: let
   private = /etc/nixos/private.nix;
-in
-{
-  imports = [ ] ++ (if builtins.pathExists private then [ private ] else [ ]);
+in {
+  imports =
+    []
+    ++ (
+      if builtins.pathExists private
+      then [private]
+      else []
+    );
 
-  networking.hostName = "hex"; # Define your hostname.
-  networking.networkmanager.enable = true; # Enables wireless support via wpa_supplicant.
+  networking.hostName = "hex";
+  networking.networkmanager.enable = true;
 
   boot.loader = {
     # Use the GRUB 2 boot loader.
@@ -17,12 +19,7 @@ in
 
       # Define on which hard drive you want to install Grub.
       device = "/dev/sda"; # or "nodev" for efi only
-
-      # efiSupport = true;
-      # efiInstallAsRemovable = true;
     };
-
-    # efi.efiSysMountPoint = "/boot/efi";
   };
 
   # Enable the OpenSSH daemon.
@@ -36,7 +33,6 @@ in
   services.tailscale.enable = true;
 
   hardware.graphics.enable = true;
-  #hardware.opengl.driSupport = true;
 
   users.extraUsers.nthorne.extraGroups = [
     "wheel"
@@ -44,13 +40,35 @@ in
     "dialout"
   ];
 
+  # Systemd socket unit
+  systemd.sockets.open-webui = {
+    enable = true;
+    wantedBy = ["sockets.target"];
+    socketConfig.ListenStream = 8080;
+  };
+
   virtualisation = {
     podman = {
       enable = true;
     };
     docker.enable = true;
-  };
 
+    oci-containers = {
+      backend = "podman";
+      containers = {
+        openwebui = {
+          image = "ghcr.io/open-webui/open-webui:main";
+          ports = ["8080:8080"];
+          volumes = [
+            "openwebui:/app/backend/data"
+          ];
+          autoStart = false;
+
+          extraOptions = ["--network=host"];
+        };
+      };
+    };
+  };
 
   nix.extraOptions = ''
     experimental-features = nix-command flakes
