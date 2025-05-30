@@ -209,6 +209,8 @@ in {
     };
   };
 
+  services.tailscale.enable = true;
+
   nix.extraOptions = ''
     keep-outputs = true
     keep-derivations = true
