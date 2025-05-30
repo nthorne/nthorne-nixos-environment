@@ -49,10 +49,9 @@
 
     system = "x86_64-linux";
 
-    vimes-modules = [
+    # These are modules that are common across all my systems.
+    common-modules = [
       ./configuration.nix
-      ./work/hardware-config/hardware-config-generated.nix
-      ./work/adaptation.nix
 
       stylix.nixosModules.stylix
 
@@ -63,12 +62,6 @@
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.nthorne = import ./home-manager/home.nix;
-        home-manager.extraSpecialArgs.flake-inputs =
-          inputs
-          // {
-            hostname = "vimes";
-            system = "${system}";
-          };
 
         # Mako fails to build on main, so I disable it for now.
         home-manager.sharedModules = [
@@ -82,133 +75,107 @@
           }
         ];
       }
-
-      sops-nix.nixosModules.sops
     ];
 
-    nixlaptop-modules = [
-      ./configuration.nix
-      ./laptop/hardware-configuration.nix
-      ./laptop/adaptation.nix
+    vimes-modules =
+      common-modules
+      ++ [
+        ./work/hardware-config/hardware-config-generated.nix
+        ./work/adaptation.nix
 
-      stylix.nixosModules.stylix
+        sops-nix.nixosModules.sops
+      ];
 
-      pin-registries
+    nixlaptop-modules =
+      common-modules
+      ++ [
+        ./laptop/hardware-configuration.nix
+        ./laptop/adaptation.nix
+      ];
 
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.nthorne = import ./home-manager/home.nix;
-        home-manager.extraSpecialArgs.flake-inputs =
-          inputs
-          // {
-            hostname = "nixlaptop";
-            system = "${system}";
-          };
-
-        # Mako fails to build on main, so I disable it for now.
-        home-manager.sharedModules = [
-          {
-            stylix.autoEnable = true;
-            stylix.targets.mako.enable = false;
-          }
-        ];
-      }
-    ];
-
-    hex-modules = [
-      ./configuration.nix
-      ./hex/hardware-configuration.nix
-      ./hex/adaptation.nix
-
-      stylix.nixosModules.stylix
-
-      pin-registries
-
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.nthorne = import ./home-manager/home.nix;
-        home-manager.extraSpecialArgs.flake-inputs =
-          inputs
-          // {
-            hostname = "hex";
-            system = "${system}";
-          };
-
-        # Mako fails to build on main, so I disable it for now.
-        home-manager.sharedModules = [
-          {
-            stylix.autoEnable = true;
-            stylix.targets.mako.enable = false;
-          }
-        ];
-      }
-    ];
+    hex-modules =
+      common-modules
+      ++ [
+        ./hex/hardware-configuration.nix
+        ./hex/adaptation.nix
+      ];
 
     wifiDevice = "wlp0s20f3";
+
+    mkConfig = {
+      name,
+      modules,
+    }: {
+      "${name}" = nixpkgs.lib.nixosSystem {
+        system = "${system}";
+        modules =
+          modules
+          ++ [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs.flake-inputs =
+                inputs
+                // {
+                  hostname = "${name}";
+                  system = "${system}";
+                };
+            }
+          ];
+      };
+    };
+
+    mkVmConfig = {
+      name,
+      modules,
+      extraModules ? [],
+    }: {
+      "${name}-vm" = nixpkgs.lib.nixosSystem {
+        system = "${system}";
+
+        modules =
+          modules
+          ++ [
+            ({...}: {
+              users.extraUsers."nthorne".password = "nthorne";
+              users.mutableUsers = false;
+            })
+          ]
+          ++ extraModules;
+      };
+    };
   in {
     nixpkgs.config.allowUnfree = true;
 
     formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
 
-    nixosConfigurations.vimes = nixpkgs.lib.nixosSystem {
-      system = "${system}";
-      modules = vimes-modules;
-    };
-    nixosConfigurations.nixlaptop = nixpkgs.lib.nixosSystem {
-      system = "${system}";
-      modules = nixlaptop-modules;
-    };
-    nixosConfigurations.hex = nixpkgs.lib.nixosSystem {
-      system = "${system}";
-      modules = hex-modules;
-    };
-
-    # Theese are for testing purposes
-    nixosConfigurations.vimes-vm = nixpkgs.lib.nixosSystem {
-      system = system;
-
-      modules =
-        vimes-modules
-        ++ [
-          (
-            {...}: {
-              #services.openssh.enable = true;
-              #services.openssh.permitRootLogin = "yes";
-              #users.extraUsers.root.password = "";
-
-              users.extraUsers."nthorne".password = "nthorne";
-              users.mutableUsers = false;
-
-              systemd.services = {
-                "network-link-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [];
-                "network-addresses-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [];
-              };
-            }
-          )
+    nixosConfigurations =
+      mkConfig {
+        name = "vimes";
+        modules = vimes-modules;
+      }
+      // mkConfig {
+        name = "nixlaptop";
+        modules = nixlaptop-modules;
+      }
+      // mkConfig {
+        name = "hex";
+        modules = hex-modules;
+      }
+      // mkVmConfig {
+        name = "vimes";
+        modules = vimes-modules;
+        extraModules = [
+          ({...}: {
+            systemd.services = {
+              "network-link-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [];
+              "network-addresses-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [];
+            };
+          })
         ];
-    };
-
-    nixosConfigurations.nixlaptop-vm = nixpkgs.lib.nixosSystem {
-      system = system;
-
-      modules =
-        nixlaptop-modules
-        ++ [
-          (
-            {...}: {
-              #services.openssh.enable = true;
-              #services.openssh.permitRootLogin = "yes";
-              #users.extraUsers.root.password = "";
-
-              users.extraUsers."nthorne".password = "nthorne";
-              users.mutableUsers = false;
-            }
-          )
-        ];
-    };
+      }
+      // mkVmConfig {
+        name = "nixlaptop";
+        modules = nixlaptop-modules;
+      };
   };
 }
