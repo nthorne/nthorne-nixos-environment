@@ -88,7 +88,7 @@
 
     nixlaptop-modules = [
       ./configuration.nix
-      ./hardware-configuration.nix
+      ./laptop/hardware-configuration.nix
       ./laptop/adaptation.nix
 
       stylix.nixosModules.stylix
