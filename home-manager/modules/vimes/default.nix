@@ -13,8 +13,9 @@
   });
 in {
   imports = [
-    (import ./packages/clion args)
-    (import ./packages/clamav-scan args)
+    (import ../../packages/clion args)
+    (import ../../packages/clamav-scan args)
+    (import ../workstation.nix args)
 
     args.flake-inputs.sops-nix.homeManagerModules.sops
   ];

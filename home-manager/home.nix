@@ -11,7 +11,7 @@ args @ {
   hostDotfiles = hostCollection ./dotfiles;
   hostPackages = hostCollection ./packages;
   hostScripts = hostCollection ./scripts;
-
+  hostModules = hostCollection ./modules;
 in {
   imports =
     [
@@ -25,8 +25,6 @@ in {
       flake-inputs.nixvim.homeManagerModules.nixvim
       ./dotfiles/nixvim
 
-      # Automatically include <hostname>.nix for host specific configurations.
-      (import (./. + ("/" + hostname + ".nix")) args)
       # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
       #    here to keep the host specific config files short
     ]
@@ -43,6 +41,10 @@ in {
     ++ (
       if builtins.pathExists hostScripts
       then [hostScripts]
+      else []
+    ) ++ (
+      if builtins.pathExists hostModules
+      then [hostModules]
       else []
     );
 
@@ -65,17 +67,12 @@ in {
   home.stateVersion = "23.05";
 
   home.packages = with pkgs; [
-    bitwarden
     comma
     fasd
     fd
     file
     fzf
-    gh
-    gparted
-    grimblast # Screen capture tool with hyprland support
     htop
-    hyperfine
     just
     nvd
     pavucontrol
@@ -86,15 +83,9 @@ in {
     tree
     firefox
     git-crypt
-    obsidian
-    todoist
     waybar
     wl-clipboard
   ];
-
-  home.sessionVariables = {
-    OLLAMA_ORIGINS = "app://obsidian.md*";
-  };
 
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
   programs.direnv.enable = true;
@@ -107,7 +98,6 @@ in {
     settings.enable_audio_bell = false;
   };
 
-  services.copyq.enable = true;
 
   programs.bat.enable = true;
 
