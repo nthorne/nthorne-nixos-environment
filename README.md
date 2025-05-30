@@ -5,21 +5,9 @@ as some assorted dotfiles.
 
 # Installation
 
-    sudo rm /etc/nixos/configuration.nix
-    sudo ln -s $PWD/configuration.nix /etc/nixos/
-
-Symlink the adaptation nix file in to place, if applicable; e.g.
-
-    sudo ln -s $PWD/laptop/adaptation.nix /etc/nixos/
-
-if the target is my home laptop.
-
-Symlink any dotfiles into the appropriate place; e.g.
-
-    ln -s $PWD/dotfiles/.direnvrc $HOME/
-
-Install the respective home manager configuration, if any (at the moment only
-used for my work profile, so check ./work/home-manager/README.md).
+```sh
+sudo nixos-rebuild switch --flake .#<HOSTNAME>
+```
 
 ## Temporary
 
