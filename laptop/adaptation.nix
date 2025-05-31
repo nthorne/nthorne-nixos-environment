@@ -28,6 +28,8 @@ in
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  services.tailscale.enable = true;
+
   services.displayManager.autoLogin = {
     enable = true;
     user = "nthorne";
