@@ -74,6 +74,7 @@ in {
     fzf
     htop
     just
+    jq
     nvd
     pavucontrol
     seahorse # For managing gnome-keyring

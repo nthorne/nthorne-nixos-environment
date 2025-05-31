@@ -25,7 +25,6 @@ in {
     ctags
     gdb
     insomnia
-    jq
     lnavOverride
     nvtopPackages.full
     p7zip
