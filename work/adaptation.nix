@@ -203,6 +203,7 @@ in {
   services.ollama = {
     enable = true;
     acceleration = "cuda";
+    host = "0.0.0.0";
     environmentVariables = {
       OLLAMA_ORIGINS = "app://obsidian.md*";
       CUDA_VISIBLE_DEVICES = "0,1";
