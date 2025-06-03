@@ -70,6 +70,20 @@ in {
 
           extraOptions = ["--network=host"];
         };
+        searxng = {
+          image = "searxng/searxng";
+          volumes = [
+            "searxng:/etc/searxng"
+          ];
+          autoStart = true;
+
+          extraOptions = ["--network=host"];
+
+          environment = {
+            BIND_ADDRESS = "0.0.0.0:8081";
+            INSTANCE_NAME = "hex";
+          };
+        };
       };
     };
   };
