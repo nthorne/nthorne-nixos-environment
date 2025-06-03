@@ -1,8 +1,10 @@
-{...}: let
+{config, ...}: let
   private = /etc/nixos/private.nix;
 in {
   imports =
-    []
+    [
+      ./wallabag.nix
+    ]
     ++ (
       if builtins.pathExists private
       then [private]
@@ -45,6 +47,16 @@ in {
     enable = true;
     wantedBy = ["sockets.target"];
     socketConfig.ListenStream = 8080;
+  };
+
+  # Enable container name DNS for all Podman networks.
+  networking.firewall.interfaces = let
+    matchAll =
+      if !config.networking.nftables.enable
+      then "podman+"
+      else "podman*";
+  in {
+    "${matchAll}".allowedUDPPorts = [53];
   };
 
   virtualisation = {
