@@ -50,6 +50,10 @@ in {
   virtualisation = {
     podman = {
       enable = true;
+      autoPrune = {
+        enable = true;
+        flags = ["--all" "--filter"];
+      };
     };
     docker.enable = true;
 
@@ -62,7 +66,7 @@ in {
           volumes = [
             "openwebui:/app/backend/data"
           ];
-          autoStart = false;
+          autoStart = true;
 
           extraOptions = ["--network=host"];
         };
