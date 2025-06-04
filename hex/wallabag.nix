@@ -13,9 +13,7 @@
     ];
     log-driver = "journald";
     extraOptions = [
-      "--health-cmd=[\"mysqladmin\", \"ping\", \"-h\", \"localhost\"]"
-      "--health-interval=20s"
-      "--health-timeout=3s"
+      "--no-healthcheck"
       "--network-alias=db"
       "--network=wallabag_default"
     ];
@@ -42,7 +40,7 @@
     log-driver = "journald";
     extraOptions = [
       "--health-cmd=[\"redis-cli\", \"ping\"]"
-      "--health-interval=20s"
+      "--health-interval=300s"
       "--health-timeout=3s"
       "--network-alias=redis"
       "--network=wallabag_default"
