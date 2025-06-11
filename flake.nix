@@ -24,10 +24,7 @@
 
     nix-secrets.url = "git+ssh://git@github.com/nthorne/nix-secrets.git?allRefs=true&ref=main";
 
-    # TODO:: Check if this is fixed, or see if I can fix it.
-    # Pin this one since fec8c2d75fcf42f657247cab43cd01cfea6095ea
-    # fails on require-check.
-    mcphub-nvim.url = "github:ravitemer/mcphub.nvim?rev=c737d9df6d3a86d0e063bed7a81270bb27f0bd3c";
+    mcphub-nvim.url = "github:ravitemer/mcphub.nvim";
     mcp-hub.url = "github:ravitemer/mcp-hub";
   };
   outputs = {
