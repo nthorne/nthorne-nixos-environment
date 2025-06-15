@@ -12,6 +12,4 @@
   home.sessionVariables = {
     OLLAMA_ORIGINS = "app://obsidian.md*";
   };
-
-  services.copyq.enable = true;
 }
