@@ -41,6 +41,22 @@ in
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.extraUsers.alma = {
+    isNormalUser = true;
+    uid = 1001;
+    extraGroups = ["wheel"];
+    createHome = true;
+    home = "/home/alma";
+    shell = pkgs.zsh;
+
+    packages = with pkgs; [
+      kitty
+      firefox
+      rofi
+    ];
+  };
+
   users.extraUsers.nthorne.extraGroups = [
     "wheel"
     "audio"
