@@ -104,6 +104,8 @@ in {
 
   programs.rofi.enable = true;
 
+  programs.atuin.enable = true;
+
   nix.gc = {
     automatic = true;
     options = "--delete-older-than 21d";
