@@ -1,42 +1,53 @@
 {
   ...
 }: let
+  models = {
+    claude = "claude-3.7-sonnet";
+    claudeThought = "claude-3.7-sonnet-thought";
+    qwen = "qwen2.5-coder:latest";
+  };
 in {
-  # References:
-  #   - https://github.com/yetone/avante.nvim/issues/1807
-  #   - https://github.com/yetone/avante.nvim/issues/1813
   programs.nixvim = {
     plugins = {
       avante = {
         enable = true;
 
         settings = {
+          # Set the default provider to use
           provider = "copilot";
-          copilot = {
-            model = "claude-3.7-sonnet";
-          };
-          vendors = {
+
+          # Configure all available providers
+          providers = {
+            # Default Claude provider through Copilot API
+            copilot.model = models.claude;
+            
+            # Extended provider with longer timeouts for complex reasoning
             copilotthink = {
               __inherited_from = "copilot";
-              model = "claude-3.7-sonnet-thought";
-              timeout = 600000;
+              model = models.claudeThought;
+              timeout = 600000; # 10 minutes
               max_completion_tokens = 64000;
             };
+            
+            # Local model option through Ollama
+            ollama.model = models.qwen;
           };
-          ollama = {
-            model = "qwen2.5-coder:latest";
-          };
-          # Recommended for ollama
-          #behaviour = {
-          #  enable_cursor_planning_mode = false;
-          #};
 
-          # Allow for mcphub to update the prompt
+          # Ollama-specific settings (disabled by default)
+          # Uncomment this section if using Ollama as primary provider
+          # behaviour = {
+          #   enable_cursor_planning_mode = false;
+          # };
+
+          # MCP Integration Settings
+          # Allow for mcphub to dynamically update the prompt
           system_prompt.__raw = ''
             function()
               local hub = require("mcphub").get_hub_instance()
               return hub:get_active_servers_prompt()
             end'';
+          
+          # Add MCP tools to Avante
           custom_tools.__raw = ''
             function()
               return {
