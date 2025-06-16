@@ -68,4 +68,8 @@ in {
       };
     };
   };
+
+  programs.zsh.shellAliases = {
+    nlsh = ''nlsh() { curl -s localhost:11434/api/generate -d "{\"model\": \"westenfelder/NL2SH\", \"prompt\": \"$1\", \"stream\": false}" | jq -r '.response'}; nlsh'';
+  };
 }
