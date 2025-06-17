@@ -393,11 +393,11 @@
     "nix-secrets": {
       "locked": {
         "allRefs": false,
-        "lastModified": 1743147030,
-        "narHash": "sha256-3iHPXv16bsrh7L08EwN7R+s0niYDtRYaLNsn17qdu1I=",
+        "lastModified": 1750141040,
+        "narHash": "sha256-gLxqb/XZApdJR30QQMdx9bdaW9O0ZqSRevdXMMYfcXw=",
         "ref": "main",
-        "rev": "bf3dd8673e0c58c3862db1cfe6d4a2b94dc40390",
-        "revCount": 2,
+        "rev": "f8cde49d5de15c6941c52bec1390096393bf8c54",
+        "revCount": 5,
         "type": "git",
         "url": "ssh://git@github.com/nthorne/nix-secrets.git"
       },

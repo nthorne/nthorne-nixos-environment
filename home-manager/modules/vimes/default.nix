@@ -37,6 +37,8 @@ in {
       "vimes/ssh_keys/rsa_secret".path = "/home/nthorne/.ssh/id_rsa";
       "vimes/ssh_keys/ed_pub".path = "/home/nthorne/.ssh/id_ed25519.pub";
       "vimes/ssh_keys/ed_secret".path = "/home/nthorne/.ssh/id_ed25519";
+      "all/atuin/key".path = "/home/nthorne/.local/share/atuin/key";
+      "all/atuin/session".path = "/home/nthorne/.local/share/atuin/session";
     };
   };
 
