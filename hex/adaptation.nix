@@ -1,4 +1,4 @@
-{config, ...}: let
+{config, pkgs, ...}: let
   private = /etc/nixos/private.nix;
 in {
   imports =
@@ -23,6 +23,11 @@ in {
       device = "/dev/sda"; # or "nodev" for efi only
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    age
+    sops
+  ];
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
