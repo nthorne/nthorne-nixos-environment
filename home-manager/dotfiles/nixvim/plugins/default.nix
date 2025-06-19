@@ -33,6 +33,8 @@ in {
 
       lualine.enable = true;
 
+      noice.enable = true;
+
       rainbow-delimiters.enable = true;
 
       render-markdown.enable = true;
