@@ -17,7 +17,7 @@
           "<leader>s." = {
             action = "oldfiles";
           };
-          "<leader>sr" = {
+          "<leader>su" = {
             action = "resume";
           };
           "<leader>sd" = {
@@ -52,6 +52,12 @@
           };
           "<leader>sy" = {
             action = "lsp_document_symbols";
+          };
+          "<leader>sr" = {
+            action = "registers";
+          };
+          "<leader>sm" = {
+            action = "marks";
           };
         };
       };
