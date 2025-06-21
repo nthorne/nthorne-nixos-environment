@@ -111,11 +111,9 @@ in {
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     afuse
-    age
     clamav
     fscrypt-experimental
     gnupg
-    sops
     sshfs-fuse
   ];
 

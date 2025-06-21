@@ -17,6 +17,7 @@ in {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    age
     git
     git-agecrypt
     terminus_font
@@ -24,6 +25,7 @@ in {
 
     polkit
     polkit_gnome
+    sops
   ];
 
   fonts.packages = with pkgs; [jetbrains-mono];

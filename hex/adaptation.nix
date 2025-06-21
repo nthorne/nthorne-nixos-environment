@@ -24,11 +24,6 @@ in {
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    age
-    sops
-  ];
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
