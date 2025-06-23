@@ -195,7 +195,8 @@ in {
   # Needed for cargo to be able to pull from private Github repositories
   programs.ssh = {
     forwardX11 = true;
-    startAgent = true;
+    # TODO: Already started by gnome-keyring, so this _should_ be redundant.
+    # startAgent = true;
   };
 
   services.ollama = {
