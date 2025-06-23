@@ -64,7 +64,7 @@ in {
       enable = true;
       autoPrune = {
         enable = true;
-        flags = ["--all" "--filter"];
+        flags = ["--all"];
       };
     };
     docker.enable = true;
