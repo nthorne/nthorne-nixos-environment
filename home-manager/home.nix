@@ -104,7 +104,13 @@ in {
 
   programs.rofi.enable = true;
 
-  programs.atuin.enable = true;
+  programs.atuin = {
+    enable = true;
+    settings = {
+      # ALT key is taken by Hyprland..
+      ctrl_n_shortcuts = true;
+    };
+  };
 
   nix.gc = {
     automatic = true;
