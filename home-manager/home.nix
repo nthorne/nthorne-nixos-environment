@@ -42,7 +42,8 @@ in {
       if builtins.pathExists hostScripts
       then [hostScripts]
       else []
-    ) ++ (
+    )
+    ++ (
       if builtins.pathExists hostModules
       then [hostModules]
       else []
@@ -99,7 +100,6 @@ in {
     settings.enable_audio_bell = false;
   };
 
-
   programs.bat.enable = true;
 
   programs.rofi.enable = true;
@@ -109,6 +109,8 @@ in {
     settings = {
       # ALT key is taken by Hyprland..
       ctrl_n_shortcuts = true;
+      enter_accept = true;
+      filter_mode = "host";
     };
   };
 
