@@ -1,4 +1,6 @@
-{...}: {
+{pkgs, lib, ...}: let
+  pomodoro = lib.getExe pkgs.openpomodoro-cli;
+in {
   programs.waybar = {
     enable = true;
     settings = {
@@ -8,12 +10,19 @@
 
         modules-left = ["hyprland/workspaces" "hyprland/mode"];
         modules-center = ["hyprland/window"];
-        modules-right = ["cpu" "memory" "temperature" "pulseaudio" "network" "battery" "tray" "clock"];
+        modules-right = ["custom/pomodoro" "cpu" "memory" "temperature" "pulseaudio" "network" "battery" "tray" "clock"];
 
         cpu = {
           interval = 15;
           format = "💻 {}%";
           max-length = 10;
+        };
+        
+        "custom/pomodoro" = {
+          exec = "POMODORO_STATUS=$(${pomodoro} status); test -n \"$POMODORO_STATUS\" && echo \"$POMODORO_STATUS\"";
+          interval = 1;
+          format = "{}";
+          tooltip = false;
         };
 
         memory = {
