@@ -111,6 +111,7 @@ in {
       ctrl_n_shortcuts = true;
       enter_accept = true;
       filter_mode = "host";
+      filter_mode_shell_up_key_binding = "directory";
     };
   };
 
