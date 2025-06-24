@@ -5,6 +5,7 @@
     gparted
     grimblast # Screen capture tool with hyprland support
     hyperfine
+    libnotify
     obsidian
     todoist
   ];
