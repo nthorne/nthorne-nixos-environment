@@ -15,8 +15,10 @@ in {
   home.packages = with pkgs; [
     cppcheck
     ctags
+    entr
     gdb
     insomnia
+    libxml2
     lnav
     nvtopPackages.full
     openpomodoro-cli
