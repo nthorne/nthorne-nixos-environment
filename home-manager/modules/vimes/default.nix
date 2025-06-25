@@ -22,7 +22,6 @@ in {
     libxml2
     lnav
     nvtopPackages.full
-    openpomodoro-cli
     p7zip
     remmina
     rr

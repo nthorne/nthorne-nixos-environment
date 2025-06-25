@@ -215,6 +215,8 @@
 
       bind = $mainMod SHIFT, F, exec, firefox
       bind = $mainMod SHIFT, S, exec, slack
+      bind = $mainMod SHIFT, P, exec, ${lib.getExe pkgs.openpomodoro-cli} start
+      bind = $mainMod SHIFT, B, exec, ${lib.getExe pkgs.openpomodoro-cli} break
 
       # Manage window focus
       bind = $mainMod, h, movefocus, l
