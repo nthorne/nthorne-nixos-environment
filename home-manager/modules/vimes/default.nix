@@ -8,6 +8,7 @@ in {
     (import ../../packages/clion args)
     (import ../../packages/clamav-scan args)
     (import ../workstation.nix args)
+    (import ../../scripts/tf2rem args)
 
     args.flake-inputs.sops-nix.homeManagerModules.sops
   ];
