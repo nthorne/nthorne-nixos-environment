@@ -21,7 +21,7 @@
       # Set programs that you use
       $terminal = kitty
       # $fileManager = dolphin
-      $menu = rofi -show drun
+      $menu = rofi -show drun -show-icons
       $lock = hyprlock
       $nmapplet = ${lib.getExe pkgs.networkmanagerapplet}
 
