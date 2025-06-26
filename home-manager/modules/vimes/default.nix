@@ -9,6 +9,7 @@ in {
     (import ../../packages/clamav-scan args)
     (import ../workstation.nix args)
     (import ../../scripts/tf2rem args)
+    (import ../../dotfiles/vimes/gh-cli args)
 
     args.flake-inputs.sops-nix.homeManagerModules.sops
   ];
