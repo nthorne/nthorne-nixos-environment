@@ -8,6 +8,26 @@
   #
   # * docker0 interface - inet -> 10.10.2.54 (not 172.17.0.1). Not set up; wonder where it got pulled from (daemon.json:{"bip":"10.10.254.1/24"})
   ethernetDevice = "enp0s13f0u4u4";
+
+  vpnPemFiles = [
+    "netclean-client-2024-ca"
+    "netclean-client-2024-cert"
+    "netclean-client-2024-key"
+    "netclean-client-2024-tls-crypt"
+  ];
+
+  pemNameToAttr = map (pemName: {
+    name = pemName;
+    value = {
+      format = "binary";
+      sopsFile = ./secrets/vpn/${pemName}.pem;
+      path = "/usr/share/certificates/${pemName}.pem";
+
+      mode = "0440";
+      owner = config.users.users.nthorne.name;
+      group = config.users.users.nthorne.group;
+    };
+  });
 in {
   # Don't require ethernet to be connected when booting
   systemd.services = {
@@ -218,60 +238,20 @@ in {
   '';
 
   sops.age.keyFile = "/etc/sops/age/keys.txt";
-  sops.secrets.unicorn-passwords = {
-    format = "binary";
-    sopsFile = ./secrets/unicorn-passwords.sh;
+  sops.secrets =
+    {
+      unicorn-passwords = {
+        format = "binary";
+        sopsFile = ./secrets/unicorn-passwords.sh;
 
-    mode = "0440";
-    owner = config.users.users.nthorne.name;
-    group = config.users.users.nthorne.group;
-  };
-
-  sops.secrets.nc-vpn-ca = {
-    format = "binary";
-    sopsFile = ./secrets/vpn/netclean-client-2024-ca.pem;
-    path = "/usr/share/certificates/netclean-client-2024-ca.pem";
-
-
-    mode = "0440";
-    owner = config.users.users.nthorne.name;
-    group = config.users.users.nthorne.group;
-  };
-
-  sops.secrets.nc-vpn-cert = {
-    format = "binary";
-    sopsFile = ./secrets/vpn/netclean-client-2024-cert.pem;
-    path = "/usr/share/certificates/netclean-client-2024-cert.pem";
-
-
-    mode = "0440";
-    owner = config.users.users.nthorne.name;
-    group = config.users.users.nthorne.group;
-  };
-
-  sops.secrets.nc-vpn-key = {
-    format = "binary";
-    sopsFile = ./secrets/vpn/netclean-client-2024-key.pem;
-    path = "/usr/share/certificates/netclean-client-2024-key.pem";
-
-
-    mode = "0440";
-    owner = config.users.users.nthorne.name;
-    group = config.users.users.nthorne.group;
-  };
-
-  sops.secrets.nc-vpn-tls-crypt = {
-    format = "binary";
-    sopsFile = ./secrets/vpn/netclean-client-2024-tls-crypt.pem;
-    path = "/usr/share/certificates/netclean-client-2024-tls-crypt.pem";
-
-
-    mode = "0440";
-    owner = config.users.users.nthorne.name;
-    group = config.users.users.nthorne.group;
-  };
+        mode = "0440";
+        owner = config.users.users.nthorne.name;
+        group = config.users.users.nthorne.group;
+      };
+    }
+    // builtins.listToAttrs (pemNameToAttr vpnPemFiles);
 
   # I handled this one separately from sops, as it is an input to `certificateFiles`
   # and need to be in this repository.
-  security.pki.certificateFiles = [ ./secrets/vimes.pem ];
+  security.pki.certificateFiles = [./secrets/vimes.pem];
 }
