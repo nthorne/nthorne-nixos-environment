@@ -3,8 +3,7 @@ keys:
   - &primary age1hz3gpqxyt6ke2qu9u5rl3egkndtpl08m75xh2njawevut3z95d2s68zujf
 
 creation_rules:
-  # Match extensions under a secrets folder that should be encrypted..
-  - path_regex: secrets/[^/]+\.(sh)$
-    key_groups:
+  # Use age for everything.
+  - key_groups:
       - age:
         - *primary

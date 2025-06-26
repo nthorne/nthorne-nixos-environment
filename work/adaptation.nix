@@ -217,7 +217,7 @@ in {
     experimental-features = nix-command flakes
   '';
 
-  sops.age.keyFile = "/home/nthorne/.config/sops/age/keys.txt";
+  sops.age.keyFile = "/etc/sops/age/keys.txt";
   sops.secrets.unicorn-passwords = {
     format = "binary";
     sopsFile = ./secrets/unicorn-passwords.sh;
@@ -227,5 +227,51 @@ in {
     group = config.users.users.nthorne.group;
   };
 
+  sops.secrets.nc-vpn-ca = {
+    format = "binary";
+    sopsFile = ./secrets/vpn/netclean-client-2024-ca.pem;
+    path = "/usr/share/certificates/netclean-client-2024-ca.pem";
+
+
+    mode = "0440";
+    owner = config.users.users.nthorne.name;
+    group = config.users.users.nthorne.group;
+  };
+
+  sops.secrets.nc-vpn-cert = {
+    format = "binary";
+    sopsFile = ./secrets/vpn/netclean-client-2024-cert.pem;
+    path = "/usr/share/certificates/netclean-client-2024-cert.pem";
+
+
+    mode = "0440";
+    owner = config.users.users.nthorne.name;
+    group = config.users.users.nthorne.group;
+  };
+
+  sops.secrets.nc-vpn-key = {
+    format = "binary";
+    sopsFile = ./secrets/vpn/netclean-client-2024-key.pem;
+    path = "/usr/share/certificates/netclean-client-2024-key.pem";
+
+
+    mode = "0440";
+    owner = config.users.users.nthorne.name;
+    group = config.users.users.nthorne.group;
+  };
+
+  sops.secrets.nc-vpn-tls-crypt = {
+    format = "binary";
+    sopsFile = ./secrets/vpn/netclean-client-2024-tls-crypt.pem;
+    path = "/usr/share/certificates/netclean-client-2024-tls-crypt.pem";
+
+
+    mode = "0440";
+    owner = config.users.users.nthorne.name;
+    group = config.users.users.nthorne.group;
+  };
+
+  # I handled this one separately from sops, as it is an input to `certificateFiles`
+  # and need to be in this repository.
   security.pki.certificateFiles = [ ./secrets/vimes.pem ];
 }

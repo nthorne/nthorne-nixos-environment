@@ -9,6 +9,17 @@ as some assorted dotfiles.
 sudo nixos-rebuild switch --flake .#<HOSTNAME>
 ```
 
+# Secrets management
+
+Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix), or
+[git-agecrypt](https://github.com/vlaci/git-agecrypt), depending on whether
+the secret is needed at build time or run time.
+
+## Keys
+
+Age keys need to be stored in ~/.config/sops/age/keys.txt, and /etc/sops/age/keys.txt
+(for vimes), as the home partition is decrypted at login.
+
 ## Temporary
 
 In order to fix broken ath10k driver, I also copied the firmware-5.bin from
