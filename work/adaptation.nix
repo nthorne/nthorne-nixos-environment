@@ -29,23 +29,6 @@
     };
   });
 
-  gemini-pkg = pkgs.buildNpmPackage (finalAttrs: {
-    buildInputs = [pkgs.nodejs];
-
-    pname = "gemini-cli";
-    version = "2025-06-27";
-    src = pkgs.fetchFromGitHub {
-      owner = "google-gemini";
-      repo = "gemini-cli";
-      rev = "6742a1b7f97033d1301f4159b67ef0d9587f65f2";
-      sha256 = "sha256-ikrzodJQyO861Uyz/Ud+b0N2aIwLkwCG/eHLXknX5Jc=";
-    };
-
-    npmDepsHash = "sha256-qimhi2S8fnUbIq2MPU1tlvj5k9ZChY7kzxLrYqy9FXI=";
-    preFixup = ''
-      find "$out" -xtype l -exec rm -v {} +
-    '';
-  });
 in {
   # Don't require ethernet to be connected when booting
   systemd.services = {
@@ -151,7 +134,6 @@ in {
     afuse
     clamav
     fscrypt-experimental
-    gemini-pkg
     gnupg
     sshfs-fuse
   ];
@@ -262,16 +244,6 @@ in {
       unicorn-passwords = {
         format = "binary";
         sopsFile = ./secrets/unicorn-passwords.sh;
-
-        mode = "0440";
-        owner = config.users.users.nthorne.name;
-        group = config.users.users.nthorne.group;
-      };
-
-      dot-env = {
-        format = "binary";
-        sopsFile = ./secrets/gemini-dotenv;
-        path = "/home/nthorne/.env";
 
         mode = "0440";
         owner = config.users.users.nthorne.name;

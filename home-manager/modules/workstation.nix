@@ -1,4 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  flake-inputs,
+  ...
+}: {
+  imports = [
+    flake-inputs.sops-nix.homeManagerModules.sops
+
+    ../packages/gemini 
+  ];
   home.packages = with pkgs; [
     bitwarden
     gh
@@ -17,10 +26,20 @@
 
   home.file.".pomodoro/hooks/stop" = {
     text = ''
-#!/usr/bin/env bash
-set -ueo pipefail
-notify-send -et 10000 "Time is up ⏰"
+      #!/usr/bin/env bash
+      set -ueo pipefail
+      notify-send -et 10000 "Time is up ⏰"
     '';
     executable = true;
+  };
+
+  sops.secrets = {
+    dot-env = {
+      format = "binary";
+      sopsFile = ./secrets/gemini-dotenv;
+      path = "/home/nthorne/.env";
+
+      mode = "0440";
+    };
   };
 }
