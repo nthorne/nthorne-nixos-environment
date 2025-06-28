@@ -2,7 +2,7 @@
   ...
 }: let
   models = {
-    claude = "claude-3.7-sonnet";
+    claude = "claude-sonnet-4";
     claudeThought = "claude-3.7-sonnet-thought";
     qwen = "qwen2.5-coder:latest";
   };
