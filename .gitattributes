@@ -1,1 +1,5 @@
 work/secrets/vimes.pem filter=git-agecrypt diff=git-agecrypt
+work/secrets/vpn/netclean-client-ca.pem filter=git-agecrypt diff=git-agecrypt
+work/secrets/vpn/netclean-client-cert.pem filter=git-agecrypt diff=git-agecrypt
+work/secrets/vpn/netclean-client-key.pem filter=git-agecrypt diff=git-agecrypt
+work/secrets/vpn/netclean-client-tls-crypt.pem filter=git-agecrypt diff=git-agecrypt

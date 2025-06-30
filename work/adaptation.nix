@@ -8,27 +8,6 @@
   #
   # * docker0 interface - inet -> 10.10.2.54 (not 172.17.0.1). Not set up; wonder where it got pulled from (daemon.json:{"bip":"10.10.254.1/24"})
   ethernetDevice = "enp0s13f0u4u4";
-
-  vpnPemFiles = [
-    "netclean-client-2024-ca"
-    "netclean-client-2024-cert"
-    "netclean-client-2024-key"
-    "netclean-client-2024-tls-crypt"
-  ];
-
-  pemNameToAttr = map (pemName: {
-    name = pemName;
-    value = {
-      format = "binary";
-      sopsFile = ./secrets/vpn/${pemName}.pem;
-      path = "/usr/share/certificates/${pemName}.pem";
-
-      mode = "0440";
-      owner = config.users.users.nthorne.name;
-      group = config.users.users.nthorne.group;
-    };
-  });
-
 in {
   # Don't require ethernet to be connected when booting
   systemd.services = {
@@ -239,18 +218,23 @@ in {
   '';
 
   sops.age.keyFile = "/etc/sops/age/keys.txt";
-  sops.secrets =
-    {
-      unicorn-passwords = {
-        format = "binary";
-        sopsFile = ./secrets/unicorn-passwords.sh;
+  sops.secrets = {
+    unicorn-passwords = {
+      format = "binary";
+      sopsFile = ./secrets/unicorn-passwords.sh;
 
-        mode = "0440";
-        owner = config.users.users.nthorne.name;
-        group = config.users.users.nthorne.group;
-      };
-    }
-    // builtins.listToAttrs (pemNameToAttr vpnPemFiles);
+      mode = "0440";
+      owner = config.users.users.nthorne.name;
+      group = config.users.users.nthorne.group;
+    };
+  };
+
+  environment.etc = {
+    "vpn/netclean-client-ca.pem".source = ./secrets/vpn/netclean-client-ca.pem;
+    "vpn/netclean-client-cert.pem".source = ./secrets/vpn/netclean-client-cert.pem;
+    "vpn/netclean-client-key.pem".source = ./secrets/vpn/netclean-client-key.pem;
+    "vpn/netclean-client-tls-crypt.pem".source = ./secrets/vpn/netclean-client-tls-crypt.pem;
+  };
 
   # I handled this one separately from sops, as it is an input to `certificateFiles`
   # and need to be in this repository.
