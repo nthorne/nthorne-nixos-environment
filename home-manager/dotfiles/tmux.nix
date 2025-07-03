@@ -6,7 +6,6 @@
       cpu
       fingers
       open
-      resurrect
       sessionist
       vim-tmux-navigator
       yank
@@ -113,6 +112,8 @@ set-option -g detach-on-destroy on
 set -g @fingers-skip-health-check '1'
 
 run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
+
+bind f run -b "#{@fingers-cli} start #{pane_id}"
     '';
   };
 }
