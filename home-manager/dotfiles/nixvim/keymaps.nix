@@ -67,6 +67,12 @@
         key = "<leader>tc";
         action = "<cmd>tabclose<CR>";
       }
+      {
+        mode = "n";
+        key = "<leader>p";
+        action = "<cmd>let @+ = expand('%:p')<CR>";
+        options.desc = "Copy fully qualified file path to clipboard";
+      }
     ];
   };
 }
