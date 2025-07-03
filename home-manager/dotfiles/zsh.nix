@@ -135,15 +135,6 @@
       ### completions {{{
       ###
 
-      # Load and configure vcs_info
-      autoload -Uz vcs_info
-      setopt prompt_subst
-      zstyle ':vcs_info:*' check-for-changes true
-      zstyle ':vcs_info:git*' unstagedstr "''${RED}+''${NORM}"
-      zstyle ':vcs_info:git*' stagedstr "''${GREEN}+''${NORM}"
-      zstyle ':vcs_info:git*' formats " branch:%b%u%c"
-      zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
-
       # partial completion suggestions
       zstyle ':completion:*' list-suffixes zstyle ':completion:*' expand prefix suffix
 
@@ -183,52 +174,9 @@
       # set the DISPLAY variable automatically, using the IP address from SSH_CONNECTION
       export DISPLAY="`echo $SSH_CONNECTION | awk '{print $1}'`:0.0"
 
-      export RPROMPT="''${%}[%?]%{%}"
-
       ### }}}
       ### function definitions {{{
       ###
-
-      # function +vi-git-untracked()
-      #   show the ? marker if there is untracked files.
-      function +vi-git-untracked(){
-        if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
-          git status --porcelain | grep '??' &> /dev/null ; then
-          hook_com[staged]+="''${RED}?''${NORM}"
-        fi
-      }
-
-      # function precmd() {{{
-      #   executed before each prompt
-      function precmd()
-      {
-        vcs_info
-        export PS1="''${BLUE}[%n@%m''${GREEN}\$vcs_info_msg_0_''${BLUE}]''${RED} %~''${NORM} "
-
-        # if the virtualenv environment variable is set, and the RPROMPT does not
-        # contain the env token, add the token to the RPROMPT
-        if [[ ! -z $VIRTUAL_ENV ]]
-        then
-          local ENV_HEAD=$(basename $VIRTUAL_ENV)
-          local ENV_TOKEN="virtualenv:"
-
-          if [[ ! $RPROMPT == *$ENV_TOKEN* ]]
-          then
-            # if the RPROMPT did not contain the virtualenv token, simply add it..
-            export RPROMPT="$RPROMPT ''${BLUE}[''${GREEN}$ENV_TOKEN$ENV_HEAD''${BLUE}]''${NORM}"
-          elif [[ ! $RPROMPT == *$ENV_TOKEN$ACTIVE_VIRTUALENV* ]]
-          then
-            # .. or if it did contain the token, but not with another VIRTUAL_ENV
-            # string, replace the tag with an updated one
-            export RPROMPT="''${RPROMPT/$ENV_TOKEN*]/$ENV_TOKEN$ENV_HEAD]}"
-          fi
-        fi
-        if [[ ! -z $IN_NIX_SHELL && ! $RPROMPT == *nix-shell* ]]
-        then
-          export RPROMPT="nix-shell:''${RPROMPT}"
-        fi
-      }
-      # }}}
 
       function globalias () {
         # Expand upper-case global aliases

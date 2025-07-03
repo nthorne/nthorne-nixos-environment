@@ -120,4 +120,9 @@ in {
     automatic = true;
     options = "--delete-older-than 21d";
   };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }
