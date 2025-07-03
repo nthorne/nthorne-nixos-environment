@@ -69,6 +69,7 @@ in {
 
   home.packages = with pkgs; [
     comma
+    eza
     fasd
     fd
     file

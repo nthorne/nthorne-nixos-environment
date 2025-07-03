@@ -24,7 +24,8 @@
     };
 
     shellAliases = {
-      ls = "ls -AF --color=auto";
+      ls = "eza";
+      l = "eza -al --git --no-user --time-style=long-iso --no-permissions --group-directories-first --header";
       grep = "grep --color=auto";
       vim = "nvim";
       view = "nvim -R";
