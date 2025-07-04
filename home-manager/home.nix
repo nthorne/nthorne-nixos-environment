@@ -25,6 +25,8 @@ in {
       flake-inputs.nixvim.homeManagerModules.nixvim
       ./dotfiles/nixvim
 
+      ./packages/tmux-sessionizer
+
       # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
       #    here to keep the host specific config files short
     ]

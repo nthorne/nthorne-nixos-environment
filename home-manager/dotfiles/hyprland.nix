@@ -202,7 +202,7 @@
 
       bind = $mainMod SHIFT, C, killactive,
 
-      bind = $mainMod SHIFT, RETURN, exec, $terminal -e tmux
+      bind = $mainMod SHIFT, RETURN, exec, $terminal -e zsh -c tmux
       bind = $mainMod, X, exec, $menu
       bind = $mainMod, P, pseudo, # dwindle
       bind = $mainMod SHIFT, n, exec, swaync-client -t
