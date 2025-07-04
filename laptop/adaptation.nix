@@ -51,7 +51,7 @@ in
     shell = pkgs.zsh;
 
     packages = with pkgs; [
-      kitty
+      ghostty
       firefox
       rofi
     ];

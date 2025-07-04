@@ -96,9 +96,12 @@ in {
 
   programs.nix-index.enable = true;
 
-  programs.kitty = {
+  programs.ghostty = {
     enable = true;
-    settings.enable_audio_bell = false;
+    clearDefaultKeybinds = true;
+    settings = {
+      font-family = ["" "JetBrains Mono"];
+    };
   };
 
   programs.bat.enable = true;

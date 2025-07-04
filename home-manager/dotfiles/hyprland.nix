@@ -19,7 +19,7 @@
       # See https://wiki.hyprland.org/Configuring/Keywords/
 
       # Set programs that you use
-      $terminal = kitty
+      $terminal = ghostty
       # $fileManager = dolphin
       $menu = rofi -show drun -show-icons
       $lock = hyprlock
@@ -202,7 +202,7 @@
 
       bind = $mainMod SHIFT, C, killactive,
 
-      bind = $mainMod SHIFT, RETURN, exec, $terminal tmux
+      bind = $mainMod SHIFT, RETURN, exec, $terminal -e tmux
       bind = $mainMod, X, exec, $menu
       bind = $mainMod, P, pseudo, # dwindle
       bind = $mainMod SHIFT, n, exec, swaync-client -t
