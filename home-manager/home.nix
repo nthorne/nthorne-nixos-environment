@@ -79,6 +79,7 @@ in {
     htop
     just
     jq
+    jqp
     nvd
     pavucontrol
     seahorse # For managing gnome-keyring
