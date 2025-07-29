@@ -8,22 +8,6 @@
     ${pkgs.imagemagick}/bin/magick -size 1920x1080 xc:$COLOR $out
   '';
 in {
-  nixpkgs.overlays = [
-    (final: prev: {
-      # TODO: Drop this once 0.14.0 is released. 0.13.0 is broken when app is missing tray icon.
-      waybar = prev.waybar.overrideAttrs {
-        version = "2025-07-01";
-        src = prev.fetchFromGitHub {
-          owner = "Alexays";
-          repo = "Waybar";
-          rev = "460b19ba1b83b873795e2e65ce60efadc7a3a906";
-          sha256 = "sha256-iRSg4Nd8RUTTxzsRQBTO67VQlUQ7HrPaSz/JxlIhADY=";
-        };
-        doInstallCheck = false;
-      };
-    })
-  ];
-
   nixpkgs.config = {
     # :(
     allowUnfree = true;
