@@ -97,6 +97,18 @@ in {
     networkmanager = {
       enable = true;
       wifi.powersave = false;
+
+      # Explicitly enable all plugins that used to be default, to
+      # have a functioning VPN
+      plugins = with pkgs; [
+        networkmanager-fortisslvpn
+        networkmanager-iodine
+        networkmanager-l2tp
+        networkmanager-openconnect
+        networkmanager-openvpn
+        networkmanager-sstp
+        networkmanager-vpnc
+      ];
     };
 
     useDHCP = false;
