@@ -33,9 +33,9 @@ in {
 
   # PAM fails to lock protector in memory, causing unlock to fail, so we
   # increase the memlock limit to infinity.
-  systemd.extraConfig = ''
-    DefaultLimitMEMLOCK=infinity
-  '';
+  systemd.settings.Manager = {
+    DefaultLimitMEMLOCK = "infinity";
+  };
 
   # This sets memlock limits for all users to "unlimited"
   security.pam.loginLimits = [
