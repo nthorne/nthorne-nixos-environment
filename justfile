@@ -20,7 +20,7 @@ tag_generation:
   fi
 
 switch: assert_git_clean && tag_generation
-  sudo nixos-rebuild switch --flake .# && rm result 
+  sudo nixos-rebuild switch --flake .# && rm -f result 
 
 test:
   sudo nixos-rebuild test --flake .# && rm result
