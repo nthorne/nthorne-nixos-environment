@@ -25,11 +25,11 @@ in {
     text = ''
       [[search_dirs]]
       path = "/home/nthorne/src"
-      depth = 1
+      depth = 2
 
       [[search_dirs]]
       path = "/home/nthorne/repos"
-      depth = 1
+      depth = 2
     '';
   };
 
