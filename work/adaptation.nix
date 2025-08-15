@@ -4,9 +4,6 @@
   lib,
   ...
 }: let
-  # TODO:
-  #
-  # * docker0 interface - inet -> 10.10.2.54 (not 172.17.0.1). Not set up; wonder where it got pulled from (daemon.json:{"bip":"10.10.254.1/24"})
   ethernetDevice = "enp0s13f0u4u4";
 in {
   # Don't require ethernet to be connected when booting

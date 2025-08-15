@@ -2,7 +2,6 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {pkgs, ...}: let
-  # TODO: Looks like png support is broken in hyprpaper? Go with jpg for now.
   theme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
   wallpaper = pkgs.runCommand "image.jpg" {} ''
     COLOR=$(${pkgs.yq}/bin/yq -r .palette.base00 ${theme})
