@@ -22,7 +22,7 @@ in {
       (import ./dotfiles/hyprland.nix args)
       (import ./dotfiles/tmux.nix args)
 
-      flake-inputs.nixvim.homeManagerModules.nixvim
+      flake-inputs.nixvim.homeModules.nixvim
       ./dotfiles/nixvim
 
       ./packages/tmux-sessionizer

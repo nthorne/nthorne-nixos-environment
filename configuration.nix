@@ -58,7 +58,7 @@ in {
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --asterisks --remember --remember-user-session --sessions ${pkgs.hyprland}/bin/Hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --asterisks --remember --remember-user-session --sessions ${pkgs.hyprland}/bin/Hyprland";
       };
     };
   };
