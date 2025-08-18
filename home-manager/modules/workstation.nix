@@ -9,13 +9,13 @@ in {
   ];
   home.packages = with pkgs; [
     bitwarden
-    gemini-cli
     gh
     gparted
     grimblast # Screen capture tool with hyprland support
     hyperfine
     libnotify
     obsidian
+    opencode
     openpomodoro-cli
     todoist
   ];

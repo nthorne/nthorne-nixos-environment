@@ -82,8 +82,8 @@ bind s setw synchronize-pane
 # Window switching
 bind Tab last-window
 
-# Open gemini in a popup at current pane path
-bind i display-popup -d '#{pane_current_path}' -w 80% -h 80% 'gemini'
+# Open AI agent in a popup at current pane path
+bind i display-popup -d '#{pane_current_path}' -w 80% -h 80% 'opencode'
 
 # use 256 color display
 set -g default-terminal "screen-256color"
