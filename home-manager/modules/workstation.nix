@@ -15,7 +15,6 @@ in {
     hyperfine
     libnotify
     obsidian
-    opencode
     openpomodoro-cli
     todoist
   ];
@@ -40,6 +39,14 @@ in {
       path = "/home/nthorne/.env";
 
       mode = "0440";
+    };
+  };
+
+  programs.opencode = {
+    enable = true;
+    settings = {
+      share = "disabled"; 
+      autoupdate = false;
     };
   };
 }
