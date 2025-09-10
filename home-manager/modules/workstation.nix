@@ -6,6 +6,7 @@
 in {
   imports = [
     flake-inputs.sops-nix.homeManagerModules.sops
+    ../packages/opencode
   ];
   home.packages = with pkgs; [
     bitwarden
@@ -39,14 +40,6 @@ in {
       path = "/home/nthorne/.env";
 
       mode = "0440";
-    };
-  };
-
-  programs.opencode = {
-    enable = true;
-    settings = {
-      share = "disabled"; 
-      autoupdate = false;
     };
   };
 }
