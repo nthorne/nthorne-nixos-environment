@@ -48,6 +48,7 @@ in {
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
 
     matchBlocks = {
       "work.github.com" = {
