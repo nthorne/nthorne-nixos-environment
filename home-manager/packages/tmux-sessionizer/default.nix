@@ -28,7 +28,7 @@ in {
       depth = 2
 
       [[search_dirs]]
-      path = "/home/nthorne/src/prototypes/"
+      path = "/home/nthorne/src/prototypes"
       depth = 2
 
       [[search_dirs]]
