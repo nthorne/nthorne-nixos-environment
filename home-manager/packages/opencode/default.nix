@@ -4,6 +4,14 @@
     settings = {
       share = "disabled";
       autoupdate = false;
+
+      mcp = {
+        sequentialthinking = {
+          type = "local";
+          enabled = true;
+          command = [ "podman" "run" "--rm" "-i" "mcp/sequentialthinking" ];
+        };
+      };
     };
   };
 
