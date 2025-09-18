@@ -11,6 +11,11 @@
           enabled = true;
           command = [ "podman" "run" "--rm" "-i" "mcp/sequentialthinking" ];
         };
+        markitdown = {
+          type = "local";
+          enabled = true;
+          command = [ "podman" "run" "--rm" "-i" "mcp/markitdown" ];
+        };
       };
     };
   };
