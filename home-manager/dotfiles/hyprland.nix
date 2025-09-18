@@ -182,7 +182,7 @@
 
       # https://wiki.hyprland.org/Configuring/Variables/#gestures
       gestures {
-          workspace_swipe = false
+          workspace_swipe_touch = false
       }
 
       # Example per-device config
@@ -190,6 +190,11 @@
       device {
           name = epic-mouse-v1
           sensitivity = -0.5
+      }
+
+      ecosystem {
+          no_update_news = true
+          no_donation_nag = true
       }
 
 
