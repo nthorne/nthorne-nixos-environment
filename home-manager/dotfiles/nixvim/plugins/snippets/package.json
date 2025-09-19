@@ -1,18 +1,22 @@
 {
-    "name": "my-snippets",
-    "engines": {
-        "vscode": "^1.0"
-    },
-    "contributes": {
-        "snippets": [
-            {
-                "language": "nix",
-                "path": "./nix.json"
-            },
-            {
-                "language": "sh",
-                "path": "./sh.json"
-            }
-        ]
-    }
+  "name": "my-snippets",
+  "engines": {
+    "vscode": "^1.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "nix",
+        "path": "./nix.json"
+      },
+      {
+        "language": "sh",
+        "path": "./sh.json"
+      },
+      {
+        "language": "cpp",
+        "path": "./cpp.json"
+      }
+    ]
+  }
 }
