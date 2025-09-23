@@ -66,8 +66,16 @@ in {
     docker.enable = true;
   };
 
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = ["nthorne"];
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      # This is the default, but it's good to be explicit
+      package = pkgs.qemu_kvm;
+      # Enable other features as needed, e.g., for shared folders
+      vhostUserPackages = with pkgs; [ virtiofsd ];
+      swtpm.enable = true;
+    };
+  };
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -109,11 +117,6 @@ in {
     };
 
     useDHCP = false;
-
-    wireless = {
-      enable = true;
-      userControlled.enable = true;
-    };
   };
 
   # List packages installed in system profile. To search by name, run:
@@ -124,6 +127,9 @@ in {
     fscrypt-experimental
     gnupg
     sshfs-fuse
+
+    virt-manager
+    qemu
   ];
 
   services.clamav = {
@@ -157,6 +163,7 @@ in {
     "dialout"
     "disk"
     "audio"
+    "libvirtd"
   ];
   users.extraGroups.networkmanager.members = ["nthorne"];
 
