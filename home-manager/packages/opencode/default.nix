@@ -16,6 +16,11 @@
           enabled = true;
           command = [ "podman" "run" "--rm" "-i" "mcp/markitdown" ];
         };
+        nixos = {
+          type = "local";
+          enabled = true;
+          command = [ "nix" "run" "github:utensils/mcp-nixos" "--" ];
+        };
       };
     };
   };
