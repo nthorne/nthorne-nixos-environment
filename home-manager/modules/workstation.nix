@@ -10,6 +10,7 @@ in {
   ];
   home.packages = with pkgs; [
     bitwarden
+    bitwarden-cli
     gh
     gparted
     grimblast # Screen capture tool with hyprland support
