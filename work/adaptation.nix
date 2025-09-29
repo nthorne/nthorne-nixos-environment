@@ -102,6 +102,9 @@ in {
     networkmanager = {
       enable = true;
       wifi.powersave = false;
+      
+      # Tell NetworkManager to ignore br0 (managed by libvirt)
+      unmanaged = [ "br0" ];
 
       # Explicitly enable all plugins that used to be default, to
       # have a functioning VPN
