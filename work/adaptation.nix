@@ -6,6 +6,18 @@
 }: let
   ethernetDevice = "enp0s13f0u4u4";
 in {
+  # Add overlay for packages from nixpkgs master
+  nixpkgs.overlays = [
+    (final: prev: {
+      github-copilot-cli = (import (builtins.fetchTarball {
+        url = "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
+        sha256 = "1wd7svsh8f8zjiavj4pj0yp0z4h30xzj9asfpfx960ba7gsipb90";
+      }) {
+        system = prev.system;
+        config = prev.config;
+      }).github-copilot-cli;
+    })
+  ];
   # Don't require ethernet to be connected when booting
   systemd.services = {
     "network-link-${ethernetDevice}".wantedBy = lib.mkForce [];

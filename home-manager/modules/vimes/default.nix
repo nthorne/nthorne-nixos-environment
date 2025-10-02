@@ -19,6 +19,7 @@ in {
     ctags
     entr
     gdb
+    github-copilot-cli
     insomnia
     libxml2
     lnav
