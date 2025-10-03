@@ -5,7 +5,7 @@
   secretsFolders = builtins.toString args.flake-inputs.nix-secrets;
 in {
   imports = [
-    (import ../../packages/clion args)
+    ../../dotfiles/clion.nix
     (import ../../packages/clamav-scan args)
     (import ../workstation.nix args)
     (import ../../scripts/tf2rem args)

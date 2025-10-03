@@ -1,3 +1,0 @@
-{...}: {
-  imports = [../../dotfiles/clion.nix];
-}
