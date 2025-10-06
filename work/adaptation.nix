@@ -11,7 +11,7 @@ in {
     (final: prev: {
       github-copilot-cli = (import (builtins.fetchTarball {
         url = "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
-        sha256 = "1wd7svsh8f8zjiavj4pj0yp0z4h30xzj9asfpfx960ba7gsipb90";
+        sha256 = "022f6gqdhwcc8n2li2sx19n45g9pq3b7212rpzwkrw6dsn3vcdnr";
       }) {
         system = prev.system;
         config = prev.config;
