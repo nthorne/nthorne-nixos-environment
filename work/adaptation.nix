@@ -374,6 +374,12 @@ in {
     ];
   };
 
+  # Fix audit service startup timing by adding proper dependencies
+  systemd.services.audit-rules-nixos = {
+    after = [ "security-wrapper.service" "nix-daemon.service" ];
+    wants = [ "security-wrapper.service" ];
+  };
+
   # Ensure log directories exist
   systemd.tmpfiles.rules = [
     "d /var/log/audit 0750 root adm -"
