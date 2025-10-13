@@ -68,11 +68,21 @@ in {
         hostname = "nthorne-agent-0-ubuntu2204.swedencentral.cloudapp.azure.com";
         user = "adminuser";
         identityFile = "/home/nthorne/.ssh/id_ed25519";
+        # No point in saving these fingerprints since machines are rebuilt all the time
+        extraOptions = {
+          StrictHostKeyChecking = "no";
+          UserKnownHostsFile = "/dev/null";
+        };
       };
       "farmer-agent-0-ubuntu2404" = {
         hostname = "nthorne-agent-0-ubuntu2404.swedencentral.cloudapp.azure.com";
         user = "adminuser";
         identityFile = "/home/nthorne/.ssh/id_ed25519";
+        # No point in saving these fingerprints since machines are rebuilt all the time
+        extraOptions = {
+          StrictHostKeyChecking = "no";
+          UserKnownHostsFile = "/dev/null";
+        };
       };
     };
   };
