@@ -374,6 +374,12 @@ in {
     ];
   };
 
+  # Fix audit service startup timing by ensuring SUID/SGID wrappers are created first
+  systemd.services.audit-rules-nixos = {
+    after = [ "suid-sgid-wrappers.service" ];
+    wants = [ "suid-sgid-wrappers.service" ];
+  };
+
   # Ensure log directories exist
   systemd.tmpfiles.rules = [
     "d /var/log/audit 0750 root adm -"
