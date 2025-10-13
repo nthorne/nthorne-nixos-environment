@@ -374,6 +374,13 @@ in {
     ];
   };
 
+  # Fix audit service startup timing by adding proper dependencies. Graphical session
+  # is perhaps a bit late, but it should be good enough.
+  systemd.services.audit-rules-nixos = {
+    after = [ "security-wrapper.service" "nix-daemon.service" "graphical-session.target" ];
+    wants = [ "security-wrapper.service" ];
+  };
+
   # Ensure log directories exist
   systemd.tmpfiles.rules = [
     "d /var/log/audit 0750 root adm -"
