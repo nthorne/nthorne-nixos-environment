@@ -168,11 +168,6 @@ in {
       # Enable other features as needed, e.g., for shared folders
       vhostUserPackages = with pkgs; [ virtiofsd ];
       swtpm.enable = true;
-      # Enable OVMF EFI firmware for UEFI VMs
-      ovmf = {
-        enable = true;
-        packages = [ pkgs.OVMF ];
-      };
     };
   };
 
