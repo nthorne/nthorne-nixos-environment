@@ -31,6 +31,8 @@ in {
 
       fugitive.enable = true;
 
+      gitgutter.enable = true;
+
       leap.enable = true;
 
       lualine.enable = true;
