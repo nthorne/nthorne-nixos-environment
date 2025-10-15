@@ -1,6 +1,12 @@
-{...}: {
+{
+  flake-inputs,
+  ...
+}: let
+  opencode-pkgs = flake-inputs.nixpkgs-opencode.legacyPackages.x86_64-linux;
+in {
   programs.opencode = {
     enable = true;
+    package = opencode-pkgs.opencode;
     settings = {
       share = "disabled";
       autoupdate = false;
