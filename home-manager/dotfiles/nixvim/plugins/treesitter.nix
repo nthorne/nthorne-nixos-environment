@@ -29,7 +29,7 @@
       treesitter-textobjects = {
         enable = true;
 
-        move = {
+        settings.move = {
           enable = true;
           gotoNextStart.__raw = ''
             {
