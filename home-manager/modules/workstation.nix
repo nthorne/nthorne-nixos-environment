@@ -9,8 +9,8 @@ in {
     ../packages/opencode
   ];
   home.packages = with pkgs; [
-    bitwarden
     bitwarden-cli
+    bitwarden-desktop
     gh
     gparted
     grimblast # Screen capture tool with hyprland support
