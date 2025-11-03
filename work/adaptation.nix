@@ -3,18 +3,20 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   ethernetDevice = "enp0s13f0u4u4";
-in {
+in
+{
   # Don't require ethernet to be connected when booting
   systemd.services = {
-    "network-link-${ethernetDevice}".wantedBy = lib.mkForce [];
-    "network-addresses-${ethernetDevice}".wantedBy = lib.mkForce [];
+    "network-link-${ethernetDevice}".wantedBy = lib.mkForce [ ];
+    "network-addresses-${ethernetDevice}".wantedBy = lib.mkForce [ ];
   };
 
   # Start the driver at boot
   systemd.services.fprintd = {
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig.Type = "simple";
   };
 
@@ -66,14 +68,17 @@ in {
     ProtectControlGroups = lib.mkForce true;
     NoNewPrivileges = lib.mkForce true;
     RemoveIPC = lib.mkForce true;
-    
+
     # Generous resource limits for large models
     MemoryHigh = lib.mkForce "16G";
     MemoryMax = lib.mkForce "32G";
-    CPUQuota = lib.mkForce "800%";  # 8 cores max
-    
+    CPUQuota = lib.mkForce "800%"; # 8 cores max
+
     # Filesystem access
-    ReadWritePaths = lib.mkForce [ "/var/lib/ollama" "/tmp" ];
+    ReadWritePaths = lib.mkForce [
+      "/var/lib/ollama"
+      "/tmp"
+    ];
     ReadOnlyPaths = lib.mkForce [ "/nix/store" ];
   };
 
@@ -85,10 +90,17 @@ in {
     ProtectKernelLogs = lib.mkForce true;
     ProtectControlGroups = lib.mkForce true;
     NoNewPrivileges = lib.mkForce true;
-    
-    ReadWritePaths = lib.mkForce [ "/var/lib/tailscale" "/etc/resolv.conf" ];
-    ReadOnlyPaths = lib.mkForce [ "/etc/hosts" "/etc/nsswitch.conf" "/etc/services" ];
-    
+
+    ReadWritePaths = lib.mkForce [
+      "/var/lib/tailscale"
+      "/etc/resolv.conf"
+    ];
+    ReadOnlyPaths = lib.mkForce [
+      "/etc/hosts"
+      "/etc/nsswitch.conf"
+      "/etc/services"
+    ];
+
     # Conservative resource limits
     MemoryHigh = lib.mkForce "512M";
     MemoryMax = lib.mkForce "1G";
@@ -101,7 +113,7 @@ in {
     ProtectKernelModules = lib.mkForce false;
     ProtectControlGroups = lib.mkForce false;
     NoNewPrivileges = lib.mkForce false;
-    
+
     # Reasonable resource limits
     MemoryHigh = lib.mkForce "4G";
     MemoryMax = lib.mkForce "8G";
@@ -188,7 +200,7 @@ in {
 
     nat = {
       enable = true;
-      internalInterfaces = ["ve-*"];
+      internalInterfaces = [ "ve-*" ];
       # Wired at office.
       externalInterface = "wlp0s20f3";
     };
@@ -252,7 +264,7 @@ in {
     "audio"
     "libvirtd"
   ];
-  users.extraGroups.networkmanager.members = ["nthorne"];
+  users.extraGroups.networkmanager.members = [ "nthorne" ];
 
   hardware.nvidia = {
     # Keep using the closed source, proprietary driver.
@@ -314,11 +326,13 @@ in {
   services.nginx = {
     enable = true;
     virtualHosts."ollama-tailscale" = {
-      listen = [{
-        addr = "100.67.86.55";
-        port = 11435;
-      }];
-      serverName = "_";  # Accept any hostname
+      listen = [
+        {
+          addr = "100.67.86.55";
+          port = 11435;
+        }
+      ];
+      serverName = "_"; # Accept any hostname
       locations."/" = {
         proxyPass = "http://127.0.0.1:11434";
         extraConfig = ''
@@ -393,7 +407,11 @@ in {
     allowedUDPPorts = [ ];
 
     # Trust libvirt bridge interfaces for VM networking
-    trustedInterfaces = [ "virbr0" "virbr1" "docker0" ];
+    trustedInterfaces = [
+      "virbr0"
+      "virbr1"
+      "docker0"
+    ];
 
     # Custom rules for enhanced security
     extraCommands = ''
@@ -435,7 +453,7 @@ in {
     "vpn/netclean-client-cert.pem".source = ./secrets/vpn/netclean-client-cert.pem;
     "vpn/netclean-client-key.pem".source = ./secrets/vpn/netclean-client-key.pem;
     "vpn/netclean-client-tls-crypt.pem".source = ./secrets/vpn/netclean-client-tls-crypt.pem;
-    
+
     # Auditd configuration for proper logging
     "audit/auditd.conf".text = ''
       log_file = /var/log/audit/audit.log
@@ -461,5 +479,16 @@ in {
 
   # I handled this one separately from sops, as it is an input to `certificateFiles`
   # and need to be in this repository.
-  security.pki.certificateFiles = [./secrets/vimes.pem];
+  security.pki.certificateFiles = [ ./secrets/vimes.pem ];
+
+  # TEMP: Disable this one until the CUDA debacle has been resolved 😒
+  #nixpkgs.config.cudaSupport = true;
+
+  # Enable systemd-oomd for better OOM handling
+  systemd.oomd = {
+    enable = true;
+    enableRootSlice = true;
+    enableSystemSlice = true;
+    enableUserSlices = true;
+  };
 }
