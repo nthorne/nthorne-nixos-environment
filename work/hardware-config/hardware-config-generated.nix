@@ -47,10 +47,10 @@ in {
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   hardware.graphics.extraPackages = with pkgs; [
-    vaapiIntel
-    vaapiVdpau
-    libvdpau-va-gl
     intel-media-driver
+    intel-vaapi-driver
+    libva-vdpau-driver
+    libvdpau-va-gl
   ];
 
   # Gnome 40 introduced a new way of managing power, without tlp.
