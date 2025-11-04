@@ -68,6 +68,7 @@ in
 
   nix.extraOptions = ''
     experimental-features = nix-command flakes
+    accept-flake-config = true
   '';
 
   programs.steam = {

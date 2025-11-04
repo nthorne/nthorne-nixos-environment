@@ -434,6 +434,7 @@ in
     keep-outputs = true
     keep-derivations = true
     experimental-features = nix-command flakes
+    accept-flake-config = true
   '';
 
   sops.age.keyFile = "/etc/sops/age/keys.txt";
