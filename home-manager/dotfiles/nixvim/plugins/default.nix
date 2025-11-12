@@ -37,6 +37,8 @@ in {
 
       noice.enable = true;
 
+      precognition.enable = true;
+
       rainbow-delimiters.enable = true;
 
       render-markdown.enable = true;
