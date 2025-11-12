@@ -31,8 +31,6 @@ in {
 
       fugitive.enable = true;
 
-      #gitgutter.enable = true;
-
       lualine.enable = true;
 
       noice.enable = true;
