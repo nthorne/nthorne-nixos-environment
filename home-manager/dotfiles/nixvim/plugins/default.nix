@@ -33,8 +33,6 @@ in {
 
       #gitgutter.enable = true;
 
-      leap.enable = true;
-
       lualine.enable = true;
 
       noice.enable = true;
