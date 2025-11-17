@@ -160,5 +160,11 @@ in {
   };
 
   # Get completions for system packages such as systemd
-  environment.pathsToLink = ["/share/zsh"];
+  environment = {
+    pathsToLink = ["/share/zsh"];
+    variables = {
+      # Fix for GTK apps (e.g. ghostty) not detecting dead keys (e.g. tilde) properly
+      GTK_IM_MODULE = "simple";
+    };
+  };
 }
