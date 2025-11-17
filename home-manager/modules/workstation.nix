@@ -23,6 +23,8 @@ in {
 
   home.sessionVariables = {
     OLLAMA_ORIGINS = "app://obsidian.md*";
+    # Fix for GTK apps (e.g. ghostty) not detecting dead keys (e.g. tilde) properly
+    GTK_IM_MODULE = "simple";
   };
 
   home.file.".pomodoro/hooks/stop" = {
