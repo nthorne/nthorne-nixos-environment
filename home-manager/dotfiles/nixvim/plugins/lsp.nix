@@ -19,7 +19,7 @@
         };
         jsonls.enable = true;
         nixd.enable = true;
-        pylsp.enable = true;
+        pyrefly.enable = true;
         ruff.enable = true;
         yamlls.enable = true;
       };
