@@ -88,7 +88,7 @@ in {
     stateVersion = "22.05";
 
     # Fix for getting NIX_PATH to work after having deleted channels
-    extraSystemBuilderCmds = ''
+    systemBuilderCommands = ''
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
   };
