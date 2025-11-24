@@ -193,6 +193,8 @@ in
   networking = {
     hostName = "vimes";
 
+    nameservers = [ "8.8.8.8" "1.1.1.1" ];
+
     interfaces = {
       enp0s13f0u4u4.useDHCP = true;
       wlp0s20f3.useDHCP = true;
@@ -227,6 +229,8 @@ in
 
     useDHCP = false;
   };
+
+  services.resolved.enable = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
