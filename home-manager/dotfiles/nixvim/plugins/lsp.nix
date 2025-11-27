@@ -5,6 +5,7 @@
       servers = {
         bashls.enable = true;
         clangd.enable = true;
+        copilot.enable = true;
         # I need to install chsharp-ls locally in each repo, since
         # I've got different versions of .NET Core installed in different
         # projects.
