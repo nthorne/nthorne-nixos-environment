@@ -24,6 +24,18 @@
         action = "<cmd>TodoTrouble<cr>";
         options.desc = "Show [T]ODOs in Trouble";
       }
+      {
+        mode = "n";
+        key = "<leader>uq";
+        action = "<cmd>Trouble quickfix<cr>";
+        options.desc = "Show [Q]uickfix in Trouble";
+      }    
+      {
+        mode = "n";
+        key = "<leader>us";
+        action = "<cmd>Trouble symbols<cr>";
+        options.desc = "Show [S]ymbols in Trouble";
+      }
     ];
     plugins.which-key.settings = {
       spec = [
