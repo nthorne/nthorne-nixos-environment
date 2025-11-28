@@ -96,6 +96,9 @@ set -g status-right-length 64
 setw -g monitor-activity on
 set -g visual-activity on
 
+# recommended by vim.health
+set -g focus-events on
+
 # Put some useful information on status bar
 set -g status-right "#[attr=bright]#[fg=orange]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'Prefix OFF|')CPU: #{cpu_percentage}|BATTERY: #(cat /sys/class/power_supply/BAT0/capacity)%#[fg=yellow]|load:#(cut -d' ' -f1-3 /proc/loadavg)|#[attr=bright]#[fg=green]#(date +'%Y-%m-%d %H:%M')"
 

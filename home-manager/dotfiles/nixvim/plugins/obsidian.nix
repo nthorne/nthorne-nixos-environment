@@ -4,6 +4,8 @@
       obsidian = {
         enable = true;
         settings = {
+          # Recommended by render-markdown plugin
+          ui.enable = false;
           legacy_commands = false;
 
           workspaces = [
