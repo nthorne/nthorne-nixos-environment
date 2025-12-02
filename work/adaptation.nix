@@ -232,6 +232,8 @@ in
 
   services.resolved.enable = true;
 
+  programs.openvpn3.enable = true;
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
@@ -458,6 +460,7 @@ in
     "vpn/netclean-client-cert.pem".source = ./secrets/vpn/netclean-client-cert.pem;
     "vpn/netclean-client-key.pem".source = ./secrets/vpn/netclean-client-key.pem;
     "vpn/netclean-client-tls-crypt.pem".source = ./secrets/vpn/netclean-client-tls-crypt.pem;
+    "vpn/profile-userlocked.ovpn".source = ./secrets/vpn/profile-userlocked.ovpn;
 
     # Auditd configuration for proper logging
     "audit/auditd.conf".text = ''

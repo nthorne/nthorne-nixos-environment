@@ -15,6 +15,20 @@ Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix), or
 [git-agecrypt](https://github.com/vlaci/git-agecrypt), depending on whether
 the secret is needed at build time or run time.
 
+## Git-agecrypt
+
+Add the file path to `.gitattribues`, and to `git-agecrypt.toml`
+
+### Gotchas
+
+`[filter "git-agecrypt"]` in `.git/config` might point to a non-existing binary
+in case NixOS has been reinstalled or upgraded. To fix this, run:
+
+```sh
+git config --local filter.git-agecrypt.clean "$(which git-agecrypt) clean"
+git config --local filter.git-agecrypt.smudge "$(which git-agecrypt) smudge"
+```
+
 ## Keys
 
 Age keys need to be stored in ~/.config/sops/age/keys.txt, and /etc/sops/age/keys.txt

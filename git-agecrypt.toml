@@ -3,4 +3,5 @@
 "work/secrets/vpn/netclean-client-cert.pem" = ["age1hz3gpqxyt6ke2qu9u5rl3egkndtpl08m75xh2njawevut3z95d2s68zujf"]
 "work/secrets/vpn/netclean-client-key.pem" = ["age1hz3gpqxyt6ke2qu9u5rl3egkndtpl08m75xh2njawevut3z95d2s68zujf"]
 "work/secrets/vpn/netclean-client-tls-crypt.pem" = ["age1hz3gpqxyt6ke2qu9u5rl3egkndtpl08m75xh2njawevut3z95d2s68zujf"]
+"work/secrets/vpn/profile-userlocked.ovpn" = ["age1hz3gpqxyt6ke2qu9u5rl3egkndtpl08m75xh2njawevut3z95d2s68zujf"]
 "work/secrets/vimes.pem" = ["age1hz3gpqxyt6ke2qu9u5rl3egkndtpl08m75xh2njawevut3z95d2s68zujf"]
