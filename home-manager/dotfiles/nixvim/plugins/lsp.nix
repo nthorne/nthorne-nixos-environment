@@ -11,8 +11,10 @@
         # projects.
         csharp_ls = {
           enable = true;
-          package = null;
-          cmd = ["dotnet" "tool" "run" "csharp-ls"];
+          # NOTE: Use default package for now, and make sure to have
+          #       the correct runtime whereever I need it.
+          # package = null;
+          # cmd = ["dotnet" "tool" "run" "csharp-ls"];
         };
         hls = {
           enable = true;
