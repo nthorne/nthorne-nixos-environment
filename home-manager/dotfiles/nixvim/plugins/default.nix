@@ -33,6 +33,8 @@ in {
 
       fugitive.enable = true;
 
+      guess-indent.enable = true;
+
       noice.enable = true;
 
       rainbow-delimiters.enable = true;
