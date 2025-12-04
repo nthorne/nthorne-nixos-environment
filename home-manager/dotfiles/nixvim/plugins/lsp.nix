@@ -37,6 +37,8 @@
           "gt" = "type_definition";
           "gi" = "implementation";
           "K" = "hover";
+          "gn" = "incoming_calls";
+          "go" = "outgoing_calls";
         };
       };
     };
