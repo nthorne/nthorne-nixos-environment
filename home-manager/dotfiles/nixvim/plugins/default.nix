@@ -33,6 +33,11 @@ in {
 
       fugitive.enable = true;
 
+      goto-preview = {
+        enable = true;
+        settings.default_mappings = true;
+      };
+
       guess-indent.enable = true;
 
       noice.enable = true;
