@@ -31,8 +31,6 @@ in {
 
       fugitive.enable = true;
 
-      lualine.enable = true;
-
       noice.enable = true;
 
       rainbow-delimiters.enable = true;
