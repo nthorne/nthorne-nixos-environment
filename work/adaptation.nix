@@ -320,7 +320,7 @@ in
 
   services.ollama = {
     enable = true;
-    acceleration = "cuda";
+    package = pkgs.ollama-cuda;
     host = "127.0.0.1";
     environmentVariables = {
       OLLAMA_ORIGINS = "app://obsidian.md*,http://100.67.86.55:11435,https://100.67.86.55:11435,http://localhost:11434,https://localhost:11434";
