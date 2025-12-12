@@ -15,13 +15,18 @@
         # format_on_save = "function() return end";
         default_format_opts.lsp_format = "fallback";
         formatters_by_ft = {
+          cpp = ["clang_format"];
           nix = ["alejandra"];
           yaml = ["yamlfmt"];
+          python = ["isort" "black"];
         };
 
         formatters = {
           alejandra = {
             command = lib.getExe pkgs.alejandra;
+          };
+          black = {
+            command = lib.getExe pkgs.black;
           };
           yamlfmt = {
             command = lib.getExe pkgs.yamlfmt;
