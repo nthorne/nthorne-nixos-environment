@@ -4,7 +4,9 @@
       enable = true;
       servers = {
         bashls.enable = true;
-        clangd.enable = true;
+        # TODO: ccls seems to work better for the daemon, evaluate this.
+        ccls.enable = true;
+        ## clangd.enable = true;
         copilot.enable = true;
         # I need to install chsharp-ls locally in each repo, since
         # I've got different versions of .NET Core installed in different
