@@ -53,6 +53,18 @@
         action = "<cmd>:lua vim.lsp.buf.code_action({filter=function(a) return a.isPreferred end, apply=true})<CR>";
         options.desc = "[A]pply suggested code action";
       }
+
+      {
+        mode = "n";
+        key = "<leader>nai"; # Disable AI completion
+        action.__raw = ''
+          function()
+            vim.lsp.stop_client(vim.lsp.get_clients({"name", "copilot"}))
+            require("sidekick.nes").disable()
+          end
+        '';
+        options.desc = "[N]o [A][I] completion";
+      }
     ];
 
     plugins.lsp-format = {
