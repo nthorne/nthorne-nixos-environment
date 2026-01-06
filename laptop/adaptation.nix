@@ -8,7 +8,7 @@ in
   imports = [ ] ++ (if builtins.pathExists private then [ private ] else [ ]);
 
   networking.hostName = "nixlaptop"; # Define your hostname.
-  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable = true;
 
   boot.loader = {
     # Use the GRUB 2 boot loader.
@@ -62,6 +62,7 @@ in
     "audio"
     "docker"
     "dialout"
+    "networkmanager"
   ];
 
   virtualisation.docker.enable = true;
