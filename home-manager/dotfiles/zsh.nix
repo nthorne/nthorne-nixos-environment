@@ -162,20 +162,6 @@
       zle -N rationalise-dot
       zle -N edit-command-line
 
-      # keybindings for alias expansion
-      bindkey " " globalias               # expand on space
-      bindkey "^ " magic-space            # <C-space> to bypass expansion
-      bindkey -M isearch " " magic-space  # use normal space during searches
-
-      bindkey '^r' history-incremental-search-backward
-
-      bindkey '^j' jq-complete
-
-      # keybinding for dot expansion
-      bindkey . rationalise-dot
-
-      bindkey '^Xe' edit-command-line
-
       # set the DISPLAY variable automatically, using the IP address from SSH_CONNECTION
       export DISPLAY="`echo $SSH_CONNECTION | awk '{print $1}'`:0.0"
 
@@ -248,6 +234,20 @@
       bindkey '^Xk' run-help
 
       bindkey "^[[1;5C" forward-word
+
+      # keybindings for alias expansion
+      bindkey " " globalias               # expand on space
+      bindkey "^ " magic-space            # <C-space> to bypass expansion
+      bindkey -M isearch " " magic-space  # use normal space during searches
+
+      bindkey '^r' history-incremental-search-backward
+
+      bindkey '^j' jq-complete
+
+      # keybinding for dot expansion
+      bindkey . rationalise-dot
+
+      bindkey '^X^e' edit-command-line
 
       ### }}}
       ### Options {{{
