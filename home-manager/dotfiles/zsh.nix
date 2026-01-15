@@ -249,6 +249,8 @@
 
       bindkey '^X^e' edit-command-line
 
+      bindkey '^X_' undo
+
       ### }}}
       ### Options {{{
       ###
