@@ -156,8 +156,11 @@
       --preview-window=hidden
       "
 
+      autoload edit-command-line
+
       zle -N globalias
       zle -N rationalise-dot
+      zle -N edit-command-line
 
       # keybindings for alias expansion
       bindkey " " globalias               # expand on space
@@ -170,6 +173,8 @@
 
       # keybinding for dot expansion
       bindkey . rationalise-dot
+
+      bindkey '^Xe' edit-command-line
 
       # set the DISPLAY variable automatically, using the IP address from SSH_CONNECTION
       export DISPLAY="`echo $SSH_CONNECTION | awk '{print $1}'`:0.0"
