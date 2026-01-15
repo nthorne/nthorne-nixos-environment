@@ -215,9 +215,12 @@
       alias -g ...='cd ../..'
 
       # suffix aliases
-      alias -s md=vim
       alias -s cpp=vim
       alias -s hpp=vim
+      alias -s json=${lib.getExe pkgs.jless}
+      alias -s md=${lib.getExe pkgs.bat}
+      alias -s yml=${lib.getExe pkgs.bat}
+      alias -s yaml=${lib.getExe pkgs.bat}
 
       ### }}}
       ### Key bindings {{{
