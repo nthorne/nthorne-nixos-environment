@@ -254,6 +254,10 @@
 
       bindkey '^X_' undo
 
+      # Some git convenience bindings
+      bindkey -s '^Xga' 'git add -p .'
+      bindkey -s '^Xgc' 'git commit -m ""\e[D'
+
       ### }}}
       ### Options {{{
       ###
