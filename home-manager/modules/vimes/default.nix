@@ -29,7 +29,6 @@ in {
     rr
     slack
     tmuxinator
-    ungoogled-chromium
     wget
   ];
 
