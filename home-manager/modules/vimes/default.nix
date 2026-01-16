@@ -11,6 +11,8 @@ in {
     (import ../../scripts/tf2rem args)
     (import ../../dotfiles/vimes/gh-cli args)
 
+    ../../packages/copilot-cli
+
     args.flake-inputs.sops-nix.homeManagerModules.sops
   ];
 
@@ -19,7 +21,6 @@ in {
     ctags
     entr
     gdb
-    github-copilot-cli
     insomnia
     libxml2
     lnav
