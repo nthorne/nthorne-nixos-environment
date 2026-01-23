@@ -7,7 +7,7 @@ args @ {
 }: let
   hostname = flake-inputs.hostname;
 
-  hostCollection = path: (path + ("/" + hostname));
+  hostCollection = pth: (pth + ("/" + hostname));
   hostDotfiles = hostCollection ./dotfiles;
   hostPackages = hostCollection ./packages;
   hostScripts = hostCollection ./scripts;

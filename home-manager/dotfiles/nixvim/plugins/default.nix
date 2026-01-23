@@ -12,7 +12,7 @@
   nixModules = builtins.attrNames (modulesFilter (builtins.readDir ./.));
 in {
   # Convert all paths to absolute paths and import the modules
-  imports = builtins.map (path: ./. + "/${path}") nixModules;
+  imports = map (pth: ./. + "/${pth}") nixModules;
 
   # https://dotfyle.com/
   programs.nixvim = {
