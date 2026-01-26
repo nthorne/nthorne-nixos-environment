@@ -45,18 +45,6 @@
             substitutions = {};
           };
 
-          follow_url_func.__raw = ''
-            function(url)
-              vim.ui.open(url)
-            end
-            '';
-
-          follow_img_func.__raw = ''
-            function(img)
-              vim.fn.jobstart({"xdg-open", url})
-            end
-            '';
-
           picker = {
             name = "telescope.nvim";
             note_mappings = {
