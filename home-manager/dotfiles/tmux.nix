@@ -83,9 +83,9 @@ bind s setw synchronize-pane
 bind Tab last-window
 
 # Open AI agent in a popup at current pane path
-bind i display-popup -E -d '#{pane_current_path}' -w 80% -h 80% 'copilot'
+bind i display-popup -E -d '#{pane_current_path}' -w 80% -h 80% 'opencode'
 # Open AI agent in a new split, to the right of current pane
-bind I split-window -h -c '#{pane_current_path}' -p 40 'copilot'
+bind I split-window -h -c '#{pane_current_path}' -p 40 'opencode'
 
 # use 256 color display
 set -g default-terminal "screen-256color"
