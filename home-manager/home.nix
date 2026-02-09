@@ -104,6 +104,12 @@ in {
     clearDefaultKeybinds = true;
     settings = {
       font-family = ["" "JetBrains Mono"];
+
+      keybind = [
+        "ctrl+plus=increase_font_size:1"
+        "ctrl+-=decrease_font_size:1"
+        "ctrl+0=reset_font_size"
+      ];
     };
   };
 
