@@ -21,6 +21,11 @@ in {
           enabled = true;
           command = [ "podman" "run" "--rm" "-i" "mcp/markitdown" ];
         };
+        memory = {
+          type = "local";
+          enabled = true;
+          command = [ "podman" "run" "-i" "-v" "agent-memory:/app/dist" "--rm" "mcp/memory" ];
+        };
         nixos = {
           type = "local";
           enabled = true;
@@ -30,6 +35,7 @@ in {
     };
   };
 
+  home.file.".config/opencode/AGENTS.md".source = ./AGENTS.md;
   home.file.".config/opencode/agent".source = ./agent;
   home.file.".config/opencode/command".source = ./command;
   home.file.".config/opencode/skills".source = ../copilot-cli/skills;

@@ -1,0 +1,9 @@
+# Global Agent Guidelines
+
+## Memory (Knowledge Graph)
+- At the start of complex or multi-session tasks, read the knowledge graph for relevant context
+- Persist to memory: user preferences, architectural decisions, recurring patterns, project-specific conventions not captured elsewhere
+- Use consistent entity types: `user`, `host`, `project`, `preference`, `decision`, `pattern`
+- Keep entities focused - prefer specific observations over broad ones
+- Clean up outdated observations when information changes
+- Do NOT store information that's already in project files (like per-repo AGENTS.md) - memory is for things that aren't captured in the repo
