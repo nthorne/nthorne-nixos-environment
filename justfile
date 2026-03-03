@@ -29,7 +29,7 @@ update:
   nix flake update --commit-lock-file --flake .#
 
 push:
-  git push
+  git push --tags origin main
 
 update_hex_containers:
   #!/usr/bin/env bash
