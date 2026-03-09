@@ -511,4 +511,15 @@ in
       zlib
     ];
   };
+
+  # TODO: Figure out config.
+  services.openssh = {
+    enable = true;
+    ports = [ 5432 ];
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = true;
+      AllowUsers = [ "nthorne" ];
+    };
+  };
 }
