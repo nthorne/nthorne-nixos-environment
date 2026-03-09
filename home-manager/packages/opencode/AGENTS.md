@@ -7,3 +7,4 @@
 - Keep entities focused - prefer specific observations over broad ones
 - Clean up outdated observations when information changes
 - Do NOT store information that's already in project files (like per-repo AGENTS.md) - memory is for things that aren't captured in the repo
+- Before running verification steps, check memory for relevant context. It can for example be the case that the user wants manual verification.
