@@ -168,8 +168,9 @@ in
   virtualisation = {
     podman = {
       enable = true;
+      # Substitute docker with podman
+      dockerCompat = true;
     };
-    docker.enable = true;
   };
 
   virtualisation.libvirtd = {
