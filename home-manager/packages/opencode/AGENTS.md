@@ -1,5 +1,7 @@
 # Global Agent Guidelines
 
+If you are unsure how to performe some coding task, use the `github_grep` tool to search code examples from GitHub.
+
 ## Memory (Knowledge Graph)
 - At the start of complex or multi-session tasks, read the knowledge graph for relevant context
 - Persist to memory: user preferences, architectural decisions, recurring patterns, project-specific conventions not captured elsewhere

@@ -9,12 +9,13 @@ in {
       share = "disabled";
       autoupdate = false;
       enabled_providers = [ "github-copilot" ];
+      model = "github-copilot/claude-sonnet-4.6";
+      small_model = "github-copilot/gpt-5-mini";
 
       mcp = {
-        sequentialthinking = {
-          type = "local";
-          enabled = true;
-          command = [ "podman" "run" "--rm" "-i" "mcp/sequentialthinking" ];
+        github_grep = {
+          type = "remote";
+          url = "https://mcp.grep.app";
         };
         markitdown = {
           type = "local";
@@ -31,12 +32,17 @@ in {
           enabled = true;
           command = [ "nix" "run" "github:utensils/mcp-nixos" "--" ];
         };
+        sequentialthinking = {
+          type = "local";
+          enabled = true;
+          command = [ "podman" "run" "--rm" "-i" "mcp/sequentialthinking" ];
+        };
       };
     };
   };
 
   home.file.".config/opencode/AGENTS.md".source = ./AGENTS.md;
-  home.file.".config/opencode/agent".source = ./agent;
-  home.file.".config/opencode/command".source = ./command;
+  home.file.".config/opencode/agents".source = ./agent;
+  home.file.".config/opencode/commands".source = ./command;
   home.file.".config/opencode/skills".source = ../copilot-cli/skills;
 }
