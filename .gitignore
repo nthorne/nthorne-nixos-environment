@@ -1,5 +1,5 @@
 */private.nix
-work/dotfiles/
-work/scripts/
+vimes/dotfiles/
+vimes/scripts/
 result
 *.qcow2

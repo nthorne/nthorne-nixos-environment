@@ -18,7 +18,7 @@
 
 ## Project Structure
 - System configs in root (configuration.nix, flake.nix)
-- Host-specific configs in `work/`, `laptop/`, `hex/` directories
+- Host-specific configs in `vimes/`, `laptop/`, `hex/` directories
 - Home-manager configs in `home-manager/` with dotfiles and modules
 - Packages defined in `home-manager/packages/`
 - Scripts in `home-manager/scripts/`

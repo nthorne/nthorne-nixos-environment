@@ -89,8 +89,8 @@
     vimes-modules =
       common-modules
       ++ [
-        ./work/hardware-config/hardware-config-generated.nix
-        ./work/adaptation.nix
+        ./vimes/hardware-config/hardware-config-generated.nix
+        ./vimes/adaptation.nix
 
         sops-nix.nixosModules.sops
       ];
