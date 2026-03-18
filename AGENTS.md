@@ -37,3 +37,4 @@
   4. Create a pull request with a clear description
   5. Request user review instead of merging directly
 - PRs should reference the issue they fix (e.g., "Fixes #2")
+- **IMPORTANT**: Never push directly to main. Only the repo owner can push to main unless explicitly granted permission. All changes must go through a PR for review when working on GitHub issues. For other changes requested directly (not from GitHub issues), local review is acceptable.
