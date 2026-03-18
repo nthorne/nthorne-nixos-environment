@@ -4,6 +4,7 @@ in {
   imports =
     [
       ./wallabag.nix
+      ./openclaw.nix
     ]
     ++ (
       if builtins.pathExists private

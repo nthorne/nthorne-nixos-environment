@@ -44,6 +44,7 @@
     home-manager,
     stylix,
     sops-nix,
+    nix-secrets,
     ...
   } @ inputs: let
     # Pin nixpkgs in the flake registry to what we use for the system
@@ -101,6 +102,8 @@
       ++ [
         ./hex/hardware-configuration.nix
         ./hex/adaptation.nix
+
+        sops-nix.nixosModules.sops
       ];
 
     wifiDevice = "wlp0s20f3";
@@ -111,6 +114,9 @@
     }: {
       "${name}" = nixpkgs.lib.nixosSystem {
         system = "${system}";
+        specialArgs = {
+          inherit nix-secrets;
+        };
         modules =
           modules
           ++ [
