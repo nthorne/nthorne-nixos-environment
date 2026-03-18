@@ -120,7 +120,6 @@
         modules =
           modules
           ++ [
-            home-manager.nixosModules.home-manager
             {
               home-manager.extraSpecialArgs.flake-inputs =
                 inputs
@@ -153,8 +152,6 @@
       };
     };
   in {
-    nixpkgs.config.allowUnfree = true;
-
     formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
 
     nixosConfigurations =
