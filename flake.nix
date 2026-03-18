@@ -30,7 +30,7 @@
 
     nixvim.url = "github:nix-community/nixvim";
 
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix.url = "github:danth/stylix";
 
     sops-nix.url = "github:Mic92/sops-nix";
 
@@ -72,15 +72,9 @@
         home-manager.useUserPackages = true;
         home-manager.users.nthorne = import ./home-manager/home.nix;
 
-        # Mako fails to build on main, so I disable it for now.
         home-manager.sharedModules = [
           {
             stylix.autoEnable = true;
-            stylix.targets = {
-              mako.enable = false;
-              wpaperd.enable = false;
-              vscode.enable = false;
-            };
           }
         ];
       }
