@@ -27,3 +27,13 @@
 - Use `lib.mkForce` for overrides when necessary
 - Prefer conditional expressions with `lib.mkIf` for optional features
 - Handle missing packages gracefully with null checks where appropriate
+
+## GitHub Workflow
+- Task tracking uses GitHub issues
+- When working on an issue:
+  1. Create a new branch (e.g., `issue-N-description`)
+  2. Make changes and commit with meaningful messages
+  3. Push the branch to origin
+  4. Create a pull request with a clear description
+  5. Request user review instead of merging directly
+- PRs should reference the issue they fix (e.g., "Fixes #2")
