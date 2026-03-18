@@ -130,7 +130,7 @@ in {
 
   nix.gc = {
     automatic = true;
-    options = "--delete-older-than 21d";
+    options = "--delete-older-than 21d --keep-generations 5";
   };
 
   programs.starship = {
