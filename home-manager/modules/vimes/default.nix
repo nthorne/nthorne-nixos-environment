@@ -16,22 +16,27 @@ in {
     args.flake-inputs.sops-nix.homeManagerModules.sops
   ];
 
-  home.packages = with pkgs; [
-    cppcheck
-    ctags
-    entr
-    gdb
-    insomnia
-    libxml2
-    lnav
-    nvtopPackages.full
-    p7zip
-    remmina
-    rr
-    slack
-    tmuxinator
-    wget
-  ];
+  home.packages =
+    with pkgs;
+    [
+      cppcheck
+      ctags
+      entr
+      gdb
+      insomnia
+      libxml2
+      lnav
+      nvtopPackages.full
+      p7zip
+      remmina
+      rr
+      slack
+      tmuxinator
+      wget
+    ]
+    ++ [
+      (pkgs.callPackage ../../packages/open-ralph-wiggum { })
+    ];
 
   sops = {
     age.keyFile = "/home/nthorne/.config/sops/age/keys.txt";
