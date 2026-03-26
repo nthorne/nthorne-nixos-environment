@@ -79,17 +79,28 @@
         options.desc = "[A]pply suggested code action";
       }
 
-      {
-        mode = "n";
-        key = "<leader>nai"; # Disable AI completion
-        action.__raw = ''
-          function()
-            vim.lsp.stop_client(vim.lsp.get_clients({"name", "copilot"}))
-            require("sidekick.nes").disable()
-          end
-        '';
-        options.desc = "[N]o [A][I] completion";
-      }
+       {
+         mode = "n";
+         key = "<leader>nai"; # Toggle AI completion
+         action.__raw = ''
+           function()
+             if vim.g.copilot_enabled == 0 then
+               vim.g.copilot_enabled = 1
+               vim.notify("Copilot enabled", vim.log.levels.INFO)
+             else
+               for _, client in ipairs(vim.lsp.get_clients()) do
+                 if client.name:lower() == "github copilot" or client.name:lower() == "copilot" then
+                   vim.lsp.stop_client(client.id)
+                 end
+               end
+               vim.g.copilot_enabled = 0
+               require("sidekick.nes").disable()
+               vim.notify("Copilot disabled", vim.log.levels.INFO)
+             end
+           end
+         '';
+         options.desc = "Toggle [N]o [A][I] completion";
+       }
     ];
 
     plugins.lsp-format = {
