@@ -8,9 +8,27 @@ in {
     settings = {
       share = "disabled";
       autoupdate = false;
-      enabled_providers = [ "github-copilot" ];
+      enabled_providers = [ "github-copilot" "ollama" ];
       model = "github-copilot/claude-sonnet-4.6";
       small_model = "github-copilot/gpt-5-mini";
+
+      provider = {
+          ollama = {
+            npm = "@ai-sdk/openai-compatible";
+            name = "Ollama";
+            options = {
+              baseURL = "http://localhost:11434/v1";
+            };
+            models = {
+              "qwen3-coder:latest" = {
+                name = "qwen3-coder:latest";
+              };
+              "qwen3.5:latest" = {
+                name = "qwen3.5:latest";
+              };
+            };
+          };
+      };
 
       mcp = {
         github_grep = {
