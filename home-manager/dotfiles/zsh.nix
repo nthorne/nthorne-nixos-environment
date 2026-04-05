@@ -210,7 +210,6 @@
       # .. order matters here.
       alias -g ......='cd ../../../../../..'
       alias -g .....='cd ../../../../..'
-      alias -g .....='cd ../../../..'
       alias -g ....='cd ../../..'
       alias -g ...='cd ../..'
 
@@ -322,11 +321,6 @@
         alias j='zz'
         alias zs=_fasd_z_to_subfolder
       fi
-
-      ## <<<
-
-      test -f "''${zgen_base_path}/sachaos/todoist-master/todoist_functions_fzf.sh" && \
-        . "''${zgen_base_path}/sachaos/todoist-master/todoist_functions_fzf.sh"
 
       ### }}}
     '';
