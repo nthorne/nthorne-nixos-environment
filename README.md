@@ -34,12 +34,11 @@ git config --local filter.git-agecrypt.smudge "$(which git-agecrypt) smudge"
 Age keys need to be stored in ~/.config/sops/age/keys.txt, and /etc/sops/age/keys.txt
 (for vimes), as the home partition is decrypted at login.
 
-## Temporary
+## QCA9377 WiFi Firmware
 
-In order to fix broken ath10k driver, I also copied the firmware-5.bin from
-/nix/store/ for the QCA9377 that was closest to december, and added a nix
-package for it, and included that package within `hardware-configuration.nix`.
-This change should be reverted once the driver issue has been fixed for NixOS.
+To work around a broken ath10k driver, I've created a custom Nix package for the
+QCA9377 WiFi firmware. This package copies the correct firmware binaries and is
+included in the laptop's `hardware-configuration.nix`.
 
 # Misc
 
