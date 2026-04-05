@@ -95,4 +95,13 @@ in {
   programs.zsh.shellAliases = {
     nlsh = ''nlsh() { curl -s localhost:11434/api/generate -d "{\"model\": \"westenfelder/NL2SH\", \"prompt\": \"$1\", \"stream\": false}" | jq -r '.response'}; nlsh'';
   };
+
+  programs.opencode.settings.provider.ollama.models = {
+    "qwen3-coder:latest" = {
+      name = "qwen3-coder:latest";
+    };
+    "qwen3.5:latest" = {
+      name = "qwen3.5:latest";
+    };
+  };
 }
