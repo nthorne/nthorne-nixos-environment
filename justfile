@@ -1,7 +1,7 @@
 default: build diff
 
 build:
-  sudo nixos-rebuild build --flake .#  
+  nixos-rebuild build --flake .#  
 
 diff:
   nvd diff /nix/var/nix/profiles/system result
@@ -20,10 +20,10 @@ tag_generation:
   fi
 
 switch: assert_git_clean && tag_generation
-  sudo nixos-rebuild switch --flake .# && rm -f result 
+  nixos-rebuild switch --sudo --flake .# && rm -f result 
 
 test:
-  sudo nixos-rebuild test --flake .# && rm result
+  nixos-rebuild test --sudo --flake .# && rm result
 
 update:
   nix flake update --commit-lock-file --flake .#
