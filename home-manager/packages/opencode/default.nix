@@ -22,33 +22,98 @@ in {
            };
        };
 
-      mcp = {
-        github_grep = {
-          type = "remote";
-          url = "https://mcp.grep.app";
-        };
-        markitdown = {
-          type = "local";
-          enabled = true;
-          command = [ "podman" "run" "--rm" "-i" "mcp/markitdown" ];
-        };
-        memory = {
-          type = "local";
-          enabled = true;
-          command = [ "podman" "run" "-i" "-v" "agent-memory:/app/dist" "--rm" "mcp/memory" ];
-        };
-        nixos = {
-          type = "local";
-          enabled = true;
-          command = [ "nix" "run" "github:utensils/mcp-nixos" "--" ];
-        };
-        sequentialthinking = {
-          type = "local";
-          enabled = true;
-          command = [ "podman" "run" "--rm" "-i" "mcp/sequentialthinking" ];
-        };
-      };
-    };
+       mcp = {
+         github_grep = {
+           type = "remote";
+           url = "https://mcp.grep.app";
+         };
+         markitdown = {
+           type = "local";
+           enabled = true;
+           command = [ "podman" "run" "--rm" "-i" "mcp/markitdown" ];
+         };
+         memory = {
+           type = "local";
+           enabled = true;
+           command = [ "podman" "run" "-i" "-v" "agent-memory:/app/dist" "--rm" "mcp/memory" ];
+         };
+         nixos = {
+           type = "local";
+           enabled = true;
+           command = [ "nix" "run" "github:utensils/mcp-nixos" "--" ];
+         };
+         sequentialthinking = {
+           type = "local";
+           enabled = true;
+           command = [ "podman" "run" "--rm" "-i" "mcp/sequentialthinking" ];
+         };
+       };
+
+       permission = {
+         # Safe operations - auto-allow
+         read = "allow";
+         grep = "allow";
+         glob = "allow";
+         list = "allow";
+         edit = "allow";
+
+         # Require approval or block dangerous commands
+         bash = {
+           "*" = "ask";
+
+           # Hard blocks - never allow
+           "sudo *" = "deny";
+           "git push *" = "deny";
+           "git push" = "deny";
+           "nixos-rebuild switch *" = "deny";
+           "nixos-rebuild switch" = "deny";
+           "nixos-rebuild test *" = "deny";
+           "nixos-rebuild test" = "deny";
+           "just switch *" = "deny";
+           "just switch" = "deny";
+           "just test *" = "deny";
+           "just test" = "deny";
+           "rm -rf *" = "deny";
+
+           # Safe git commands - auto-allow
+           "git add *" = "allow";
+           "git branch *" = "allow";
+           "git checkout *" = "allow";
+           "git commit *" = "allow";
+           "git diff *" = "allow";
+           "git log *" = "allow";
+           "git status *" = "allow";
+           "git show *" = "allow";
+           "git show" = "allow";
+
+           # Safe github CLI commands - auto-allow
+           "gh pr view *" = "allow";
+           "gh pr view" = "allow";
+           "gh issue view *" = "allow";
+           "gh issue view" = "allow";
+
+           # Safe nix commands - auto-allow
+           "nix fmt *" = "allow";
+           "nix fmt" = "allow";
+           "just *" = "allow";
+
+           # Safe generic commands - auto-allow
+           "ls *" = "allow";
+           "ls" = "allow";
+           "cat *" = "allow";
+           "cat" = "allow";
+           "grep *" = "allow";
+           "grep" = "allow";
+           "find *" = "allow";
+           "find" = "allow";
+         };
+
+         external_directory = {
+           "*" = "ask";
+           "/tmp/*" = "allow";
+         };
+       };
+     };
   };
 
   home.file.".config/opencode/AGENTS.md".source = ./AGENTS.md;
