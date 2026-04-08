@@ -30,14 +30,26 @@
 
     nixvim.url = "github:nix-community/nixvim";
 
-    stylix.url = "github:danth/stylix";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-secrets.url = "git+ssh://git@github.com/nthorne/nix-secrets.git?allRefs=true&ref=main";
 
-    mcphub-nvim.url = "github:ravitemer/mcphub.nvim";
-    mcp-hub.url = "github:ravitemer/mcp-hub";
+    mcphub-nvim = {
+      url = "github:ravitemer/mcphub.nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    mcp-hub = {
+      url = "github:ravitemer/mcp-hub";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = {
     nixpkgs,
