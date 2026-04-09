@@ -14,6 +14,10 @@ in {
       autoupdate = false;
       enabled_providers = [ "github-copilot" "ollama" ];
       model = "github-copilot/claude-sonnet-4.6";
+      plugin = [
+        "@mohak34/opencode-notifier@latest"
+        "@tarquinen/opencode-dcp@latest"
+      ];
       small_model = "github-copilot/gpt-5-mini";
 
       provider = {
@@ -67,8 +71,8 @@ in {
 
           # Hard blocks - never allow
           "sudo *" = "deny";
-          "git push *" = "deny";
-          "git push" = "deny";
+          "*git push *" = "deny";
+          "*git push" = "deny";
           "nixos-rebuild switch *" = "deny";
           "nixos-rebuild switch" = "deny";
           "nixos-rebuild test *" = "deny";
@@ -79,22 +83,22 @@ in {
           "just test" = "deny";
           "rm -rf *" = "deny";
 
-          # Safe git commands - auto-allow
-          "git add *" = "allow";
-          "git branch *" = "allow";
-          "git checkout *" = "allow";
-          "git commit *" = "allow";
-          "git diff *" = "allow";
-          "git log *" = "allow";
-          "git status *" = "allow";
-          "git show *" = "allow";
-          "git show" = "allow";
+          # Safe git commands - auto-allow (glob in from to catch rtk versions)
+          "*git add *" = "allow";
+          "*git branch *" = "allow";
+          "*git checkout *" = "allow";
+          "*git commit *" = "allow";
+          "*git diff *" = "allow";
+          "*git log *" = "allow";
+          "*git status *" = "allow";
+          "*git show *" = "allow";
+          "*git show" = "allow";
 
-          # Safe github CLI commands - auto-allow
-          "gh pr view *" = "allow";
-          "gh pr view" = "allow";
-          "gh issue view *" = "allow";
-          "gh issue view" = "allow";
+          # Safe github CLI commands - auto-allow (glob in from to catch rtk versions)
+          "*gh pr view *" = "allow";
+          "*gh pr view" = "allow";
+          "*gh issue view *" = "allow";
+          "*gh issue view" = "allow";
 
           # Safe nix commands - auto-allow
           "nix fmt *" = "allow";
@@ -106,10 +110,29 @@ in {
           "ls" = "allow";
           "cat *" = "allow";
           "cat" = "allow";
-          "grep *" = "allow";
-          "grep" = "allow";
+          "echo *" = "allow";
           "find *" = "allow";
           "find" = "allow";
+          "grep *" = "allow";
+          "grep" = "allow";
+          "head *" = "allow";
+          "head" = "allow";
+          "rg *" = "allow";
+          "sort" = "allow";
+          "wc *" = "allow";
+          "wc" = "allow";
+
+          # .. and the same versions running through rtk
+          "rtk ls *" = "allow";
+          "rtk ls" = "allow";
+          "rtk cat *" = "allow";
+          "rtk cat" = "allow";
+          "rtk grep *" = "allow";
+          "rtk grep" = "allow";
+          "rtk find *" = "allow";
+          "rtk find" = "allow";
+          "rtk wc *" = "allow";
+          "rtk wc" = "allow";
         };
 
         external_directory = {
