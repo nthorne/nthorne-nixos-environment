@@ -46,13 +46,9 @@ in {
 
       render-markdown.enable = true;
 
-      repeat.enable = true;
-
       rustaceanvim.enable = true;
 
       undotree.enable = true;
-
-      vim-surround.enable = true;
 
       which-key.enable = true;
     };
