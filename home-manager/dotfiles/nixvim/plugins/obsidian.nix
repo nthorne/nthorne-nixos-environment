@@ -34,8 +34,8 @@
               end
               '';
 
-          wiki_link_func = "prepend_note_path";
-          preferred_link_style = "wiki";
+          link.style = "wiki";
+          link.format = "shortest";
           use.frontmatter = false;
 
           templates = {
