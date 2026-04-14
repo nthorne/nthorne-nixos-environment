@@ -141,6 +141,10 @@ in {
         };
       };
      };
+
+    tui.keybinds = {
+      "session_fork" = "<leader>f";
+    };
   };
 
   home.file.".config/opencode/AGENTS.md".source = ./AGENTS.md;
