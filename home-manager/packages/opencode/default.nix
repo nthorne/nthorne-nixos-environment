@@ -95,10 +95,12 @@ in {
           "*git show" = "allow";
 
           # Safe github CLI commands - auto-allow (glob in from to catch rtk versions)
-          "*gh pr view *" = "allow";
-          "*gh pr view" = "allow";
           "*gh issue view *" = "allow";
           "*gh issue view" = "allow";
+          "*gh pr checkout *" = "allow";
+          "*gh pr list" = "allow";
+          "*gh pr view *" = "allow";
+          "*gh pr view" = "allow";
 
           # Safe nix commands - auto-allow
           "nix fmt *" = "allow";
@@ -109,16 +111,16 @@ in {
           "ls *" = "allow";
           "ls" = "allow";
           "cat *" = "allow";
-          "cat" = "allow";
           "echo *" = "allow";
           "find *" = "allow";
-          "find" = "allow";
           "grep *" = "allow";
-          "grep" = "allow";
           "head *" = "allow";
           "head" = "allow";
           "rg *" = "allow";
           "sort" = "allow";
+          "tail" = "allow";
+          "tail *" = "allow";
+          "timeout *" = "allow";
           "wc *" = "allow";
           "wc" = "allow";
 
@@ -126,11 +128,8 @@ in {
           "rtk ls *" = "allow";
           "rtk ls" = "allow";
           "rtk cat *" = "allow";
-          "rtk cat" = "allow";
           "rtk grep *" = "allow";
-          "rtk grep" = "allow";
           "rtk find *" = "allow";
-          "rtk find" = "allow";
           "rtk wc *" = "allow";
           "rtk wc" = "allow";
         };
