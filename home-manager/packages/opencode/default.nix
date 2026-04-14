@@ -13,7 +13,7 @@ in {
       share = "disabled";
       autoupdate = false;
       enabled_providers = [ "github-copilot" "ollama" ];
-      model = "github-copilot/claude-sonnet-4.6";
+      model = "github-copilot/claude-haiku-4.5";
       plugin = [
         "@mohak34/opencode-notifier@latest"
         "@tarquinen/opencode-dcp@latest"
