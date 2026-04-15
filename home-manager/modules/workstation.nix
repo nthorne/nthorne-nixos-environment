@@ -9,8 +9,6 @@ in {
     ../packages/opencode
   ];
   home.packages = with pkgs; [
-    bitwarden-cli
-    bitwarden-desktop
     gh
     gparted
     grimblast # Screen capture tool with hyprland support
@@ -18,7 +16,6 @@ in {
     libnotify
     obsidian
     openpomodoro-cli
-    todoist
   ];
 
   home.sessionVariables = {
