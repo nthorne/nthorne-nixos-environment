@@ -97,6 +97,9 @@ in {
   };
 
   programs.opencode.settings.provider.ollama.models = {
+    "gemma4:latest" = {
+      name = "gemma4:latest";
+    };
     "qwen3-coder:latest" = {
       name = "qwen3-coder:latest";
     };
