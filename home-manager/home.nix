@@ -23,6 +23,7 @@ in {
       (import ./dotfiles/tmux.nix args)
 
       flake-inputs.nixvim.homeModules.nixvim
+      flake-inputs.nix-index-database.homeModules.default
       ./dotfiles/nixvim
 
       ./packages/tmux-sessionizer
