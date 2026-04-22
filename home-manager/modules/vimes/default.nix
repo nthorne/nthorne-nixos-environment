@@ -2,10 +2,9 @@
   pkgs,
   ...
 } @ args: let
-  secretsFolders = builtins.toString args.flake-inputs.nix-secrets;
+  secretsFolders = toString args.flake-inputs.nix-secrets;
 in {
   imports = [
-    ../../dotfiles/clion.nix
     (import ../../packages/clamav-scan args)
     (import ../workstation.nix args)
     (import ../../scripts/tf2rem args)
@@ -19,7 +18,6 @@ in {
   home.packages =
     with pkgs;
     [
-      cppcheck
       ctags
       entr
       gdb
@@ -29,7 +27,6 @@ in {
       nvtopPackages.full
       p7zip
       remmina
-      rr
       slack
       tmuxinator
       wget

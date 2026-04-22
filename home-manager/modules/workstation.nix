@@ -12,7 +12,6 @@ in {
     gh
     gparted
     grimblast # Screen capture tool with hyprland support
-    hyperfine
     libnotify
     obsidian
     openpomodoro-cli
@@ -29,15 +28,5 @@ in {
       notify-send -et 10000 "Time is up ⏰"
     '';
     executable = true;
-  };
-
-  sops.secrets = {
-    dot-env = {
-      format = "binary";
-      sopsFile = ./secrets/gemini-dotenv;
-      path = "/home/nthorne/.env";
-
-      mode = "0440";
-    };
   };
 }
