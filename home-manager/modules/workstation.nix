@@ -13,7 +13,6 @@ in {
     gparted
     grimblast # Screen capture tool with hyprland support
     libnotify
-    obsidian
     openpomodoro-cli
   ];
 

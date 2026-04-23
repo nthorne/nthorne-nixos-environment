@@ -13,6 +13,7 @@ in {
   home.packages = with pkgs; [
     bashmount
     deluge
+    obsidian
     sshfs-fuse
   ];
 
