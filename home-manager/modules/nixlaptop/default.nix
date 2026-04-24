@@ -3,7 +3,7 @@
   flake-inputs,
   ...
 } @ args: let
-  secretsFolders = builtins.toString flake-inputs.nix-secrets;
+  secretsFolders = toString flake-inputs.nix-secrets;
 in {
   imports = [
     (import ../workstation.nix args)

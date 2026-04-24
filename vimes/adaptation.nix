@@ -490,9 +490,6 @@ in
   # and need to be in this repository.
   security.pki.certificateFiles = [ ./secrets/vimes.pem ];
 
-  # TEMP: Disable this one until the CUDA debacle has been resolved 😒
-  #nixpkgs.config.cudaSupport = true;
-
   # Enable systemd-oomd for better OOM handling
   systemd.oomd = {
     enable = true;
@@ -501,7 +498,7 @@ in
     enableUserSlices = true;
   };
 
-  # TODO: to get aspire working, but i do not like pollutin the system with this..
+  # To get aspire working, but i do not like polluting the system with this..
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [

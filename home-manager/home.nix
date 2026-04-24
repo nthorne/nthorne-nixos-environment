@@ -22,8 +22,9 @@ in {
       (import ./dotfiles/hyprland.nix args)
       (import ./dotfiles/tmux.nix args)
 
-      flake-inputs.nixvim.homeModules.nixvim
       flake-inputs.nix-index-database.homeModules.default
+
+      flake-inputs.nixvim.homeModules.nixvim
       ./dotfiles/nixvim
 
       ./packages/tmux-sessionizer
@@ -76,11 +77,13 @@ in {
     fasd
     fd
     file
+    firefox
     fzf
+    git-crypt
     htop
-    just
     jq
     jqp
+    just
     nvd
     pavucontrol
     seahorse # For managing gnome-keyring
@@ -88,8 +91,6 @@ in {
     silver-searcher
     swaynotificationcenter
     tree
-    firefox
-    git-crypt
     waybar
     wl-clipboard
   ];

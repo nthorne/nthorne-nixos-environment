@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{pkgs, ...}: let
+{pkgs, lib, ...}: let
   theme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
   wallpaper = pkgs.runCommand "image.jpg" {} ''
     COLOR=$(${pkgs.yq}/bin/yq -r .palette.base00 ${theme})
@@ -58,7 +58,7 @@ in {
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --asterisks --remember --remember-user-session --sessions ${pkgs.hyprland}/bin/Hyprland";
+        command = "${lib.getExe pkgs.tuigreet} --time --asterisks --remember --remember-user-session --sessions ${lib.getExe pkgs.hyprland}";
       };
     };
   };
