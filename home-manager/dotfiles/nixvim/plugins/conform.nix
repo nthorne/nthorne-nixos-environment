@@ -16,17 +16,17 @@
         default_format_opts.lsp_format = "fallback";
         formatters_by_ft = {
           cpp = ["clang_format"];
-          nix = ["alejandra"];
+          nix = ["nixfmt"];
           yaml = ["yamlfmt"];
           python = ["isort" "black"];
         };
 
         formatters = {
-          alejandra = {
-            command = lib.getExe pkgs.alejandra;
-          };
           black = {
             command = lib.getExe pkgs.black;
+          };
+          nixfmt = {
+            command = lib.getExe pkgs.nixfmt;
           };
           yamlfmt = {
             command = lib.getExe pkgs.yamlfmt;
