@@ -51,6 +51,7 @@
         nixd.enable = true;
         pyrefly.enable = true;
         ruff.enable = true;
+        ts_ls.enable = true;
         yamlls.enable = true;
       };
       keymaps = {
