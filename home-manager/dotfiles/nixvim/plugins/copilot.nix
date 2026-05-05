@@ -6,7 +6,7 @@
       copilot-chat = {
         enable = true;
         settings = {
-          model = "claude-sonnet-4";
+          model = "claude-haiku-4.5";
 
           mappings = {
             reset = {
