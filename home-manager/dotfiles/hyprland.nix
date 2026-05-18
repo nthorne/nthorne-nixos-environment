@@ -143,7 +143,6 @@
 
       # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
       dwindle {
-          pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
           preserve_split = true # You probably want this
       }
 
@@ -213,7 +212,7 @@
       bind = $mainMod SHIFT, n, exec, swaync-client -t
 
       bind = $mainMod, f, togglefloating,
-      bind = $mainMod SHIFT, space, togglesplit, # dwindle
+      bind = $mainMod SHIFT, space, layoutmsg, togglesplit, # dwindle
       bind = $mainMod, space, fullscreen, 1
 
       bind = $mainMod, Scroll_Lock, exec, $lock
