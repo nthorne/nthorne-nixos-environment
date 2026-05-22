@@ -49,6 +49,7 @@
         };
         jsonls.enable = true;
         nixd.enable = true;
+        ocamllsp.enable = true;
         pyrefly.enable = true;
         ruff.enable = true;
         ts_ls.enable = true;
@@ -80,7 +81,7 @@
         options.desc = "[A]pply suggested code action";
       }
 
-       {
+      {
          mode = "n";
          key = "<leader>nai"; # Toggle AI completion
          action.__raw = ''
@@ -101,6 +102,38 @@
            end
          '';
          options.desc = "Toggle [N]o [A][I] completion";
+      }
+
+      {
+        mode = "n";
+        key = "<leader>ll";
+        action.__raw = ''
+          function()
+            local codelens = vim.lsp.codelens
+            if codelens.is_enabled({bufnr = 0}) then
+              codelens.enable(false)
+            else
+              codelens.enable(true)
+            end
+          end
+        '';
+        options.desc = "Toggle In[L]ay code [L]ens";
+      }
+
+      {
+        mode = "n";
+        key = "<leader>lh";
+        action.__raw = ''
+          function()
+            local inlay_hint = vim.lsp.inlay_hint
+            if inlay_hint.is_enabled({bufnr = 0}) then
+              inlay_hint.enable(false)
+            else
+              inlay_hint.enable(true)
+            end
+          end
+        '';
+        options.desc = "Toggle In[L]ay [H]ints";
        }
     ];
 
@@ -145,11 +178,11 @@
         mode = "n";
         desc = "Rename";
       }
-      {
-        __unkeyed = "K";
-        mode = "n";
-        desc = "Hover";
-      }
-    ];
-  };
+       {
+         __unkeyed = "K";
+         mode = "n";
+         desc = "Hover";
+       }
+     ];
+   };
 }
