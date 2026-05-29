@@ -54,5 +54,5 @@
 [include]
 	path = .gitconfig-private
 [user]
-        email = niklas.thorne@netclean.com
+        email = notrupertthorne@gmail.com
         name = "Niklas Thörne"

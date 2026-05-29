@@ -25,11 +25,6 @@ in
     enable = true;
   };
 
-  # Enable fscrypt for home directory encryption
-  security.pam.enableFscrypt = true;
-  # NOTE: I NEED to login with password to descrypt my home directory.
-  security.pam.services.greetd.fprintAuth = false;
-
   # PAM fails to lock protector in memory, causing unlock to fail, so we
   # increase the memlock limit to infinity.
   systemd.settings.Manager = {
@@ -240,7 +235,6 @@ in
   environment.systemPackages = with pkgs; [
     afuse
     clamav
-    fscrypt-experimental
     gnupg
     sshfs-fuse
 
@@ -444,25 +438,7 @@ in
     accept-flake-config = true
   '';
 
-  sops.age.keyFile = "/etc/sops/age/keys.txt";
-  sops.secrets = {
-    unicorn-passwords = {
-      format = "binary";
-      sopsFile = ./secrets/unicorn-passwords.sh;
-
-      mode = "0440";
-      owner = config.users.users.nthorne.name;
-      group = config.users.users.nthorne.group;
-    };
-  };
-
   environment.etc = {
-    "vpn/netclean-client-ca.pem".source = ./secrets/vpn/netclean-client-ca.pem;
-    "vpn/netclean-client-cert.pem".source = ./secrets/vpn/netclean-client-cert.pem;
-    "vpn/netclean-client-key.pem".source = ./secrets/vpn/netclean-client-key.pem;
-    "vpn/netclean-client-tls-crypt.pem".source = ./secrets/vpn/netclean-client-tls-crypt.pem;
-    "vpn/profile-userlocked.ovpn".source = ./secrets/vpn/profile-userlocked.ovpn;
-
     # Auditd configuration for proper logging
     "audit/auditd.conf".text = ''
       log_file = /var/log/audit/audit.log
@@ -485,10 +461,6 @@ in
       disk_error_action = SUSPEND
     '';
   };
-
-  # I handled this one separately from sops, as it is an input to `certificateFiles`
-  # and need to be in this repository.
-  security.pki.certificateFiles = [ ./secrets/vimes.pem ];
 
   # Enable systemd-oomd for better OOM handling
   systemd.oomd = {
