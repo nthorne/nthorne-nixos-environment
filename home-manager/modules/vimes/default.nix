@@ -26,7 +26,6 @@ in {
       nvtopPackages.full
       p7zip
       remmina
-      slack
       tmuxinator
       wget
     ]
