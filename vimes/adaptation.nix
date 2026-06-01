@@ -114,12 +114,6 @@ in
     MemoryMax = lib.mkForce "8G";
   };
 
-  systemd.services.clamav-daemon.serviceConfig = {
-    # Resource limits for scanning - keeping existing protections for now
-    MemoryHigh = lib.mkForce "2G";
-    MemoryMax = lib.mkForce "4G";
-  };
-
   # Security hardening - kernel sysctls (VM-safe)
   boot.kernel.sysctl = {
     "kernel.ftrace_enabled" = true;
@@ -234,7 +228,6 @@ in
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     afuse
-    clamav
     gnupg
     sshfs-fuse
 
@@ -242,11 +235,6 @@ in
     qemu
     virtiofsd
   ];
-
-  services.clamav = {
-    daemon.enable = true;
-    updater.enable = true;
-  };
 
   boot = {
     kernelModules = [

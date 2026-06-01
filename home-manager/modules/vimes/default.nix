@@ -5,7 +5,6 @@
   secretsFolders = toString args.flake-inputs.nix-secrets;
 in {
   imports = [
-    (import ../../packages/clamav-scan args)
     (import ../workstation.nix args)
     (import ../../scripts/tf2rem args)
     (import ../../dotfiles/vimes/gh-cli args)
