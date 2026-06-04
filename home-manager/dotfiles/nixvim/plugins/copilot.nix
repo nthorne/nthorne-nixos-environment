@@ -4,7 +4,7 @@
       copilot-vim.enable = true;
 
       copilot-chat = {
-        enable = true;
+        enable = false;
         settings = {
           model = "claude-haiku-4.5";
 

@@ -10,7 +10,7 @@ in {
   programs.nixvim = {
     plugins = {
       avante = {
-        enable = true;
+        enable = false;
 
         settings = {
           # Set the default provider to use
