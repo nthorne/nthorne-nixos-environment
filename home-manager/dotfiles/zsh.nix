@@ -25,7 +25,7 @@
 
     shellAliases = {
       ls = "eza";
-      l = "eza -al --git --no-user --time-style=long-iso --no-permissions --group-directories-first --header";
+      l = "eza -al --no-user --time-style=long-iso --no-permissions --group-directories-first --header";
       grep = "grep --color=auto";
       vim = "nvim";
       view = "nvim -R";
