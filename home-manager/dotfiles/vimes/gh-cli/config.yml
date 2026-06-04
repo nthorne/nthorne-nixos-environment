@@ -1,0 +1,28 @@
+# What protocol to use when performing git operations. Supported values: ssh, https
+git_protocol: https
+# What editor gh should run when creating issues, pull requests, etc. If blank, will refer to environment.
+editor:
+# When to interactively prompt. This is a global config that cannot be overridden by hostname. Supported values: enabled, disabled
+prompt: enabled
+# A pager program to send command output to, e.g. "less". Set the value to "cat" to disable the pager.
+pager:
+# Aliases allow you to create nicknames for gh commands
+aliases:
+    co: pr checkout
+    rls: run ls --user nethorne
+    deploy_pams: workflow run -R netclean-com/server deploy-pams-to-farmer.yaml -f license_key=NIKLASXXXXXXXXXXXXXXXXXX -f pams_address=nthorne-pams.swedencentral.cloudapp.azure.com
+    remove_farmer: workflow run -R netclean-com/farmer remove_environment.yml -f id=nthorne
+    deploy_win10_agent: workflow run -R netclean-com/agent deploy_to_farmer.yml -f agent_address=nthorne-agent-0-win10.swedencentral.cloudapp.azure.com -f pams_address=nthorne-pams.swedencentral.cloudapp.azure.com
+    setup_farmer: workflow run -R netclean-com/farmer setup_environment.yml -f id=nthorne
+    show_log: '!gh run list --user nethorne -L 1 --status success --json databaseId --jq ''.[0] | .databaseId'' | xargs gh run view --log'
+    show_root_password: '!gh show_log | fgrep "Print password" | tail -n 1 | cut -d" " -f3 | tee >(wl-copy)'
+    show_farm_parameters: '!gh run list --user nethorne --workflow setup_environment.yml -R netclean-com/farmer -L 1 --status success --json databaseId --jq ''.[0].databaseId'' | xargs gh run view --log | fgrep ''terraform output'' | cut -d'' '' -f4- | sed -e ''/\[group\]/,/\[endgroup\]/d'''
+    watch_latest: '!gh run ls --user nethorne --status in_progress --json databaseId --jq ".[0].databaseId" | xargs gh run watch'
+    show_agent_auth_secret: '!ssh -o StrictHostKeyChecking=no adminuser@nthorne-pams.swedencentral.cloudapp.azure.com "type \"C:\ProgramData\NetClean Technologies\NetClean ProActive Management Server\AgentAuthSecret.txt\"" | tee >(wl-copy)'
+    deploy_pamc: workflow run -R netclean-com/server deploy-pamc-to-farmer.yaml -f pamc_address=nthorne-pams.swedencentral.cloudapp.azure.com
+    show_pams_instance: '!ssh -o StrictHostKeyChecking=no adminuser@nthorne-pams.swedencentral.cloudapp.azure.com "type \"C:\ProgramData\NetClean Technologies\NetClean ProActive Management Server\EventLogs\pams*.txt\"" | fgrep ncloud | sed -e "s/.*Instance identifier: //" | uniq | tee >(wl-copy)'
+# The path to a unix socket through which send HTTP connections. If blank, HTTP traffic will be handled by net/http.DefaultTransport.
+http_unix_socket:
+# What web browser gh should use when opening URLs. If blank, will refer to environment.
+browser:
+version: "1"

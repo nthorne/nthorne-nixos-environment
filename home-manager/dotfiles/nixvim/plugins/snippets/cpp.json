@@ -1,0 +1,12 @@
+{
+  "fn": {
+    "prefix": "fn",
+    "body": [
+      "auto $1($2) -> $3",
+      "{",
+      "  $4",
+      "}"
+    ],
+    "description": "c++ function"
+  }
+}

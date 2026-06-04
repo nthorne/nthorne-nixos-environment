@@ -1,0 +1,40 @@
+# Agent Guidelines - NixOS Environment Configuration
+
+## Build/Test Commands
+- **Build**: `just build` (builds system configuration)
+- **Test**: `just test` (builds and tests without switching)
+- **Switch**: `just switch` (builds and switches system)
+- **Format**: `nix fmt` (formats all .nix files using nixfmt-rfc-style)
+- **Single test**: No specific single test framework - this is a NixOS system configuration
+
+## Code Style
+- **Language**: Nix expressions for system configuration
+- **Formatting**: Use `nixfmt-rfc-style` formatter (configured in flake.nix:146)
+- **Imports**: Follow existing patterns with `{pkgs, ...}:` or `{lib, pkgs, ...}:` syntax
+- **Function style**: Use `let...in` blocks for complex configurations
+- **Comments**: Use `#` for inline comments, avoid block comments unless necessary
+- **Naming**: Use kebab-case for files, camelCase for Nix attributes
+- **Strings**: Prefer double quotes, use `''` for multiline strings
+
+## Project Structure
+- System configs in root (configuration.nix, flake.nix)
+- Host-specific configs in `vimes/`, `laptop/`, `hex/` directories
+- Home-manager configs in `home-manager/` with dotfiles and modules
+- Packages defined in `home-manager/packages/`
+- Scripts in `home-manager/scripts/`
+
+## Error Handling
+- Use `lib.mkForce` for overrides when necessary
+- Prefer conditional expressions with `lib.mkIf` for optional features
+- Handle missing packages gracefully with null checks where appropriate
+
+## GitHub Workflow
+- Task tracking uses GitHub issues
+- When working on an issue:
+  1. Create a new branch (e.g., `issue-N-description`)
+  2. Make changes and commit with meaningful messages
+  3. Push the branch to origin
+  4. Create a pull request with a clear description
+  5. Request user review instead of merging directly
+- PRs should reference the issue they fix (e.g., "Fixes #2")
+- **IMPORTANT**: Never push directly to main. Only the repo owner can push to main unless explicitly granted permission. All changes must go through a PR for review when working on GitHub issues. For other changes requested directly (not from GitHub issues), local review is acceptable.

@@ -1,0 +1,12 @@
+name: pams-local-development
+root: ~/src/server
+
+windows:
+  - run:
+      panes:
+        - server:
+          - cd /home/nthorne/src/server/source/server/management-server/
+          - ASPNETCORE_ENVIRONMENT=Development ProActive__ConfigRootDirectory=/home/nthorne/.local/share/netclean/pams Serilog__WriteTo__1__Args__path=/home/nthorne/.local/share/netclean/pams/EventLogs/pams_log.txt dotnet run
+        - dcn:
+          - cd /home/nthorne/src/server/source/communication-node/communication-node/
+          - ASPNETCORE_ENVIRONMENT=Development ProActive__DataDirectoryPath=/home/nthorne/.local/share/netclean/dcn Serilog__Write__To__1__Args__path=/home/nthorne/.local/share/netclean/dcn/EventLogs/ncpa_dcn.log dotnet run
