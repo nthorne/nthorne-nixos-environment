@@ -4,7 +4,7 @@
 
     plugins = with pkgs.tmuxPlugins; [
       cpu
-      # fingers
+      fingers
       open
       sessionist
       vim-tmux-navigator
@@ -114,11 +114,11 @@ set -g @resurrect-processes 'ssh'
 
 set-option -g detach-on-destroy on
 
-# set -g @fingers-skip-health-check '1'
+set -g @fingers-skip-health-check '1'
 
 run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
 
-# bind f run -b "#{@fingers-cli} start #{pane_id}"
+bind f run -b "#{@fingers-cli} start #{pane_id}"
 
 # I often get black on black for pane numbers, so let's set a bright color for them
 set -g display-panes-active-colour "#fabd2f" # gruvbox yellow
