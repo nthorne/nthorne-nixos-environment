@@ -75,4 +75,6 @@ vim
       };
     };
   };
+
+  time.timeZone = "Europe/Stockholm";
 }
