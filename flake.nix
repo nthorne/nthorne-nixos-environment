@@ -51,6 +51,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl.url = "github:nix-community/nixos-wsl/main";
+
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = {
     nixpkgs,
@@ -58,6 +61,7 @@
     stylix,
     sops-nix,
     nixos-wsl,
+    nix-index-database,
     ...
   } @ inputs: let
     # Pin nixpkgs in the flake registry to what we use for the system
@@ -117,23 +121,23 @@
         ./hex/adaptation.nix
       ];
 
-    mort-modules =
-      [
-        ./mort/adaptation.nix
-	nixos-wsl.nixosModules.default {
-		system.stateVersion = "22.05";
-		wsl.enable = true;
-		wsl.defaultUser = "nthorne";
-	}
+    mort-modules = [
+      ./mort/adaptation.nix
+      nixos-wsl.nixosModules.default
+      {
+        system.stateVersion = "22.05";
+        wsl.enable = true;
+        wsl.defaultUser = "nthorne";
+      }
 
-            {
-              home-manager.extraSpecialArgs.flake-inputs =
-                inputs
-                // {
-                  hostname = "mort";
-                  system = "${system}";
-                };
-            }
+      {
+        home-manager.extraSpecialArgs.flake-inputs =
+          inputs
+          // {
+            hostname = "mort";
+            system = "${system}";
+          };
+      }
 
       stylix.nixosModules.stylix
 
@@ -150,8 +154,11 @@
             stylix.autoEnable = true;
           }
         ];
-     }
-      ];
+      }
+
+      nix-index-database.nixosModules.default
+      { programs.nix-index-database.comma.enable = true; }
+    ];
 
     wifiDevice = "wlp0s20f3";
 
@@ -212,10 +219,10 @@
         modules = hex-modules;
       }
       // {
-           "mort" = nixpkgs.lib.nixosSystem {
-             system = "${system}";
-             modules = mort-modules;
-         };
+        "mort" = nixpkgs.lib.nixosSystem {
+          system = "${system}";
+          modules = mort-modules;
+        };
       }
       // mkVmConfig {
         name = "vimes";

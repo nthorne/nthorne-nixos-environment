@@ -70,7 +70,6 @@ in {
   home.stateVersion = "23.05";
 
   home.packages = with pkgs; [
-    comma
     eza
     fasd
     fd
@@ -96,8 +95,6 @@ in {
   # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-
-  programs.nix-index.enable = true;
 
   programs.ghostty = {
     enable = true;
