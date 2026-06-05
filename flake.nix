@@ -55,12 +55,14 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-wsl.url = "github:nix-community/nixos-wsl/main";
   };
   outputs = {
     nixpkgs,
     home-manager,
     stylix,
     sops-nix,
+    nixos-wsl,
     ...
   } @ inputs: let
     # Pin nixpkgs in the flake registry to what we use for the system
@@ -120,6 +122,42 @@
         ./hex/adaptation.nix
       ];
 
+    mort-modules =
+      [
+        ./mort/adaptation.nix
+	nixos-wsl.nixosModules.default {
+		system.stateVersion = "22.05";
+		wsl.enable = true;
+		wsl.defaultUser = "nthorne";
+	}
+
+            {
+              home-manager.extraSpecialArgs.flake-inputs =
+                inputs
+                // {
+                  hostname = "mort";
+                  system = "${system}";
+                };
+            }
+
+      stylix.nixosModules.stylix
+
+      pin-registries
+
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.nthorne = import ./home-manager/home.nix;
+
+        home-manager.sharedModules = [
+          {
+            stylix.autoEnable = true;
+          }
+        ];
+     }
+      ];
+
     wifiDevice = "wlp0s20f3";
 
     mkConfig = {
@@ -177,6 +215,12 @@
       // mkConfig {
         name = "hex";
         modules = hex-modules;
+      }
+      // {
+           "mort" = nixpkgs.lib.nixosSystem {
+             system = "${system}";
+             modules = mort-modules;
+         };
       }
       // mkVmConfig {
         name = "vimes";
