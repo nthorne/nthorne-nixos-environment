@@ -5,6 +5,7 @@
 {
   imports = [
     #(import ../workstation.nix args)
+    (import ../../packages/copilot-cli args)
   ];
 
   home.packages =
