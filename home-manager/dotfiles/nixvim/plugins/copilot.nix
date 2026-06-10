@@ -1,11 +1,16 @@
 {...}: {
   programs.nixvim = {
     plugins = {
-      # TODO: Disable for now
-      copilot-vim.enable = false;
+      copilot-vim = {
+        enable = true;
+        settings = {
+          enterprise_uri = "https://logisnext.ghe.com/";
+        };
+      };
 
       copilot-chat = {
-        enable = true;
+        # NOTE: Does not support enterprise yet.
+        enable = false;
         settings = {
           model = "claude-sonnet-4";
 
