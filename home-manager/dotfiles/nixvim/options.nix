@@ -26,6 +26,7 @@
     colorschemes.gruvbox.enable = true;
 
     extraConfigLua = ''
+      vim.g.autoformat = false;
       vim.o.foldlevelstart = 99
       vim.diagnostic.config({
         virtual_text = {
