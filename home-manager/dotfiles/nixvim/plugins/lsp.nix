@@ -6,33 +6,14 @@
         bashls.enable = true;
         ccls.enable = true;
         clangd = {
+        copilot = {
           enable = true;
-          cmd = [
-            "clangd" 
-            "--clang-tidy"
-            "--background-index"
-          ];
-          onAttach.function = ''
-            -- Disable everything except diagnostics
-            client.server_capabilities.completionProvider = false
-            client.server_capabilities.hoverProvider = false
-            client.server_capabilities.definitionProvider = false
-            client.server_capabilities.referencesProvider = false
-            client.server_capabilities.documentFormattingProvider = false
-            client.server_capabilities.documentRangeFormattingProvider = false
-            client.server_capabilities.renameProvider = false
-            client.server_capabilities.documentSymbolProvider = false
-            client.server_capabilities.workspaceSymbolProvider = false
-            client.server_capabilities.signatureHelpProvider = false
-            client.server_capabilities.implementationProvider = false
-            client.server_capabilities.typeDefinitionProvider = false
-            client.server_capabilities.declarationProvider = false
-
-            -- Optional: Disable semantic tokens if you want to keep original highlighting
-            client.server_capabilities.semanticTokensProvider = nil
-          '';
+          settings = {
+            github-enterprise = {
+              uri = "https://logisnext.ghe.com/";
+            };
+          };
         };
-        copilot.enable = true;
         # I need to install chsharp-ls locally in each repo, since
         # I've got different versions of .NET Core installed in different
         # projects.

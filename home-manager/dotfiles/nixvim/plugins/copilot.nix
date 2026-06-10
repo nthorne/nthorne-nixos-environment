@@ -1,9 +1,15 @@
 {...}: {
   programs.nixvim = {
     plugins = {
-      copilot-vim.enable = true;
+      copilot-vim = {
+        enable = true;
+        settings = {
+          enterprise_uri = "https://logisnext.ghe.com/";
+        };
+      };
 
       copilot-chat = {
+        # NOTE: Does not support enterprise yet.
         enable = false;
         settings = {
           model = "claude-haiku-4.5";
