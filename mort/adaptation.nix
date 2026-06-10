@@ -9,8 +9,7 @@
     COLOR=$(${pkgs.yq}/bin/yq -r .palette.base00 ${theme})
     ${pkgs.imagemagick}/bin/magick -size 1920x1080 xc:$COLOR $out
   '';
-in 
-{
+in {
   nix.extraOptions = ''
     experimental-features = nix-command flakes
     accept-flake-config = true
@@ -19,18 +18,19 @@ in
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-git
-tmux
-vim
+    git
+    obsidian
+    tmux
+    vim
   ];
 
   environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
   nixpkgs.config = {
     allowUnfree = true;
-};
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.extraUsers.nthorne = {
+  users.extraUsers.nthorne = {
     isNormalUser = true;
     uid = 1001;
     extraGroups = ["wheel"];
