@@ -73,6 +73,12 @@
         action = "<cmd>let @+ = expand('%:p')<CR>";
         options.desc = "Copy fully qualified file path to clipboard";
       }
+      {
+        mode = "n";
+        key = "<leader>z";
+        action = "<cmd>lua require('mini.misc').zoom()<CR>";
+        options.desc = "Toggle buffer [Z]oom";
+      }
     ];
   };
 }
