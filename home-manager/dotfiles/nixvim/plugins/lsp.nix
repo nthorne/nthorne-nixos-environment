@@ -5,7 +5,6 @@
       servers = {
         bashls.enable = true;
         ccls.enable = true;
-        clangd = {
         copilot = {
           enable = true;
           settings = {
@@ -13,16 +12,6 @@
               uri = "https://logisnext.ghe.com/";
             };
           };
-        };
-        # I need to install chsharp-ls locally in each repo, since
-        # I've got different versions of .NET Core installed in different
-        # projects.
-        csharp_ls = {
-          enable = true;
-          # NOTE: Use default package for now, and make sure to have
-          #       the correct runtime whereever I need it.
-          # package = null;
-          # cmd = ["dotnet" "tool" "run" "csharp-ls"];
         };
         hls = {
           enable = true;
@@ -83,10 +72,6 @@
          options.desc = "Toggle [N]o [A][I] completion";
        }
     ];
-
-    plugins.lsp-format = {
-      enable = true;
-    };
 
     # Add descriptions to lsp keymaps
     plugins.which-key.settings.spec = [
