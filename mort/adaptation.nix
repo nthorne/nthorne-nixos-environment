@@ -10,6 +10,8 @@
     ${pkgs.imagemagick}/bin/magick -size 1920x1080 xc:$COLOR $out
   '';
 in {
+  networking.hostName = "mort";
+
   nix.extraOptions = ''
     experimental-features = nix-command flakes
     accept-flake-config = true
