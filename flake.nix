@@ -57,186 +57,181 @@
     };
     nixos-wsl.url = "github:nix-community/nixos-wsl/main";
   };
-  outputs = {
-    nixpkgs,
-    home-manager,
-    stylix,
-    sops-nix,
-    nixos-wsl,
-    ...
-  } @ inputs: let
-    # Pin nixpkgs in the flake registry to what we use for the system
-    pin-registries = {...}: {
-      nix = {
-        registry = {
-          nixpkgs.flake = nixpkgs;
-          nixpkgs-unstable.flake = nixpkgs;
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      stylix,
+      sops-nix,
+      nixos-wsl,
+      ...
+    }@inputs:
+    let
+      # Pin nixpkgs in the flake registry to what we use for the system
+      pin-registries = { ... }: {
+        nix = {
+          registry = {
+            nixpkgs.flake = nixpkgs;
+            nixpkgs-unstable.flake = nixpkgs;
+          };
         };
       };
-    };
 
-    system = "x86_64-linux";
+      system = "x86_64-linux";
 
-    # These are modules that are common across all my systems.
-    common-modules = [
-      ./configuration.nix
+      # These are modules that are common across all my systems.
+      common-modules = [
+        ./configuration.nix
 
-      stylix.nixosModules.stylix
+        stylix.nixosModules.stylix
 
-      pin-registries
+        pin-registries
 
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.nthorne = import ./home-manager/home.nix;
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.nthorne = import ./home-manager/home.nix;
 
-        home-manager.sharedModules = [
-          {
-            stylix.autoEnable = true;
-          }
-        ];
-      }
-    ];
+          home-manager.sharedModules = [
+            {
+              stylix.autoEnable = true;
+            }
+          ];
+        }
+      ];
 
-    vimes-modules =
-      common-modules
-      ++ [
+      vimes-modules = common-modules ++ [
         ./vimes/hardware-config/hardware-config-generated.nix
         ./vimes/adaptation.nix
 
         sops-nix.nixosModules.sops
       ];
 
-    nixlaptop-modules =
-      common-modules
-      ++ [
+      nixlaptop-modules = common-modules ++ [
         ./laptop/hardware-configuration.nix
         ./laptop/adaptation.nix
       ];
 
-    hex-modules =
-      common-modules
-      ++ [
+      hex-modules = common-modules ++ [
         ./hex/hardware-configuration.nix
         ./hex/adaptation.nix
       ];
 
-    mort-modules =
-      [
+      mort-modules = [
         ./mort/adaptation.nix
-	nixos-wsl.nixosModules.default {
-		system.stateVersion = "22.05";
-		wsl.enable = true;
-		wsl.defaultUser = "nthorne";
-	}
+        nixos-wsl.nixosModules.default
+        {
+          system.stateVersion = "22.05";
+          wsl.enable = true;
+          wsl.defaultUser = "nthorne";
+        }
 
+        {
+          home-manager.extraSpecialArgs.flake-inputs = inputs // {
+            hostname = "mort";
+            system = "${system}";
+          };
+        }
+
+        stylix.nixosModules.stylix
+
+        pin-registries
+
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.nthorne = import ./home-manager/home.nix;
+
+          home-manager.sharedModules = [
             {
-              home-manager.extraSpecialArgs.flake-inputs =
-                inputs
-                // {
-                  hostname = "mort";
-                  system = "${system}";
-                };
+              stylix.autoEnable = true;
             }
-
-      stylix.nixosModules.stylix
-
-      pin-registries
-
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.nthorne = import ./home-manager/home.nix;
-
-        home-manager.sharedModules = [
-          {
-            stylix.autoEnable = true;
-          }
-        ];
-     }
+          ];
+        }
       ];
 
-    wifiDevice = "wlp0s20f3";
+      wifiDevice = "wlp0s20f3";
 
-    mkConfig = {
-      name,
-      modules,
-    }: {
-      "${name}" = nixpkgs.lib.nixosSystem {
-        system = "${system}";
-        modules =
-          modules
-          ++ [
-            {
-              home-manager.extraSpecialArgs.flake-inputs =
-                inputs
-                // {
+      mkConfig =
+        {
+          name,
+          modules,
+        }:
+        {
+          "${name}" = nixpkgs.lib.nixosSystem {
+            system = "${system}";
+            modules = modules ++ [
+              {
+                home-manager.extraSpecialArgs.flake-inputs = inputs // {
                   hostname = "${name}";
                   system = "${system}";
                 };
-            }
-          ];
-      };
-    };
+              }
+            ];
+          };
+        };
 
-    mkVmConfig = {
-      name,
-      modules,
-      extraModules ? [],
-    }: {
-      "${name}-vm" = nixpkgs.lib.nixosSystem {
-        system = "${system}";
+      mkVmConfig =
+        {
+          name,
+          modules,
+          extraModules ? [ ],
+        }:
+        {
+          "${name}-vm" = nixpkgs.lib.nixosSystem {
+            system = "${system}";
 
-        modules =
-          modules
-          ++ [
-            ({...}: {
-              users.extraUsers."nthorne".password = "nthorne";
-              users.mutableUsers = false;
+            modules =
+              modules
+              ++ [
+                ({ ... }: {
+                  users.extraUsers."nthorne".password = "nthorne";
+                  users.mutableUsers = false;
+                })
+              ]
+              ++ extraModules;
+          };
+        };
+    in
+    {
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+
+      nixosConfigurations =
+        mkConfig {
+          name = "vimes";
+          modules = vimes-modules;
+        }
+        // mkConfig {
+          name = "nixlaptop";
+          modules = nixlaptop-modules;
+        }
+        // mkConfig {
+          name = "hex";
+          modules = hex-modules;
+        }
+        // {
+          "mort" = nixpkgs.lib.nixosSystem {
+            system = "${system}";
+            modules = mort-modules;
+          };
+        }
+        // mkVmConfig {
+          name = "vimes";
+          modules = vimes-modules;
+          extraModules = [
+            ({ ... }: {
+              systemd.services = {
+                "network-link-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [ ];
+                "network-addresses-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [ ];
+              };
             })
-          ]
-          ++ extraModules;
-      };
+          ];
+        }
+        // mkVmConfig {
+          name = "nixlaptop";
+          modules = nixlaptop-modules;
+        };
     };
-  in {
-    formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
-
-    nixosConfigurations =
-      mkConfig {
-        name = "vimes";
-        modules = vimes-modules;
-      }
-      // mkConfig {
-        name = "nixlaptop";
-        modules = nixlaptop-modules;
-      }
-      // mkConfig {
-        name = "hex";
-        modules = hex-modules;
-      }
-      // {
-           "mort" = nixpkgs.lib.nixosSystem {
-             system = "${system}";
-             modules = mort-modules;
-         };
-      }
-      // mkVmConfig {
-        name = "vimes";
-        modules = vimes-modules;
-        extraModules = [
-          ({...}: {
-            systemd.services = {
-              "network-link-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [];
-              "network-addresses-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [];
-            };
-          })
-        ];
-      }
-      // mkVmConfig {
-        name = "nixlaptop";
-        modules = nixlaptop-modules;
-      };
-  };
 }
