@@ -88,7 +88,6 @@ in {
     pavucontrol
     seahorse # For managing gnome-keyring
     shellcheck
-    silver-searcher
     swaynotificationcenter
     tree
     waybar
