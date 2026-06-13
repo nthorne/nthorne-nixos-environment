@@ -19,6 +19,7 @@ in {
   environment.systemPackages = with pkgs; [
     age
     git
+    git-agecrypt
     terminus_font
     unzip
 
