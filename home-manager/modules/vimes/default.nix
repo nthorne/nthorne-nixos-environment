@@ -20,6 +20,7 @@ in {
       ctags
       entr
       gdb
+      git-agecrypt
       insomnia
       libxml2
       lnav
