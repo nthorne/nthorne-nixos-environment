@@ -40,8 +40,6 @@ in {
 
       guess-indent.enable = true;
 
-      marks.enable = true;
-
       noice.enable = true;
 
       rainbow-delimiters.enable = true;
