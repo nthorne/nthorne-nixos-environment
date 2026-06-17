@@ -23,6 +23,9 @@ in {
       (import ./dotfiles/tmux.nix args)
 
       flake-inputs.nix-index-database.homeModules.default
+      {
+        programs.nix-index-database.comma.enable = true;
+      }
 
       flake-inputs.nixvim.homeModules.nixvim
       ./dotfiles/nixvim
