@@ -123,8 +123,12 @@
         nixos-wsl.nixosModules.default
         {
           system.stateVersion = "22.05";
-          wsl.enable = true;
-          wsl.defaultUser = "nthorne";
+
+          wsl = {
+            enable = true;
+            defaultUser = "nthorne";
+            interop.register = true;
+          };
         }
 
         {
