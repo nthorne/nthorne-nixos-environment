@@ -1,4 +1,4 @@
-{...}: {
+{ lib, config, ... }: {
   programs.nixvim = {
     plugins.lsp = {
       enable = true;
@@ -8,8 +8,9 @@
         copilot = {
           enable = true;
           settings = {
+          } // lib.optionalAttrs config.nixvim.useGHE {
             github-enterprise = {
-              uri = "https://logisnext.ghe.com/";
+              uri = config.nixvim.gheURL;
             };
           };
         };

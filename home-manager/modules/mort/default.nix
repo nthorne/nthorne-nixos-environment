@@ -4,13 +4,20 @@
 } @ args:
 {
   imports = [
-    #(import ../workstation.nix args)
     (import ../../packages/copilot-cli args)
   ];
 
-  home.packages =
-    with pkgs;
-    [
-      lnav
-    ];
+  config = {
+    home.packages =
+      with pkgs;
+      [
+        lnav
+      ];
+
+    nixvim = {
+      # We use GitHub Enterprise for Copilot Vim plugins ..
+      useGHE = true;
+      gheURL = "https://logisnext.ghe.com/";
+    };
+  };
 }

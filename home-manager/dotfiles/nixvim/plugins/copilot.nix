@@ -1,16 +1,15 @@
-{...}: {
+{ config, ... }: {
   programs.nixvim = {
     plugins = {
       copilot-vim = {
         enable = true;
         settings = {
-          enterprise_uri = "https://logisnext.ghe.com/";
+          enterprise_uri = if (config.nixvim.useGHE) then config.nixvim.gheURL else "";
         };
       };
 
       copilot-chat = {
-        # NOTE: Does not support enterprise yet.
-        enable = false;
+        enable = if (config.nixvim.useGHE) then false else true;
         settings = {
           model = "claude-haiku-4.5";
 
