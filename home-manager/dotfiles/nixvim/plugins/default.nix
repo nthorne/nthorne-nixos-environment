@@ -23,8 +23,6 @@ in {
 
       comment.enable = true;
 
-      debugprint.enable = true;
-
       diffview.enable = true;
 
       direnv.enable = true;
