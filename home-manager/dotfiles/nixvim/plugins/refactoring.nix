@@ -1,8 +1,12 @@
-{...}: {
+{ lib, ... }:
+let
+  enableRefactoring = false;
+in
+{
   programs.nixvim = {
     plugins = {
       refactoring = {
-        enable = true;
+        enable = enableRefactoring;
         settings = {
           prompt_func_return_type = {
             cpp = true;
@@ -14,7 +18,7 @@
       };
     };
 
-    extraConfigLua = ''
+    extraConfigLua = lib.optionalString enableRefactoring ''
       vim.keymap.set({ "n", "x" }, "<leader>re", function()
         return require('refactoring').refactor('Extract Function')
       end, { expr = true, desc = "[E]xtract Function" })
@@ -44,14 +48,15 @@
       end, { expr = true, desc = "[B]lock to [F]ile" })
     '';
 
-    plugins.which-key.settings = {
-      spec = [
-        {
-          __unkeyed = "<leader>r";
-          group = "[R]efactor";
-          mode = ["n" "x"];
-        }
-      ];
-    };
+    plugins.which-key.settings.spec = lib.optionals enableRefactoring [
+      {
+        __unkeyed = "<leader>r";
+        group = "[R]efactor";
+        mode = [
+          "n"
+          "x"
+        ];
+      }
+    ];
   };
 }
