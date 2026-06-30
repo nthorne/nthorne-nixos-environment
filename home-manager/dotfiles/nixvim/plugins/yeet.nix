@@ -1,6 +1,10 @@
-{pkgs, ...}: {
+{ pkgs, lib, ... }:
+let
+  yeetEnabled = false;
+in
+{
   programs.nixvim = {
-    extraPlugins = [
+    extraPlugins = lib.optionals yeetEnabled [
       (pkgs.vimUtils.buildVimPlugin {
         name = "yeet-nvim";
         src = pkgs.fetchFromGitHub {
@@ -11,16 +15,15 @@
         };
       })
     ];
-    plugins.which-key.settings = {
-      spec = [
-        {
-          __unkeyed = "<leader>y";
-          group = "[Y]eet";
-          mode = "n";
-        }
-      ];
-    };
-    keymaps = [
+    plugins.which-key.settings.spec = lib.optionals yeetEnabled [
+      {
+        __unkeyed = "<leader>y";
+        group = "[Y]eet";
+        mode = "n";
+      }
+    ];
+
+    keymaps = lib.optionals yeetEnabled [
       {
         mode = "n";
         key = "<leader>yt";
