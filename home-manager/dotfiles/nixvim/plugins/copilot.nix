@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, ... }: {
   programs.nixvim = {
     plugins = {
       copilot-vim = {
@@ -36,7 +36,7 @@
         ];
       };
     };
-    keymaps = [
+    keymaps = lib.mkIf config.programs.nixvim.plugins.copilot-chat.enable [
       {
         mode = "n";
         key = "<leader>ct";
