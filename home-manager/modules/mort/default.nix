@@ -14,6 +14,7 @@
         entr
         hunk
         lnav
+        xlsx2csv
       ];
 
     nixvim = {

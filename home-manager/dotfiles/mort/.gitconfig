@@ -8,6 +8,8 @@
 	ff = only
 [diff]
 	tool = vimdiff
+[diff "xlsx"]
+        textconv = xlsx2csv
 [mergetool]
 	prompt = false
 [mergetool "vimdiff"]
