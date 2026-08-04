@@ -56,6 +56,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl.url = "github:nix-community/nixos-wsl/main";
+
+    hunk.url = "github:modem-dev/hunk";
   };
   outputs =
     {
