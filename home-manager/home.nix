@@ -79,7 +79,6 @@ in {
     fasd
     fd
     file
-    firefox
     fzf
     git-crypt
     htop
