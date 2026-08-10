@@ -32,39 +32,39 @@
       }
       {
         mode = "n";
-        key = "<leader>cs";
+        key = "<leader>ccs";
         action.__raw = ''function() require("sidekick.cli").select({filter = {installed = true}}) end'';
-        options.desc = "[C]opilot [S]elect CLI";
+        options.desc = "[C]opilot [C]LI [S]elect";
       }
       {
         mode = "n";
-        key = "<leader>cc";
+        key = "<leader>ccc";
         action.__raw = ''function() require("sidekick.cli").close() end'';
         options.desc = "[C]opilot [C]LI [C]close ";
       }
       {
         mode = ["x" "n"];
-        key = "<leader>cst";
+        key = "<leader>ccst";
         action.__raw = ''function() require("sidekick.cli").send({ msg = "{this}" }) end'';
-        options.desc = "[C]opilot [S]end [T]his";
+        options.desc = "[C]opilot [C]LI [S]end [T]his";
       }
       {
         mode = "n";
-        key = "<leader>csf";
+        key = "<leader>ccsf";
         action.__raw = ''function() require("sidekick.cli").send({ msg = "{file}" }) end'';
-        options.desc = "[C]opilot [S]end [F]ile";
+        options.desc = "[C]opilot [C]LI [S]end [F]ile";
       }
       {
         mode = "x";
-        key = "<leader>csv";
+        key = "<leader>ccsv";
         action.__raw = ''function() require("sidekick.cli").send({ msg = "{selection}" }) end'';
-        options.desc = "[C]opilot [S]end [V]isual Selection";
+        options.desc = "[C]opilot [C]LI [S]end [V]isual Selection";
       }
       {
         mode = ["x" "n"];
-        key = "<leader>cp";
+        key = "<leader>ccp";
         action.__raw = ''function() require("sidekick.cli").prompt() end'';
-        options.desc = "[C]opilot Select [P]rompt";
+        options.desc = "[C]opilot [C]LI Select [P]rompt";
       }
     ];
   };
