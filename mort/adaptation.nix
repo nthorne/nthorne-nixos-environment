@@ -44,6 +44,14 @@ in {
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
+  nix.optimise.automatic = true;
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 21d";
+  };
+
   stylix = {
     enable = true;
     image = wallpaper;
