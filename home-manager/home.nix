@@ -1,10 +1,13 @@
 # This derivation should contain configurations that are common
 # to all profiles.
-args @ {
-  pkgs,
+args@{
   flake-inputs,
+  lib,
+  osConfig,
+  pkgs,
   ...
-}: let
+}:
+let
   hostname = flake-inputs.hostname;
 
   hostCollection = pth: (pth + ("/" + hostname));
@@ -12,138 +15,137 @@ args @ {
   hostPackages = hostCollection ./packages;
   hostScripts = hostCollection ./scripts;
   hostModules = hostCollection ./modules;
-in {
-  imports =
-    [
-      ./dotfiles/zsh.nix
-      ./dotfiles/waybar.nix
-      ./dotfiles/hyprlock.nix
-      ./dotfiles/hypridle.nix
-      (import ./dotfiles/hyprland.nix args)
-      (import ./dotfiles/tmux.nix args)
 
-      flake-inputs.nix-index-database.homeModules.default
-      {
-        programs.nix-index-database.comma.enable = true;
-      }
+  # Not all hosts use a window manager (hyprland), so we
+  # trim installed derivations and files accordingly.
+  wmEnabled = osConfig.programs.hyprland.enable or false;
+in
+{
+  imports = [
+    ./dotfiles/zsh.nix
+    (import ./dotfiles/tmux.nix args)
 
-      flake-inputs.nixvim.homeModules.nixvim
-      ./dotfiles/nixvim
+    flake-inputs.nix-index-database.homeModules.default
+    {
+      programs.nix-index-database.comma.enable = true;
+    }
 
-      ./packages/tmux-sessionizer
+    flake-inputs.nixvim.homeModules.nixvim
+    ./dotfiles/nixvim
 
-      # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
-      #    here to keep the host specific config files short
-    ]
-    ++ (
-      if builtins.pathExists hostDotfiles
-      then [hostDotfiles]
-      else []
-    )
-    ++ (
-      if builtins.pathExists hostPackages
-      then [hostPackages]
-      else []
-    )
-    ++ (
-      if builtins.pathExists hostScripts
-      then [hostScripts]
-      else []
-    )
-    ++ (
-      if builtins.pathExists hostModules
-      then [hostModules]
-      else []
-    );
+    ./packages/tmux-sessionizer
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+    # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
+    #    here to keep the host specific config files short
+  ]
+  ++ lib.optionals wmEnabled [
+    ./dotfiles/waybar.nix
+    ./dotfiles/hyprlock.nix
+    ./dotfiles/hypridle.nix
+    (import ./dotfiles/hyprland.nix args)
+  ]
+  ++ (if builtins.pathExists hostDotfiles then [ hostDotfiles ] else [ ])
+  ++ (if builtins.pathExists hostPackages then [ hostPackages ] else [ ])
+  ++ (if builtins.pathExists hostScripts then [ hostScripts ] else [ ])
+  ++ (if builtins.pathExists hostModules then [ hostModules ] else [ ]);
 
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "nthorne";
-  home.homeDirectory = "/home/nthorne";
+  config = {
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
 
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "23.05";
+    # Home Manager needs a bit of information about you and the
+    # paths it should manage.
+    home.username = "nthorne";
+    home.homeDirectory = "/home/nthorne";
 
-  home.packages = with pkgs; [
-    eza
-    fasd
-    fd
-    file
-    fzf
-    git-crypt
-    htop
-    jq
-    jqp
-    just
-    nvd
-    pavucontrol
-    seahorse # For managing gnome-keyring
-    shellcheck
-    swaynotificationcenter
-    tree
-    waybar
-    wl-clipboard
-  ];
+    # This value determines the Home Manager release that your
+    # configuration is compatible with. This helps avoid breakage
+    # when a new Home Manager release introduces backwards
+    # incompatible changes.
+    #
+    # You can update Home Manager without changing this value. See
+    # the Home Manager release notes for a list of state version
+    # changes in each release.
+    home.stateVersion = "23.05";
 
-  home.pointerCursor.enable = true;
+    home.packages =
+      with pkgs;
+      [
+        eza
+        fasd
+        fd
+        file
+        fzf
+        git-crypt
+        htop
+        jq
+        jqp
+        just
+        nvd
+        shellcheck
+        tree
+        wl-clipboard
+      ]
+      ++ lib.optionals wmEnabled [
+        pavucontrol
+        seahorse # For managing gnome-keyring
+        swaynotificationcenter
+        waybar
+      ];
 
-  # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
+    home.pointerCursor.enable = true;
 
-  programs.ghostty = {
-    enable = true;
-    clearDefaultKeybinds = true;
-    settings = {
-      font-family = ["" "JetBrains Mono"];
+    # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
+    programs.direnv.enable = true;
+    programs.direnv.nix-direnv.enable = true;
 
-      keybind = [
-        "ctrl+plus=increase_font_size:1"
-        "ctrl+-=decrease_font_size:1"
-        "ctrl+0=reset_font_size"
+    programs.ghostty = {
+      enable = true;
+      clearDefaultKeybinds = true;
+      settings = {
+        font-family = [
+          ""
+          "JetBrains Mono"
+        ];
+
+        keybind = [
+          "ctrl+plus=increase_font_size:1"
+          "ctrl+-=decrease_font_size:1"
+          "ctrl+0=reset_font_size"
+        ];
+      };
+    };
+
+    programs.bat.enable = true;
+
+    programs.rofi.enable = wmEnabled;
+
+    programs.atuin = {
+      enable = true;
+      settings = {
+        # ALT key is taken by Hyprland..
+        ctrl_n_shortcuts = true;
+        enter_accept = true;
+        filter_mode = "host";
+        filter_mode_shell_up_key_binding = "directory";
+      };
+    };
+
+    nix.gc = {
+      automatic = true;
+      options = "--delete-older-than 21d --keep-generations 5";
+    };
+
+    programs.starship = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    programs.ripgrep = {
+      enable = true;
+      arguments = [
+        "--smart-case"
       ];
     };
-  };
-
-  programs.bat.enable = true;
-
-  programs.rofi.enable = true;
-
-  programs.atuin = {
-    enable = true;
-    settings = {
-      # ALT key is taken by Hyprland..
-      ctrl_n_shortcuts = true;
-      enter_accept = true;
-      filter_mode = "host";
-      filter_mode_shell_up_key_binding = "directory";
-    };
-  };
-
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 21d --keep-generations 5";
-  };
-
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.ripgrep = {
-    enable = true;
-    arguments = [
-      "--smart-case"
-    ];
   };
 }
