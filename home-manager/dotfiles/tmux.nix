@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.tmux = {
     enable = true;
 
@@ -78,6 +82,11 @@ bind -T off § \
   refresh-client -S
 
 bind s setw synchronize-pane
+
+# Quick and dirty file pickers. C-d for directories, C-f for files, and C-h for both, but starting in my home directory with absolute paths.
+bind-key C-d display-popup -d '#{pane_current_path}' -E '${lib.getExe pkgs.fd} -t d | ${lib.getExe pkgs.fzf} | tmux load-buffer - ' \; paste-buffer -d
+bind-key C-f display-popup -d '#{pane_current_path}' -E '${lib.getExe pkgs.fd} -t f | ${lib.getExe pkgs.fzf} | tmux load-buffer - ' \; paste-buffer -d
+bind-key C-h display-popup -d '/home/nthorne' -E '${lib.getExe pkgs.fd} -a | ${lib.getExe pkgs.fzf} | tmux load-buffer - ' \; paste-buffer -d
 
 # Window switching
 bind Tab last-window
