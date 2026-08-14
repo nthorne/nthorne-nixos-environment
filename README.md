@@ -15,6 +15,11 @@ Secrets are managed using [sops-nix](https://github.com/Mic92/sops-nix), or
 [git-agecrypt](https://github.com/vlaci/git-agecrypt), depending on whether
 the secret is needed at build time or run time.
 
+NOTE: The nix-secrets repo is private, and is not included in this repository.
+      It is revision locked and fetched in `home-manager/lib/nix-secrets.nix`
+      as it is not needed for all hosts, and some host cannot clonet from
+      GitHub using git+ssh.
+
 ## Git-agecrypt
 
 Add the file path to `.gitattribues`, and to `git-agecrypt.toml`

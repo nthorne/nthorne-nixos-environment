@@ -1,9 +1,11 @@
 {
   pkgs,
   ...
-} @ args: let
-  secretsFolders = toString args.flake-inputs.nix-secrets;
-in {
+}@args:
+let
+  secretsFolders = toString (import ../../lib/nix-secrets.nix);
+in
+{
   imports = [
     (import ../workstation.nix args)
     (import ../../scripts/tf2rem args)

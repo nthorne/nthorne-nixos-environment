@@ -2,9 +2,11 @@
   pkgs,
   flake-inputs,
   ...
-} @ args: let
-  secretsFolders = toString flake-inputs.nix-secrets;
-in {
+}@args:
+let
+  secretsFolders = toString (import ../../lib/nix-secrets.nix);
+in
+{
   imports = [
     (import ../workstation.nix args)
     flake-inputs.sops-nix.homeManagerModules.sops

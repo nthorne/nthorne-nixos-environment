@@ -292,11 +292,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1786240379,
-        "narHash": "sha256-lVxvgV4QDi6pgnx21NyjWPbJTm/bwmQDRorhnomr+VY=",
+        "lastModified": 1786676624,
+        "narHash": "sha256-bSQoXF2i+t1lutZZvogsQhooLR4svPngkvXlZejwVWU=",
         "owner": "modem-dev",
         "repo": "hunk",
-        "rev": "505d9d373aec50b7c855e536dbab477560e5168d",
+        "rev": "9bdb0bb94c28ce6b5ca5b052d3717ab6763ca2fb",
         "type": "github"
       },
       "original": {
@@ -380,24 +380,6 @@
         "owner": "nix-community",
         "repo": "nix-index-database",
         "type": "github"
-      }
-    },
-    "nix-secrets": {
-      "locked": {
-        "allRefs": false,
-        "lastModified": 1774253437,
-        "narHash": "sha256-DAVopU5/+GWibBf6pzNVsjDYa7+g/tagYycthP8K8hE=",
-        "ref": "main",
-        "rev": "3e8b4ef91b0193ea0fe1fdab8b4ca298ca669ddb",
-        "revCount": 6,
-        "type": "git",
-        "url": "ssh://git@github.com/nthorne/nix-secrets.git"
-      },
-      "original": {
-        "allRefs": false,
-        "ref": "main",
-        "type": "git",
-        "url": "ssh://git@github.com/nthorne/nix-secrets.git"
       }
     },
     "nixos-wsl": {
@@ -567,7 +549,6 @@
         "mcp-hub": "mcp-hub",
         "mcphub-nvim": "mcphub-nvim",
         "nix-index-database": "nix-index-database",
-        "nix-secrets": "nix-secrets",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_3",
         "nixvim": "nixvim",

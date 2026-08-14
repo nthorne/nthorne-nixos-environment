@@ -40,8 +40,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-secrets.url = "git+ssh://git@github.com/nthorne/nix-secrets.git?allRefs=true&ref=main";
-
     mcphub-nvim = {
       url = "github:ravitemer/mcphub.nvim";
       inputs.nixpkgs.follows = "nixpkgs";
