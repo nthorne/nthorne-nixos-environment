@@ -104,7 +104,7 @@ in
       settings = {
         font-family = [
           ""
-          "JetBrains Mono"
+          "JetBrainsMono Nerd Font"
         ];
 
         keybind = [
