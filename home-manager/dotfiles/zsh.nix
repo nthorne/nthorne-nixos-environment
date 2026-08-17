@@ -276,16 +276,6 @@
       ### UNDER EVALUATION {{{
       ###
 
-      function _fasd_z_to_subfolder() {
-        test -z "''${1}" && echo "Missing subfolder argument." && return
-
-        readonly subfolder=$(fasd -dl1 "''${PWD}" "''${1}")
-        test -z  "''${subfolder}" && echo "''${1}: no such subfolder in fasd." && return
-        test -d "''${subfolder}" || return
-
-        cd "''${subfolder}"
-      }
-
       function take()
       {
         test -d "''${1}" || mkdir -p "''${1}"
@@ -300,27 +290,6 @@
         test -d "''${pth}" || error "unable to create ''${pth}"
         cd "''${pth}"
       }
-
-      ## >>> This snippet is roughly from oh-my-zsh/fasd, in an attempt
-      ##     to drop the framework entirely.
-      export ZSH_CACHE_DIR="''${HOME}/.cache/zsh"
-      test -d "''${ZSH_CACHE_DIR}" || mkdir -p "''${ZSH_CACHE_DIR}"
-
-      # check if fasd is installed
-      if (( ''${+commands[fasd]} )); then
-        fasd_cache="''${ZSH_CACHE_DIR}/fasd-init-cache"
-        if [[ "$commands[fasd]" -nt "$fasd_cache" || ! -s "$fasd_cache" ]]; then
-          fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install \
-            zsh-wcomp zsh-wcomp-install >| "$fasd_cache"
-        fi
-        source "$fasd_cache"
-        unset fasd_cache
-
-        alias v='f -e "$EDITOR"'
-        alias o='a -e xdg-open'
-        alias j='zz'
-        alias zs=_fasd_z_to_subfolder
-      fi
 
       ### }}}
     '';

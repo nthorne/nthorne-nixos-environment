@@ -72,7 +72,6 @@ in
       with pkgs;
       [
         eza
-        fasd
         fd
         file
         fzf
@@ -146,6 +145,11 @@ in
       arguments = [
         "--smart-case"
       ];
+    };
+
+    programs.zoxide = {
+      enable = true;
+      enableZshIntegration = true;
     };
   };
 }
