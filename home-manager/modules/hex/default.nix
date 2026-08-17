@@ -1,8 +1,6 @@
-{ flake-inputs, ... }:
-let
-  secretsFolders = builtins.toString (import ../../lib/nix-secrets.nix);
-in
-{
+{flake-inputs, ...}: let
+  secretsFolders = builtins.toString flake-inputs.nix-secrets;
+in {
   imports = [
     flake-inputs.sops-nix.homeManagerModules.sops
   ];
