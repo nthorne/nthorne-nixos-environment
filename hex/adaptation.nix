@@ -103,4 +103,6 @@ in {
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
+
+  programs.mosh.enable = true;
 }
