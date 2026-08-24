@@ -23,6 +23,14 @@
       gheURL = "https://logisnext.ghe.com/";
     };
 
+    # Add the private notes repo as a Obsidian vault
+    programs.nixvim.plugins.obsidian.settings.workspaces = [
+      {
+        name = "private-notes";
+        path = "/home/nthorne/repos/private-notes/";
+      }
+    ];
+
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
