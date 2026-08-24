@@ -7,7 +7,9 @@
     extraConfigLua = ''
         -- setup sidekick
         require("sidekick").setup({
-          -- add any settings here
+          opts = {
+            nes = { enable = false },
+          }
         })
         '';
     keymaps = [
