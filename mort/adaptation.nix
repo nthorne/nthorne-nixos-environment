@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   ...
 }: let
   theme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
