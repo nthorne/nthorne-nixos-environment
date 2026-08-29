@@ -2,8 +2,10 @@
   pkgs,
   flake-inputs,
   ...
-}: let
-in {
+}:
+let
+in
+{
   imports = [
     flake-inputs.sops-nix.homeManagerModules.sops
     ../packages/opencode
@@ -28,5 +30,12 @@ in {
       notify-send -et 10000 "Time is up ⏰"
     '';
     executable = true;
+  };
+
+  stylix.targets.firefox = {
+    enable = true;
+    profileNames = [
+      "default"
+    ];
   };
 }
