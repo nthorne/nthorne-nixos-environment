@@ -11,7 +11,6 @@ in
     ../packages/opencode
   ];
   home.packages = with pkgs; [
-    firefox
     gh
     gparted
     grimblast # Screen capture tool with hyprland support
@@ -32,10 +31,14 @@ in
     executable = true;
   };
 
+  programs.firefox = {
+    enable = true;
+  };
   stylix.targets.firefox = {
     enable = true;
     profileNames = [
       "default"
     ];
+    firefoxGnomeTheme.enable = true;
   };
 }
