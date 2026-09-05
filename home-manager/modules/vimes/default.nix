@@ -1,9 +1,11 @@
 {
   pkgs,
   ...
-} @ args: let
+}@args:
+let
   secretsFolders = toString args.flake-inputs.nix-secrets;
-in {
+in
+{
   imports = [
     (import ../workstation.nix args)
     (import ../../scripts/tf2rem args)
@@ -71,5 +73,11 @@ in {
     "qwen3.5:latest" = {
       name = "qwen3.5:latest";
     };
+  };
+
+  programs.firefox.profiles.default = {
+    # Points Home Manager to your existing profile directory
+    path = "xon5n7p1.default";
+    isDefault = true;
   };
 }
