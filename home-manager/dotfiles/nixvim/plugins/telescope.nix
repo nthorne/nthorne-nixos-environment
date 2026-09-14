@@ -51,11 +51,17 @@
           "<leader>sy" = {
             action = "lsp_document_symbols";
           };
+          "<leader>sY" = {
+            action = "lsp_dynamic_workspace_symbols";
+          };
           "<leader>sr" = {
             action = "registers";
           };
           "<leader>sm" = {
             action = "marks";
+          };
+          "grr" = {
+            action = "lsp_references";
           };
         };
         luaConfig.post = ''
