@@ -455,16 +455,4 @@ in
     enableSystemSlice = true;
     enableUserSlices = true;
   };
-
-  # To get aspire working, but i do not like polluting the system with this..
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      stdenv.cc.cc.lib
-      icu
-      openssl.out
-      glibc
-      zlib
-    ];
-  };
 }
