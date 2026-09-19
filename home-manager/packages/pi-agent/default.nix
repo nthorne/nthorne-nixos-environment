@@ -21,6 +21,8 @@
         "npm:bigpowers"
         "npm:context-mode"
         "npm:pi-background-tasks"
+        "npm:@narumitw/pi-btw"
+        "npm:@narumitw/pi-plan-mode"
         "npm:pi-goal-x"
         "npm:pi-mcp-adapter"
         "npm:pi-memory"
