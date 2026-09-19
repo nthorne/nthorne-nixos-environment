@@ -12,6 +12,7 @@ in
     (import ../../dotfiles/vimes/gh-cli args)
 
     ../../packages/copilot-cli
+    ../../packages/pi-agent
 
     args.flake-inputs.sops-nix.homeManagerModules.sops
   ];
