@@ -9,7 +9,7 @@
   "shellTools": {},
   "authorizerChain": [],
   "permission": {
-    "*": "allow",
+    "*": "ask",
     "path": {
       "*": "allow",
       "*.env": "deny",
@@ -21,12 +21,30 @@
     "edit": "ask",
     "bash": {
       "git *": "ask",
+      "git diff *": "allow",
+      "git log *": "allow",
+      "git show *": "allow",
+      "git status *": "allow",
+
+      "cat *": "allow",
+      "echo *": "allow",
+      "grep *": "allow",
+      "head *": "allow",
+      "ls *": "allow",
+      "tail *": "allow",
+
       "rm *": "ask",
       "rm -rf *": "ask",
+
       "sudo *": "ask"
     },
     "mcp": { "mcp_status": "allow" },
     "skill": { "*": "allow" },
+
+    "ctx_search": "allow",
+    "ctx_fetch_and_index": "allow",
+    "fetch_content": "allow",
+
     "external_directory": "ask"
   }
 }
