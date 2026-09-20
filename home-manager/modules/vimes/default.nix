@@ -81,4 +81,9 @@ in
     path = "xon5n7p1.default";
     isDefault = true;
   };
+
+  programs.pi-coding-agent.settings = {
+    defaultProvider = "openrouter";
+    defaultModel= "deepseek/deepseek-v4-flash";
+  };
 }
