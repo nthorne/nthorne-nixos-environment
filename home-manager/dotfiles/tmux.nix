@@ -132,6 +132,11 @@
 
       setw -g mode-keys vi
 
+      # Mostly for pi
+      set -g extended-keys on
+      set -g extended-keys-format csi-u
+      set -g set-clipboard on
+
       set-option -g display-time 4000
 
       #   configurations
