@@ -44,5 +44,10 @@
         };
       };
     };
+
+    programs.pi-coding-agent.settings = {
+      defaultProvider = "github-copilot";
+      defaultModel= "kimi-k2.7-code";
+    };
   };
 }
