@@ -82,8 +82,24 @@ in
     isDefault = true;
   };
 
-  programs.pi-coding-agent.settings = {
-    defaultProvider = "openrouter";
-    defaultModel= "deepseek/deepseek-v4-flash";
+  programs.pi-coding-agent = {
+    settings = {
+      defaultProvider = "openrouter";
+      defaultModel= "deepseek/deepseek-v4-flash";
+    };
+    models = {
+      "providers" = {
+        "ollama" = {
+          "baseUrl" = "http://localhost:11434/v1";
+          "api" = "openai-completions";
+          "apiKey" = "ollama";
+          "models" = [
+            {
+              "id" = "qwen3-coder";
+            }
+          ];
+        };
+      };
+    };
   };
 }

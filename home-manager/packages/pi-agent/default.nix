@@ -30,19 +30,5 @@
         "npm:pi-web-access"
       ];
     };
-    models = {
-      "providers" = {
-        "ollama" = {
-          "baseUrl" = "http://localhost:11434/v1";
-          "api" = "openai-completions";
-          "apiKey" = "ollama";
-          "models" = [
-            {
-              "id" = "qwen3-coder";
-            }
-          ];
-        };
-      };
-    };
   };
 }
