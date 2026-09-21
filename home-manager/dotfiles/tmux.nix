@@ -74,6 +74,9 @@
       bind-key -T copy-mode-vi 'v' send -X begin-selection 
       bind-key -T copy-mode-vi 'y' send -X copy-selection
 
+      # Fast cd to git root
+      bind C-g run "tmux set-buffer \"$(git rev-parse --show-toplevel)\"; tmux paste-buffer"
+
       # Clipboard interaction
       bind C-y run "tmux save-buffer - | wl-copy"
       bind C-p run "tmux set-buffer \"$(wl-paste -n)\"; tmux paste-buffer"
