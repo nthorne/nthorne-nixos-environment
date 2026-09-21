@@ -5,6 +5,7 @@
 {
   imports = [
     (import ../../packages/copilot-cli args)
+    ../../packages/pi-agent
   ];
 
   config = {
