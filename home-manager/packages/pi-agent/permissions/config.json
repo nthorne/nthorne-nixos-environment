@@ -16,35 +16,60 @@
       "*.env.*": "deny",
       "*.env.example": "allow"
     },
+
+    "external_directory": {
+      "*": "ask",
+      "/tmp/*": "allow"
+    },
+    "external_directory_read": {
+      "*": "ask",
+      "/nix/store/*": "allow",
+      "/mnt/c/Dev/*": "allow"
+    },
+
     "read": "allow",
     "write": "ask",
     "edit": "ask",
+
     "bash": {
       "git *": "ask",
       "git diff *": "allow",
+      "git grep *": "allow",
       "git log *": "allow",
+      "git rev-list *": "allow",
+      "git rev-parse *": "allow",
       "git show *": "allow",
       "git status *": "allow",
 
+      "cd *": "allow",
       "cat *": "allow",
       "echo *": "allow",
+      "find *": "allow",
       "grep *": "allow",
       "head *": "allow",
+      "hunk *": "allow",
       "ls *": "allow",
+      "readlink *": "allow",
       "tail *": "allow",
+      "wc *": "allow",
+      "which *": "allow",
 
       "rm *": "ask",
       "rm -rf *": "ask",
 
       "sudo *": "ask"
     },
-    "mcp": { "mcp_status": "allow" },
+
     "skill": { "*": "allow" },
 
-    "ctx_search": "allow",
-    "ctx_fetch_and_index": "allow",
-    "fetch_content": "allow",
+    "ask_user_question": "allow",
+    "get_search_content": "allow",
+    "memory_search": "allow",
+    "todo": "allow",
+    "web_search": "allow",
 
-    "external_directory": "ask"
+    "fetch_content": "allow",
+    "ctx_search": "allow",
+    "ctx_fetch_and_index": "allow"
   }
 }
