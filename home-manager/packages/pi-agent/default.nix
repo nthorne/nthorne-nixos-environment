@@ -17,7 +17,10 @@
   # Agent settings
   programs.pi-coding-agent = {
     enable = true;
-    extraPackages = [ pkgs.nodejs ];
+    extraPackages = with pkgs; [ 
+      nixd
+      nodejs
+    ];
     settings = {
       theme = "dark";
       packages = [
@@ -29,6 +32,7 @@
         "npm:pi-background-tasks"
         "npm:pi-goal-x"
         "npm:pi-hermes-memory"
+        "npm:pi-lens"
         "npm:pi-system-prompt"
         "npm:pi-usage-meters"
         "npm:pi-web-access"
