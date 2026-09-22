@@ -108,10 +108,12 @@
       # Window switching
       bind Tab last-window
 
-      # Open AI agent in a popup at current pane path
-      bind i display-popup -E -d '#{pane_current_path}' -w 80% -h 80% 'copilot'
-      # Open AI agent in a new split, to the right of current pane
-      bind I split-window -h -c '#{pane_current_path}' -p 40 'copilot'
+      # Open AI agent keybindings: prefix+i to open the agent binding table ..
+      bind -T prefix i switch-client -T pi-agent-table
+      # .. and then | for horizontal split, - for vertical split, and p for popup.
+      bind -T pi-agent-table | split-window -h -c '#{pane_current_path}' -p 40 'pi'
+      bind -T pi-agent-table - split-window -v -c '#{pane_current_path}' -p 40 'pi'
+      bind -T pi-agent-table p display-popup -E -d '#{pane_current_patinstall h}' -w 80% -h 80% 'pi'
 
       bind b confirm-before -p "Send Ctrl-d to all panes? (y/n)" "run tmux-boom"
 
