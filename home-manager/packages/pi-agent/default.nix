@@ -21,15 +21,16 @@
     settings = {
       theme = "dark";
       packages = [
-        "npm:context-mode"
         "npm:@gotgenes/pi-permission-system"
         "npm:@juicesharp/rpiv-ask-user-question"
         "npm:@juicesharp/rpiv-todo"
-        "npm:pi-usage-meters"
         "npm:@narumitw/pi-plan-mode"
+        "npm:context-mode"
+        "npm:pi-background-tasks"
         "npm:pi-goal-x"
         "npm:pi-hermes-memory"
         "npm:pi-system-prompt"
+        "npm:pi-usage-meters"
         "npm:pi-web-access"
       ];
     };
