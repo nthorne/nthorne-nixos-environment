@@ -18,8 +18,16 @@
   programs.pi-coding-agent = {
     enable = true;
     extraPackages = with pkgs; [ 
-      nixd
       nodejs
+
+      #LSPs for pi-lens
+      bash-language-server
+      clang-tools
+      htmlhint
+      nixd
+      pyright
+      rust-analyzer
+      yaml-language-server
     ];
     settings = {
       theme = "dark";
