@@ -33,9 +33,11 @@
 
     "bash": {
       "git *": "ask",
+      "git branch *": "allow",
       "git diff *": "allow",
       "git grep *": "allow",
       "git log *": "allow",
+      "git ls-tree *": "allow",
       "git rev-list *": "allow",
       "git rev-parse *": "allow",
       "git show *": "allow",
@@ -44,13 +46,17 @@
       "cd *": "allow",
       "cat *": "allow",
       "echo *": "allow",
+      "file *": "allow",
       "find *": "allow",
       "grep *": "allow",
       "head *": "allow",
       "hunk *": "allow",
       "ls *": "allow",
+      "pwd *": "allow",
       "readlink *": "allow",
+      "sort *": "allow",
       "tail *": "allow",
+      "true": "allow",
       "wc *": "allow",
       "which *": "allow",
 
@@ -64,7 +70,12 @@
 
     "ask_user_question": "allow",
     "get_search_content": "allow",
+
+    "memory_add": "allow",
+    "memory_remove": "allow",
+    "memory_replace": "allow",
     "memory_search": "allow",
+
     "todo": "allow",
     "web_search": "allow",
 
