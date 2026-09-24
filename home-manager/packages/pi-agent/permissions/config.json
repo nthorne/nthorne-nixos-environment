@@ -54,6 +54,7 @@
       "ls *": "allow",
       "pwd *": "allow",
       "readlink *": "allow",
+      "rg *": "allow",
       "sort *": "allow",
       "tail *": "allow",
       "true": "allow",
@@ -77,6 +78,8 @@
     "memory_search": "allow",
 
     "todo": "allow",
+
+    "symbol_search": "allow",
     "web_search": "allow",
 
     "fetch_content": "allow",
