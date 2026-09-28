@@ -35,15 +35,17 @@
         "npm:@gotgenes/pi-permission-system"
         "npm:@juicesharp/rpiv-ask-user-question"
         "npm:@juicesharp/rpiv-todo"
-        "npm:@narumitw/pi-plan-mode"
         "npm:context-mode"
         "npm:pi-background-tasks"
-        "npm:pi-goal-x"
         "npm:pi-hermes-memory"
         "npm:pi-lens"
         "npm:pi-system-prompt"
         "npm:pi-usage-meters"
         "npm:pi-web-access"
+
+        # Under evaulation
+        "npm:@narumitw/pi-plan-mode"
+        "npm:pi-goal-x"
       ];
     };
   };

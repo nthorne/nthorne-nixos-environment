@@ -43,6 +43,7 @@
       "git show *": "allow",
       "git status *": "allow",
 
+      "awk *": "allow",
       "cd *": "allow",
       "cat *": "allow",
       "echo *": "allow",
@@ -55,6 +56,7 @@
       "pwd *": "allow",
       "readlink *": "allow",
       "rg *": "allow",
+      "sed *": "allow",
       "sort *": "allow",
       "tail *": "allow",
       "true": "allow",
