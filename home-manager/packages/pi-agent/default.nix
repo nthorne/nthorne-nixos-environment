@@ -3,7 +3,6 @@
   ...
 }:
 {
-  home.file.".pi/agent/skills/caveman".source = ../copilot-cli/skills/caveman;
   home.file.".pi/agent/skills/excel-toolkit".source = ../copilot-cli/skills/excel-toolkit;
   home.file.".pi/agent/skills/executing-plan".source = ../copilot-cli/skills/executing-plan;
   home.file.".pi/agent/skills/grill-me".source = ../copilot-cli/skills/grill-me;
@@ -46,6 +45,8 @@
         # Under evaulation
         "npm:@narumitw/pi-plan-mode"
         "npm:pi-goal-x"
+        "npm:pi-btw"
+        "npm:pi-caveman"
       ];
     };
   };
