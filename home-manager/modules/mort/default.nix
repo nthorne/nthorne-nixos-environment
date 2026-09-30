@@ -5,7 +5,6 @@
 {
   imports = [
     (import ../../packages/copilot-cli args)
-    ../../packages/pi-agent
   ];
 
   config = {
@@ -23,6 +22,8 @@
       useGHE = true;
       gheURL = "https://logisnext.ghe.com/";
     };
+
+    tmux.codingagent = "copilot";
 
     # Add the private notes repo as a Obsidian vault
     programs.nixvim.plugins.obsidian.settings.workspaces = [
@@ -43,11 +44,6 @@
           user = "git";
         };
       };
-    };
-
-    programs.pi-coding-agent.settings = {
-      defaultProvider = "github-copilot";
-      defaultModel= "kimi-k2.7-code";
     };
   };
 }

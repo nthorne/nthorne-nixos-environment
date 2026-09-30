@@ -1,163 +1,174 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }:
 {
-  home.packages = with pkgs; [
-    (writeShellScriptBin "tmux-boom" ''
-      # Send Ctrl-d to all panes, except the current one.
-      # Anything that does not terminate on EOF will need to be shut down manually.
-      current_pane=$(tmux display-message -p '#{pane_id}')
-      for pane in $(tmux list-panes -a -F '#{pane_id}'); do
+  options = {
+    tmux.codingagent = lib.mkOption {
+      type = lib.types.str;
+      default = "pi";
+      description = "Which coding agent to use in tmux bindings (default: pi)";
+    };
+  };
+
+  config = {
+    home.packages = with pkgs; [
+      (writeShellScriptBin "tmux-boom" ''
+        # Send Ctrl-d to all panes, except the current one.
+        # Anything that does not terminate on EOF will need to be shut down manually.
+        current_pane=$(tmux display-message -p '#{pane_id}')
+        for pane in $(tmux list-panes -a -F '#{pane_id}'); do
           if [[ "$pane" != "$current_pane" ]]; then
-              tmux send-keys -t "$pane" C-d
+            tmux send-keys -t "$pane" C-d
           fi
-      done
-    '')
-  ];
-
-  programs.tmux = {
-    enable = true;
-
-    plugins = with pkgs.tmuxPlugins; [
-      cpu
-      fingers
-      open
-      sessionist
-      vim-tmux-navigator
-      yank
+        done
+      '')
     ];
 
-    extraConfig = ''
-      # Set prefix to good old C-a to avoid confusion
-      set -g prefix C-a
-      unbind C-b
+    programs.tmux = {
+      enable = true;
 
-      #reduce the command delay
-      set -s escape-time 1
+      plugins = with pkgs.tmuxPlugins; [
+        cpu
+        fingers
+        open
+        sessionist
+        vim-tmux-navigator
+        yank
+      ];
 
-      bind C-a send-prefix
+      extraConfig = ''
+        # Set prefix to good old C-a to avoid confusion
+        set -g prefix C-a
+        unbind C-b
 
-      # Rebind new-window to get the default-path behavior
-      bind c new-window -c '#{pane_current_path}'
-      # "up" path new pane strategy
-      bind u new-window -c '#{pane_current_path}/..'
-      # "home" path new pane strategy
-      bind h new-window -c '~'
+        #reduce the command delay
+        set -s escape-time 1
 
-      # Define saner window splitting keys
-      bind | split-window -c '#{pane_current_path}' -h
-      bind - split-window -c '#{pane_current_path}' -v
+        bind C-a send-prefix
 
-      # Vim-like movement between panes..
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
+        # Rebind new-window to get the default-path behavior
+        bind c new-window -c '#{pane_current_path}'
+        # "up" path new pane strategy
+        bind u new-window -c '#{pane_current_path}/..'
+        # "home" path new pane strategy
+        bind h new-window -c '~'
 
-      # .. and between windows
-      bind -r C-h select-window -t :-
-      bind -r C-l select-window -t :+
+        # Define saner window splitting keys
+        bind | split-window -c '#{pane_current_path}' -h
+        bind - split-window -c '#{pane_current_path}' -v
 
-      # .. and for resizing panes
-      bind -r H resize-pane -L 5
-      bind -r J resize-pane -D 5
-      bind -r K resize-pane -U 5
-      bind -r L resize-pane -R 5
+        # Vim-like movement between panes..
+        bind h select-pane -L
+        bind j select-pane -D
+        bind k select-pane -U
+        bind l select-pane -R
 
-      # Use vim-ish copy-mode
-      unbind [
-      unbind ]
-      bind Escape copy-mode
-      bind p paste-buffer
-      bind-key -T copy-mode-vi 'v' send -X begin-selection 
-      bind-key -T copy-mode-vi 'y' send -X copy-selection
+        # .. and between windows
+        bind -r C-h select-window -t :-
+        bind -r C-l select-window -t :+
 
-      # Fast cd to git root
-      bind C-g run "tmux set-buffer \"$(git rev-parse --show-toplevel)\"; tmux paste-buffer"
+        # .. and for resizing panes
+        bind -r H resize-pane -L 5
+        bind -r J resize-pane -D 5
+        bind -r K resize-pane -U 5
+        bind -r L resize-pane -R 5
 
-      # Clipboard interaction
-      bind C-y run "tmux save-buffer - | wl-copy"
-      bind C-p run "tmux set-buffer \"$(wl-paste -n)\"; tmux paste-buffer"
+        # Use vim-ish copy-mode
+        unbind [
+        unbind ]
+        bind Escape copy-mode
+        bind p paste-buffer
+        bind-key -T copy-mode-vi 'v' send -X begin-selection 
+        bind-key -T copy-mode-vi 'y' send -X copy-selection
 
-      bind P pipe-pane -o "cat >>~/#W.log"\; display "Toggled logging to ~/#W.log" 
+        # Fast cd to git root
+        bind C-g run "tmux set-buffer \"$(git rev-parse --show-toplevel)\"; tmux paste-buffer"
 
-      # Use § to toggle prefix key; makes working in nested tmux sessions a lot nicer.
-      bind -T root §  \
-        set prefix None \;\
-        set key-table off \;\
-        if -F '#{pane_in_mode}' 'send-keys -X cancel' \;\
-        refresh-client -S \;\
+        # Clipboard interaction
+        bind C-y run "tmux save-buffer - | wl-copy"
+        bind C-p run "tmux set-buffer \"$(wl-paste -n)\"; tmux paste-buffer"
 
-      bind -T off § \
-        set -u prefix \;\
-        set -u key-table \;\
-        set -u status-style \;\
-        set -u window-status-current-style \;\
-        set -u window-status-current-format \;\
-        refresh-client -S
+        bind P pipe-pane -o "cat >>~/#W.log"\; display "Toggled logging to ~/#W.log" 
 
-      bind s setw synchronize-pane
+        # Use § to toggle prefix key; makes working in nested tmux sessions a lot nicer.
+        bind -T root §  \
+          set prefix None \;\
+          set key-table off \;\
+          if -F '#{pane_in_mode}' 'send-keys -X cancel' \;\
+          refresh-client -S \;\
 
-      # Quick and dirty file pickers. C-d for directories, C-f for files, and C-h for both, but starting in my home directory with absolute paths.
-      bind-key C-d display-popup -d '#{pane_current_path}' -E '${lib.getExe pkgs.fd} -t d | ${lib.getExe pkgs.fzf} | tmux load-buffer - ' \; paste-buffer -d
-      bind-key C-f display-popup -d '#{pane_current_path}' -E '${lib.getExe pkgs.fd} -t f | ${lib.getExe pkgs.fzf} | tmux load-buffer - ' \; paste-buffer -d
-      bind-key C-h display-popup -d '/home/nthorne' -E '${lib.getExe pkgs.fd} -a | ${lib.getExe pkgs.fzf} | tmux load-buffer - ' \; paste-buffer -d
+        bind -T off § \
+          set -u prefix \;\
+          set -u key-table \;\
+          set -u status-style \;\
+          set -u window-status-current-style \;\
+          set -u window-status-current-format \;\
+          refresh-client -S
 
-      # Window switching
-      bind Tab last-window
+        bind s setw synchronize-pane
 
-      # Open AI agent keybindings: prefix+i to open the agent binding table ..
-      bind -T prefix i switch-client -T pi-agent-table
-      # .. and then | for horizontal split, - for vertical split, and p for popup.
-      bind -T pi-agent-table | split-window -h -c '#{pane_current_path}' -p 40 'pi'
-      bind -T pi-agent-table - split-window -v -c '#{pane_current_path}' -p 40 'pi'
-      bind -T pi-agent-table p display-popup -E -d '#{pane_current_patinstall h}' -w 80% -h 80% 'pi'
+        # Quick and dirty file pickers. C-d for directories, C-f for files, and C-h for both, but starting in my home directory with absolute paths.
+        bind-key C-d display-popup -d '#{pane_current_path}' -E '${lib.getExe pkgs.fd} -t d | ${lib.getExe pkgs.fzf} | tmux load-buffer - ' \; paste-buffer -d
+        bind-key C-f display-popup -d '#{pane_current_path}' -E '${lib.getExe pkgs.fd} -t f | ${lib.getExe pkgs.fzf} | tmux load-buffer - ' \; paste-buffer -d
+        bind-key C-h display-popup -d '/home/nthorne' -E '${lib.getExe pkgs.fd} -a | ${lib.getExe pkgs.fzf} | tmux load-buffer - ' \; paste-buffer -d
 
-      bind b confirm-before -p "Send Ctrl-d to all panes? (y/n)" "run tmux-boom"
+        # Window switching
+        bind Tab last-window
 
-      # use 256 color display
-      set -g default-terminal "screen-256color"
+        # Open AI agent keybindings: prefix+i to open the agent binding table ..
+        bind -T prefix i switch-client -T coding-agent-table
+        # .. and then | for horizontal split, - for vertical split, and p for popup.
+        bind -T coding-agent-table | split-window -h -c '#{pane_current_path}' -p 40 '${config.tmux.codingagent}'
+        bind -T coding-agent-table - split-window -v -c '#{pane_current_path}' -p 40 '${config.tmux.codingagent}'
+        bind -T coding-agent-table p display-popup -E -d '#{pane_current_patinstall h}' -w 80% -h 80% '${config.tmux.codingagent}'
 
-      set -g status-right-length 64
+        bind b confirm-before -p "Send Ctrl-d to all panes? (y/n)" "run tmux-boom"
 
-      # Monitor activity in other windows
-      setw -g monitor-activity on
-      set -g visual-activity on
+        # use 256 color display
+        set -g default-terminal "screen-256color"
 
-      # recommended by vim.health
-      set -g focus-events on
+        set -g status-right-length 64
 
-      # Put some useful information on status bar
-      set -g status-right "#[attr=bright]#[fg=orange]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'Prefix OFF|')CPU: #{cpu_percentage}|BATTERY: #(cat /sys/class/power_supply/BAT0/capacity)%#[fg=yellow]|load:#(cut -d' ' -f1-3 /proc/loadavg)|#[attr=bright]#[fg=green]#(date +'%Y-%m-%d %H:%M')"
+        # Monitor activity in other windows
+        setw -g monitor-activity on
+        set -g visual-activity on
 
-      # Set a decent status bar refresh rate
-      set -g status-interval 3
+        # recommended by vim.health
+        set -g focus-events on
 
-      setw -g mode-keys vi
+        # Put some useful information on status bar
+        set -g status-right "#[attr=bright]#[fg=orange]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'Prefix OFF|')CPU: #{cpu_percentage}|BATTERY: #(cat /sys/class/power_supply/BAT0/capacity)%#[fg=yellow]|load:#(cut -d' ' -f1-3 /proc/loadavg)|#[attr=bright]#[fg=green]#(date +'%Y-%m-%d %H:%M')"
 
-      # Mostly for pi
-      set -g extended-keys on
-      set -g extended-keys-format csi-u
-      set -g set-clipboard on
+        # Set a decent status bar refresh rate
+        set -g status-interval 3
 
-      set-option -g display-time 4000
+        setw -g mode-keys vi
 
-      #   configurations
-      set -g @resurrect-processes 'ssh'
+        # Mostly for pi
+        set -g extended-keys on
+        set -g extended-keys-format csi-u
+        set -g set-clipboard on
 
-      set-option -g detach-on-destroy on
+        set-option -g display-time 4000
 
-      set -g @fingers-skip-health-check '1'
+        #   configurations
+        set -g @resurrect-processes 'ssh'
 
-      run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
+        set-option -g detach-on-destroy on
 
-      bind f run -b "#{@fingers-cli} start #{pane_id}"
+        set -g @fingers-skip-health-check '1'
 
-      # I often get black on black for pane numbers, so let's set a bright color for them
-      set -g display-panes-active-colour "#fabd2f" # gruvbox yellow
-      set -g display-panes-colour "#a89984"        # gruvbox muted gray
-    '';
+        run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
+
+        bind f run -b "#{@fingers-cli} start #{pane_id}"
+
+        # I often get black on black for pane numbers, so let's set a bright color for them
+        set -g display-panes-active-colour "#fabd2f" # gruvbox yellow
+        set -g display-panes-colour "#a89984"        # gruvbox muted gray
+      '';
+    };
   };
 }
