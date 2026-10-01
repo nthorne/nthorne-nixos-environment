@@ -5,7 +5,6 @@
 }:
 {
   home.file.".copilot/skills/caveman".source = ../copilot-cli/skills/caveman;
-  home.file.".copilot/skills/create-plan".source = ../copilot-cli/skills/create-plan;
   home.file.".copilot/skills/excel-toolkit".source = ../copilot-cli/skills/excel-toolkit;
   home.file.".copilot/skills/executing-plan".source = ../copilot-cli/skills/executing-plan;
   home.file.".copilot/skills/grill-me".source = ../copilot-cli/skills/grill-me;
