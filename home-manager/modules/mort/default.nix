@@ -49,12 +49,42 @@ in
       }
     ];
 
-    programs.nixvim.plugins.lsp.servers.robotframework_ls = {
+    programs.nixvim.plugins.lsp.servers.robotcode = {
       enable = true;
       package = flake-inputs.robotcode.packages.${pkgs.system}.default;
       # TODO: Figure out a good way to propagate the "right" pythonpath to the robotframework_ls server.
-      cmd = [ "robotcode" "language-server" ];
-      filetypes = [ "robot" "resource" ];
+      cmd = [
+        "robotcode"
+        "language-server"
+      ];
+      filetypes = [
+        "robot"
+        "resource"
+      ];
+    };
+
+    programs.nixvim = {
+      extraConfigLua = ''
+        local lint = require("lint")
+        lint.linters.robotcode = {
+          cmd = "robotcode",
+          args = { "analyze", "code", "-mi ImportContainsError" },
+          stdin = false,
+          ignore_exitcode = true,
+          parser = require("lint.parser").from_pattern(
+            "^(.+):(%d+):(%d+): %[([A-Z]+)%] (.+)$",
+            { "file", "lnum", "col", "severity", "message" },
+            {
+              ["ERROR"] = vim.diagnostic.severity.ERROR,
+              ["WARNING"] = vim.diagnostic.severity.WARN,
+              ["INFO"] = vim.diagnostic.severity.INFO,
+              ["HINT"] = vim.diagnostic.severity.HINT,
+            },
+            { source = "robotcode" }
+          )
+        }
+        lint.linters_by_ft.robot = { "robotcode" }
+      '';
     };
 
     programs.ssh = {
