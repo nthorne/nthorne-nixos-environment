@@ -85,4 +85,6 @@ in {
   };
 
   time.timeZone = "Europe/Stockholm";
+
+  programs.nix-ld.enable = true;
 }
