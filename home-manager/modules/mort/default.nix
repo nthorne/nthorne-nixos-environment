@@ -3,7 +3,7 @@
   lib,
   pkgs,
   ...
-} @ args:
+}@args:
 let
   copilotWrapped = pkgs.writeShellScriptBin "copilot-wrapped" ''
     exec ${lib.getExe pkgs.github-copilot-cli} \
@@ -23,17 +23,15 @@ in
   ];
 
   config = {
-    home.packages =
-      with pkgs;
-      [
-        copilotWrapped
-        entr
-        hunk
-        lnav
-        xlsx2csv
+    home.packages = with pkgs; [
+      copilotWrapped
+      entr
+      hunk
+      lnav
+      xlsx2csv
 
-        flake-inputs.robotcode.packages.${pkgs.system}.default
-      ];
+      flake-inputs.robotcode.packages.${pkgs.system}.default
+    ];
 
     nixvim = {
       # We use GitHub Enterprise for Copilot Vim plugins ..
