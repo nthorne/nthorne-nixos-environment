@@ -1,4 +1,5 @@
 {
+  flake-inputs,
   lib,
   pkgs,
   ...
@@ -30,6 +31,8 @@ in
         hunk
         lnav
         xlsx2csv
+
+        flake-inputs.robotcode.packages.${pkgs.system}.default
       ];
 
     nixvim = {
@@ -47,6 +50,14 @@ in
         path = "/home/nthorne/repos/private-notes/";
       }
     ];
+
+    programs.nixvim.plugins.lsp.servers.robotframework_ls = {
+      enable = true;
+      package = flake-inputs.robotcode.packages.${pkgs.system}.default;
+      # TODO: Figure out a good way to propagate the "right" pythonpath to the robotframework_ls server.
+      cmd = [ "robotcode" "language-server" ];
+      filetypes = [ "robot" "resource" ];
+    };
 
     programs.ssh = {
       enable = true;
