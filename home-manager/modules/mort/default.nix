@@ -7,9 +7,13 @@
 let
   copilotWrapped = pkgs.writeShellScriptBin "copilot-wrapped" ''
     exec ${lib.getExe pkgs.github-copilot-cli} \
-      --allow-tool view \
-      --allow-tool grep \
+      --allow-tool awk \
       --allow-tool glob \
+      --allow-tool grep \
+      --allow-tool ls \
+      --allow-tool readlink \
+      --allow-tool sed \
+      --allow-tool view \
       --add-dir ~/.copilot/memory \
       --add-dir ~/src/vcm5 \
       --add-dir ~/src/vcm5-local \
