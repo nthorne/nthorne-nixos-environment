@@ -13,6 +13,7 @@
       hlsearch = true;
       ignorecase = true;
       incsearch = true;
+      linebreak = true;
       mouse = "a";
       number = true;
       relativenumber = true;

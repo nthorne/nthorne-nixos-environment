@@ -2,15 +2,17 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   # We filter out this file and anything that is not a nix file
-  modulesFilter =
-    lib.filterAttrs (name: value:
-      value == "regular" && name != "default.nix" && (lib.strings.hasSuffix ".nix" name));
+  modulesFilter = lib.filterAttrs (
+    name: value: value == "regular" && name != "default.nix" && (lib.strings.hasSuffix ".nix" name)
+  );
 
   # Apply the filter to all files in the current directory
   nixModules = builtins.attrNames (modulesFilter (builtins.readDir ./.));
-in {
+in
+{
   # Convert all paths to absolute paths and import the modules
   imports = map (pth: ./. + "/${pth}") nixModules;
 
@@ -41,8 +43,6 @@ in {
       noice.enable = true;
 
       rainbow-delimiters.enable = true;
-
-      render-markdown.enable = true;
 
       rustaceanvim.enable = true;
 
