@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   programs.nixvim = {
     globals.mapleader = ",";
     keymaps = [
@@ -80,5 +80,38 @@
         options.desc = "Toggle buffer [Z]oom";
       }
     ];
+
+    # Some convenience mappings to close floating windows/clear search highlights
+    # with a single <Esc> press.
+    extraConfigLua = ''
+      vim.keymap.set("n", "<Esc>", function()
+        local closed_float = false
+
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          if vim.api.nvim_win_is_valid(win) == true then
+            local cfg = vim.api.nvim_win_get_config(win)
+            if cfg.relative ~= "" then
+              vim.api.nvim_win_close(win, false)
+              closed_float = true
+            end
+          end
+        end
+
+        if closed_float then
+          return
+        end
+
+        if vim.v.hlsearch == 1 then
+          vim.cmd("nohlsearch")
+          return
+        end
+
+        vim.api.nvim_feedkeys(
+          vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+          "n",
+          false
+        )
+      end, { desc = "Close floats or clear search" })
+    '';
   };
 }
