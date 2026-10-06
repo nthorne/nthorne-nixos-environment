@@ -112,6 +112,16 @@
           false
         )
       end, { desc = "Close floats or clear search" })
+
+      vim.keymap.set("n", "zn", function()
+        local node = vim.treesitter.get_node()
+        if node then
+          local srow, _, erow, _ = node:range()
+          local middle = math.floor((srow + erow) / 2)
+          vim.api.nvim_win_set_cursor(0, { middle + 1, 0 })
+          vim.cmd("normal! zz")
+        end
+      end, { desc = "Center treesitter node on screen" })
     '';
   };
 }
