@@ -13,8 +13,14 @@
           statix = {
             cmd = lib.getExe pkgs.statix;
           };
+          vale = {
+            cmd = lib.getExe pkgs.vale;
+          };
         };
         lintersByFt = {
+          markdown = [
+            "vale"
+          ];
           nix = [
             "statix"
             "deadnix"
