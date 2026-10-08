@@ -29,6 +29,9 @@
             "ruff"
             "mypy"
           ];
+          sh = [
+            "shellcheck"
+          ];
         };
       };
     };
