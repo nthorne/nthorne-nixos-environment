@@ -72,7 +72,7 @@
     }@inputs:
     let
       # Pin nixpkgs in the flake registry to what we use for the system
-      pin-registries = { ... }: {
+      pin-registries = _: {
         nix = {
           registry = {
             nixpkgs.flake = nixpkgs;
@@ -93,15 +93,17 @@
 
         home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.nthorne = import ./home-manager/home.nix;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.nthorne = import ./home-manager/home.nix;
 
-          home-manager.sharedModules = [
-            {
-              stylix.autoEnable = true;
-            }
-          ];
+            sharedModules = [
+              {
+                stylix.autoEnable = true;
+              }
+            ];
+          };
         }
       ];
 
@@ -148,15 +150,17 @@
 
         home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.nthorne = import ./home-manager/home.nix;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.nthorne = import ./home-manager/home.nix;
 
-          home-manager.sharedModules = [
-            {
-              stylix.autoEnable = true;
-            }
-          ];
+            sharedModules = [
+              {
+                stylix.autoEnable = true;
+              }
+            ];
+          };
         }
       ];
 
@@ -194,7 +198,7 @@
             modules =
               modules
               ++ [
-                ({ ... }: {
+                (_: {
                   users.extraUsers."nthorne".password = "nthorne";
                   users.mutableUsers = false;
                 })
@@ -229,7 +233,7 @@
           name = "vimes";
           modules = vimes-modules;
           extraModules = [
-            ({ ... }: {
+            (_: {
               systemd.services = {
                 "network-link-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [ ];
                 "network-addresses-${wifiDevice}".wantedBy = nixpkgs.lib.mkForce [ ];
