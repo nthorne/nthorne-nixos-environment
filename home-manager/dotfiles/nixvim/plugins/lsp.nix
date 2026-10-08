@@ -111,12 +111,12 @@
     # Add descriptions to lsp keymaps
     plugins.which-key.settings.spec = [
       {
-        __unkeyed = "<leader>j";
+        __unkeyed = "gj";
         mode = "n";
         desc = "Go to next diagnostic";
       }
       {
-        __unkeyed = "<leader>k";
+        __unkeyed = "gk";
         mode = "n";
         desc = "Go to prev diagnostic";
       }

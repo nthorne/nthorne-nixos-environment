@@ -113,7 +113,7 @@
         )
       end, { desc = "Close floats or clear search" })
 
-      vim.keymap.set("n", "zn", function()
+      vim.keymap.set("n", "<leader>zn", function()
         local node = vim.treesitter.get_node()
         if node then
           local srow, _, erow, _ = node:range()
