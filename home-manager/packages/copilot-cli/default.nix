@@ -12,6 +12,7 @@
   home.file.".copilot/skills/mcp-builder".source = ../copilot-cli/skills/mcp-builder;
   home.file.".copilot/skills/nixos-host".source = ../copilot-cli/skills/nixos-host;
   home.file.".copilot/skills/obsidian-vault".source = ../copilot-cli/skills/obsidian-vault;
+  home.file.".copilot/skills/simplify-code".source = ../copilot-cli/skills/simplify-code;
   home.file.".copilot/skills/skill-creator".source = ../copilot-cli/skills/skill-creator;
 
   home.file.".copilot/copilot-instructions.md".source = ./instructions/instructions.md;
