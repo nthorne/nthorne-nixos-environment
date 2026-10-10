@@ -222,7 +222,7 @@ in
 
   services.resolved.enable = true;
 
-  programs.openvpn3.enable = true;
+  # programs.openvpn3.enable = true;
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
