@@ -45,4 +45,14 @@
       }
     ];
   };
+
+  home.file = {
+    ".vale.ini".text = ''
+MinAlertLevel = suggestion
+SkippedScopes = script, style, pre, figure, blockquote
+
+[*.md]
+BasedOnStyles = Vale
+    '';
+  };
 }
