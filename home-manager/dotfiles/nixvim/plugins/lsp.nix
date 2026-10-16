@@ -106,6 +106,19 @@
         '';
         options.desc = "Toggle In[L]ay [H]ints";
        }
+
+      {
+        mode = "n";
+        key = "<leader>lt";
+        action.__raw = ''
+          function()
+              local bufnr = vim.api.nvim_get_current_buf()
+              local is_enabled = vim.diagnostic.is_enabled({ bufnr = bufnr })
+              vim.diagnostic.enable(not is_enabled, { bufnr = bufnr })
+          end
+        '';
+        options.desc = "Toggle [L]SP [T]ips";
+      }
     ];
 
     # Add descriptions to lsp keymaps
