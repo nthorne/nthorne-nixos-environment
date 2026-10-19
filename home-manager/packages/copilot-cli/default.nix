@@ -10,13 +10,17 @@
     ".copilot/skills/executing-plan".source = ../copilot-cli/skills/executing-plan;
     ".copilot/skills/grill-me".source = ../copilot-cli/skills/grill-me;
     ".copilot/skills/hunk".source = ../copilot-cli/skills/hunk;
-    ".copilot/skills/mcp-builder".source = ../copilot-cli/skills/mcp-builder;
     ".copilot/skills/nixos-host".source = ../copilot-cli/skills/nixos-host;
     ".copilot/skills/obsidian-vault".source = ../copilot-cli/skills/obsidian-vault;
     ".copilot/skills/simplify-code".source = ../copilot-cli/skills/simplify-code;
     ".copilot/skills/skill-creator".source = ../copilot-cli/skills/skill-creator;
 
     ".copilot/copilot-instructions.md".source = ./instructions/instructions.md;
+
+    # Under evaluation:
+    ".copilot/skills/quiz-me".source = ../copilot-cli/skills/quiz-me;
+    ".copilot/skills/reflect".source = ../copilot-cli/skills/reflect;
+    ".copilot/skills/wait-what".source = ../copilot-cli/skills/wait-what;
   };
 
   programs.github-copilot-cli = {
