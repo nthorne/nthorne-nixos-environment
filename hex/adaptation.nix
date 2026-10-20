@@ -1,4 +1,4 @@
-{config, pkgs, ...}: let
+{config, ...}: let
   private = /etc/nixos/private.nix;
 in {
   imports =
@@ -36,7 +36,7 @@ in {
 
   hardware.graphics.enable = true;
 
-  users.extraUsers.nthorne.extraGroups = [
+  users.users.nthorne.extraGroups = [
     "wheel"
     "docker"
     "dialout"
@@ -99,10 +99,6 @@ in {
       };
     };
   };
-
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
 
   programs.mosh.enable = true;
 }

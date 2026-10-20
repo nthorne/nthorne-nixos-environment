@@ -42,7 +42,7 @@ in
   services.blueman.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.alma = {
+  users.users.alma = {
     isNormalUser = true;
     uid = 1001;
     extraGroups = ["wheel"];
@@ -57,7 +57,7 @@ in
     ];
   };
 
-  users.extraUsers.nthorne.extraGroups = [
+  users.users.nthorne.extraGroups = [
     "wheel"
     "audio"
     "docker"
@@ -71,11 +71,6 @@ in
       dockerCompat = true;
     };
   };
-
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-    accept-flake-config = true
-  '';
 
   programs.steam = {
     enable = true;

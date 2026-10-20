@@ -23,11 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nthorne-zsh = {
-      url = "github:nthorne/nthorne-zsh-environment";
-      flake = false;
-    };
-
     nixvim.url = "github:nix-community/nixvim";
 
     stylix = {
@@ -57,8 +52,6 @@
     };
     nixos-wsl.url = "github:nix-community/nixos-wsl/main";
 
-    hunk.url = "github:modem-dev/hunk";
-
     robotcode.url = "path:./home-manager/packages/robotcode/";
   };
   outputs =
@@ -85,12 +78,9 @@
 
       # These are modules that are common across all my systems.
       common-modules = [
-        ./configuration.nix
-
+        ./nix-settings.nix
         stylix.nixosModules.stylix
-
         pin-registries
-
         home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -107,62 +97,46 @@
         }
       ];
 
-      vimes-modules = common-modules ++ [
-        ./vimes/hardware-config/hardware-config-generated.nix
-        ./vimes/adaptation.nix
+      mkHostModules = { hostname, hostModule, extraModules ? [ ] }: common-modules ++ [ hostModule ] ++ extraModules ++ [{
+        home-manager.extraSpecialArgs.flake-inputs = inputs // {
+          inherit hostname system;
+        };
+      }];
 
-        sops-nix.nixosModules.sops
-      ];
+      vimes-modules = mkHostModules {
+        hostname = "vimes";
+        hostModule = ./configuration.nix;
+        extraModules = [
+          ./vimes/hardware-config/hardware-config-generated.nix
+          ./desktop.nix
+          ./vimes/adaptation.nix
+          sops-nix.nixosModules.sops
+        ];
+      };
 
-      nixlaptop-modules = common-modules ++ [
-        ./laptop/hardware-configuration.nix
-        ./laptop/adaptation.nix
-      ];
+      nixlaptop-modules = mkHostModules {
+        hostname = "nixlaptop";
+        hostModule = ./configuration.nix;
+        extraModules = [
+          ./laptop/adaptation.nix
+          ./laptop/hardware-configuration.nix
+          ./desktop.nix
+        ];
+      };
 
-      hex-modules = common-modules ++ [
-        ./hex/hardware-configuration.nix
-        ./hex/adaptation.nix
-      ];
+      hex-modules = mkHostModules {
+        hostname = "hex";
+        hostModule = ./configuration.nix;
+        extraModules = [
+            ./hex/adaptation.nix
+            ./hex/hardware-configuration.nix
+        ];
+      };
 
-      mort-modules = [
-        ./mort/adaptation.nix
-        nixos-wsl.nixosModules.default
-        {
-          system.stateVersion = "22.05";
-
-          wsl = {
-            enable = true;
-            defaultUser = "nthorne";
-            interop.register = true;
-          };
-        }
-
-        {
-          home-manager.extraSpecialArgs.flake-inputs = inputs // {
-            hostname = "mort";
-            system = "${system}";
-          };
-        }
-
-        stylix.nixosModules.stylix
-
-        pin-registries
-
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.nthorne = import ./home-manager/home.nix;
-
-            sharedModules = [
-              {
-                stylix.autoEnable = true;
-              }
-            ];
-          };
-        }
-      ];
+      mort-modules = mkHostModules {
+        hostname = "mort";
+        hostModule = ./mort/adaptation.nix;
+      };
 
       wifiDevice = "wlp0s20f3";
 
@@ -174,14 +148,7 @@
         {
           "${name}" = nixpkgs.lib.nixosSystem {
             system = "${system}";
-            modules = modules ++ [
-              {
-                home-manager.extraSpecialArgs.flake-inputs = inputs // {
-                  hostname = "${name}";
-                  system = "${system}";
-                };
-              }
-            ];
+            modules = modules;
           };
         };
 
@@ -199,7 +166,7 @@
               modules
               ++ [
                 (_: {
-                  users.extraUsers."nthorne".password = "nthorne";
+                  users.users."nthorne".password = "nthorne";
                   users.mutableUsers = false;
                 })
               ]
@@ -226,6 +193,7 @@
         // {
           "mort" = nixpkgs.lib.nixosSystem {
             system = "${system}";
+            specialArgs = { inherit nixos-wsl; };
             modules = mort-modules;
           };
         }

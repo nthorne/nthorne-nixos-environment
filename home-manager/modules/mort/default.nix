@@ -34,7 +34,7 @@ in
       lnav
       xlsx2csv
 
-      flake-inputs.robotcode.packages.${pkgs.system}.default
+      flake-inputs.robotcode.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
     nixvim = {
@@ -46,62 +46,66 @@ in
     tmux.codingagent = "copilot-wrapped";
 
     # Add the private notes repo as a Obsidian vault
-    programs.nixvim.plugins.obsidian.settings.workspaces = [
-      {
-        name = "private-notes";
-        path = "/home/nthorne/repos/private-notes/";
-      }
-    ];
+    programs = {
+      nixvim = {
+        extraConfigLua = ''
+          local lint = require("lint")
+          lint.linters.robotcode = {
+            cmd = "robotcode",
+            args = { "analyze", "code", "-mi ImportContainsError" },
+            stdin = false,
+            ignore_exitcode = true,
+            parser = require("lint.parser").from_pattern(
+              "^(.+):(%d+):(%d+): %[([A-Z]+)%] (.+)$",
+              { "file", "lnum", "col", "severity", "message" },
+              {
+                ["ERROR"] = vim.diagnostic.severity.ERROR,
+                ["WARNING"] = vim.diagnostic.severity.WARN,
+                ["INFO"] = vim.diagnostic.severity.INFO,
+                ["HINT"] = vim.diagnostic.severity.HINT,
+              },
+              { source = "robotcode" }
+            )
+          }
+          lint.linters_by_ft.robot = { "robotcode" }
+        '';
 
-    programs.nixvim.plugins.lsp.servers.robotcode = {
-      enable = true;
-      package = flake-inputs.robotcode.packages.${pkgs.system}.default;
-      # TODO: Figure out a good way to propagate the "right" pythonpath to the robotframework_ls server.
-      cmd = [
-        "robotcode"
-        "language-server"
-      ];
-      filetypes = [
-        "robot"
-        "resource"
-      ];
-    };
-
-    programs.nixvim = {
-      extraConfigLua = ''
-        local lint = require("lint")
-        lint.linters.robotcode = {
-          cmd = "robotcode",
-          args = { "analyze", "code", "-mi ImportContainsError" },
-          stdin = false,
-          ignore_exitcode = true,
-          parser = require("lint.parser").from_pattern(
-            "^(.+):(%d+):(%d+): %[([A-Z]+)%] (.+)$",
-            { "file", "lnum", "col", "severity", "message" },
+        plugins = {
+          obsidian.settings.workspaces = [
             {
-              ["ERROR"] = vim.diagnostic.severity.ERROR,
-              ["WARNING"] = vim.diagnostic.severity.WARN,
-              ["INFO"] = vim.diagnostic.severity.INFO,
-              ["HINT"] = vim.diagnostic.severity.HINT,
-            },
-            { source = "robotcode" }
-          )
-        }
-        lint.linters_by_ft.robot = { "robotcode" }
-      '';
-    };
+              name = "private-notes";
+              path = "/home/nthorne/repos/private-notes/";
+            }
+          ];
+          lsp.servers.robotcode = {
+            enable = true;
+            package = flake-inputs.robotcode.packages.${pkgs.stdenv.hostPlatform.system}.default;
+            # TODO: Figure out a good way to propagate the "right" pythonpath to the robotframework_ls server.
+            cmd = [
+              "robotcode"
+              "language-server"
+            ];
+            filetypes = [
+              "robot"
+              "resource"
+            ];
+          };
+        };
+      };
 
-    programs.ssh = {
-      enable = true;
-      enableDefaultConfig = false;
+      ssh = {
+        enable = true;
+        enableDefaultConfig = false;
 
-      settings = {
-        "github.com" = {
-          hostname = "ssh.github.com";
-          port = 443;
-          user = "git";
+        settings = {
+          "github.com" = {
+            hostname = "ssh.github.com";
+            port = 443;
+            user = "git";
+          };
         };
       };
     };
+
   };
 }

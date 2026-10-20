@@ -243,7 +243,7 @@ in
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.nthorne.extraGroups = [
+  users.users.nthorne.extraGroups = [
     "wheel"
     "docker"
     "dialout"
@@ -416,13 +416,6 @@ in
       iptables -D nixos-fw -i tailscale0 -p tcp --dport 11435 -j nixos-fw-accept 2>/dev/null || true
     '';
   };
-
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
-    experimental-features = nix-command flakes
-    accept-flake-config = true
-  '';
 
   environment.etc = {
     # Auditd configuration for proper logging

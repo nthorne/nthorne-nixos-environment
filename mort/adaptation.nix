@@ -1,4 +1,5 @@
 {
+  nixos-wsl,
   pkgs,
   ...
 }: let
@@ -8,12 +9,11 @@
     ${pkgs.imagemagick}/bin/magick -size 1920x1080 xc:$COLOR $out
   '';
 in {
-  networking.hostName = "mort";
+  imports = [
+    nixos-wsl.nixosModules.default
+  ];
 
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-    accept-flake-config = true
-  '';
+  networking.hostName = "mort";
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -30,7 +30,7 @@ in {
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.nthorne = {
+  users.users.nthorne = {
     isNormalUser = true;
     uid = 1001;
     extraGroups = ["wheel"];
@@ -87,4 +87,12 @@ in {
   time.timeZone = "Europe/Stockholm";
 
   programs.nix-ld.enable = true;
+
+  wsl = {
+    enable = true;
+    defaultUser = "nthorne";
+    interop.register = true;
+  };
+
+  system.stateVersion = "22.05";
 }

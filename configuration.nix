@@ -56,22 +56,8 @@ in {
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${lib.getExe pkgs.tuigreet} --time --asterisks --remember --remember-user-session --sessions ${lib.getExe pkgs.hyprland}";
-      };
-    };
-  };
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-    xwayland.enable = true;
-  };
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.nthorne = {
+  users.users.nthorne = {
     isNormalUser = true;
     uid = 1000;
     extraGroups = ["wheel"];
