@@ -8,7 +8,7 @@ args@{
   ...
 }:
 let
-  hostname = flake-inputs.hostname;
+  inherit (flake-inputs) hostname;
 
   hostCollection = pth: (pth + ("/" + hostname));
   hostDotfiles = hostCollection ./dotfiles;
@@ -50,106 +50,111 @@ in
   ++ (if builtins.pathExists hostModules then [ hostModules ] else [ ]);
 
   config = {
-    # Let Home Manager install and manage itself.
-    programs.home-manager.enable = true;
 
     # Home Manager needs a bit of information about you and the
     # paths it should manage.
-    home.username = "nthorne";
-    home.homeDirectory = "/home/nthorne";
+    home = {
+      username = "nthorne";
+      homeDirectory = "/home/nthorne";
 
-    # This value determines the Home Manager release that your
-    # configuration is compatible with. This helps avoid breakage
-    # when a new Home Manager release introduces backwards
-    # incompatible changes.
-    #
-    # You can update Home Manager without changing this value. See
-    # the Home Manager release notes for a list of state version
-    # changes in each release.
-    home.stateVersion = "23.05";
+      # This value determines the Home Manager release that your
+      # configuration is compatible with. This helps avoid breakage
+      # when a new Home Manager release introduces backwards
+      # incompatible changes.
+      #
+      # You can update Home Manager without changing this value. See
+      # the Home Manager release notes for a list of state version
+      # changes in each release.
+      stateVersion = "23.05";
 
-    home.packages =
-      with pkgs;
-      [
-        eza
-        fd
-        file
-        fzf
-        git-crypt
-        htop
-        jq
-        jqp
-        just
-        nvd
-        shellcheck
-        tree
-        wl-clipboard
-      ]
-      ++ lib.optionals wmEnabled [
-        pavucontrol
-        seahorse # For managing gnome-keyring
-        swaynotificationcenter
-        waybar
-      ];
-
-    home.pointerCursor.enable = true;
-
-    # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
-    programs.direnv.enable = true;
-    programs.direnv.nix-direnv.enable = true;
-
-    programs.ghostty = {
-      enable = true;
-      clearDefaultKeybinds = true;
-      settings = {
-        font-family = [
-          ""
-          "JetBrainsMono Nerd Font"
+      packages =
+        with pkgs;
+        [
+          eza
+          fd
+          file
+          fzf
+          git-crypt
+          htop
+          jq
+          jqp
+          just
+          nvd
+          shellcheck
+          tree
+          wl-clipboard
+        ]
+        ++ lib.optionals wmEnabled [
+          pavucontrol
+          seahorse # For managing gnome-keyring
+          swaynotificationcenter
+          waybar
         ];
 
-        keybind = [
-          "ctrl+plus=increase_font_size:1"
-          "ctrl+-=decrease_font_size:1"
-          "ctrl+0=reset_font_size"
-        ];
-      };
+      pointerCursor.enable = true;
     };
 
-    programs.bat.enable = true;
+    programs = {
+      # Let Home Manager install and manage itself.
+      home-manager.enable = true;
 
-    programs.rofi.enable = wmEnabled;
+      # NOTE: If reverting to regular direnv, remember to reinstall ~/.direnrc
+      direnv.enable = true;
+      direnv.nix-direnv.enable = true;
 
-    programs.atuin = {
-      enable = true;
-      settings = {
-        # ALT key is taken by Hyprland..
-        ctrl_n_shortcuts = true;
-        enter_accept = true;
-        filter_mode = "host";
-        filter_mode_shell_up_key_binding = "directory";
+      ghostty = {
+        enable = true;
+        clearDefaultKeybinds = true;
+        settings = {
+          font-family = [
+            ""
+            "JetBrainsMono Nerd Font"
+          ];
+
+          keybind = [
+            "ctrl+plus=increase_font_size:1"
+            "ctrl+-=decrease_font_size:1"
+            "ctrl+0=reset_font_size"
+          ];
+        };
+      };
+
+      bat.enable = true;
+
+      rofi.enable = wmEnabled;
+
+      atuin = {
+        enable = true;
+        settings = {
+          # ALT key is taken by Hyprland..
+          ctrl_n_shortcuts = true;
+          enter_accept = true;
+          filter_mode = "host";
+          filter_mode_shell_up_key_binding = "directory";
+        };
+      };
+
+      starship = {
+        enable = true;
+        enableZshIntegration = true;
+      };
+
+      ripgrep = {
+        enable = true;
+        arguments = [
+          "--smart-case"
+        ];
+      };
+
+      zoxide = {
+        enable = true;
+        enableZshIntegration = true;
       };
     };
 
     nix.gc = {
       automatic = true;
       options = "--delete-older-than 21d --keep-generations 5";
-    };
-
-    programs.starship = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    programs.ripgrep = {
-      enable = true;
-      arguments = [
-        "--smart-case"
-      ];
-    };
-
-    programs.zoxide = {
-      enable = true;
-      enableZshIntegration = true;
     };
   };
 }

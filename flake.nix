@@ -148,7 +148,7 @@
         {
           "${name}" = nixpkgs.lib.nixosSystem {
             system = "${system}";
-            modules = modules;
+            inherit modules;
           };
         };
 
