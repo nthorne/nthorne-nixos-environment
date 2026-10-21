@@ -1,11 +1,11 @@
 ---
-name: vcm5-hardware
+name: hardware-interact
 description: Build and flash VCM5 Dashboard or Tiller firmware and run hardware integration tests. Use when asked to build, flash, or test either controller, or inspect its Robot Framework logs.
 ---
 
 # VCM5 Hardware
 
-Treat `dashboard` or `tiller` in the user's prompt as the target selector, for example: `vcm5-hardware dashboard build` or `vcm5-hardware tiller run IntegrationTest/tiller/<test case>`. Skills do not define a validated argument schema; use this text convention. If the target is unclear for a hardware operation, ask which controller before acting.
+Treat `dashboard` or `tiller` in the user's prompt as the target selector, for example: `hardware-interact dashboard build` or `hardware-interact tiller run IntegrationTest/tiller/<test case>`. Skills do not define a validated argument schema; use this text convention. If the target is unclear for a hardware operation, ask which controller before acting.
 
 Run the provided commands from `/home/nthorne/src/vcm5` in a shell where direnv has loaded the repository environment. Do not replace these helpers with guessed direct build, flash, or Robot Framework commands.
 

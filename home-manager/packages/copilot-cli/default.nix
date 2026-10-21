@@ -14,7 +14,6 @@
     ".copilot/skills/obsidian-vault".source = ../copilot-cli/skills/obsidian-vault;
     ".copilot/skills/simplify-code".source = ../copilot-cli/skills/simplify-code;
     ".copilot/skills/skill-creator".source = ../copilot-cli/skills/skill-creator;
-    ".copilot/skills/vcm5-hardware".source = ../copilot-cli/skills/vcm5-hardware;
 
     ".copilot/copilot-instructions.md".source = ./instructions/instructions.md;
 
