@@ -14,7 +14,7 @@ let
   hostDotfiles = hostCollection ./dotfiles;
   hostPackages = hostCollection ./packages;
   hostScripts = hostCollection ./scripts;
-  hostModules = hostCollection ./modules;
+  hostModules = hostCollection ./hosts;
 
   # Not all hosts use a window manager (hyprland), so we
   # trim installed derivations and files accordingly.

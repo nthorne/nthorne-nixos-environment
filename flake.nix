@@ -107,9 +107,9 @@
         hostname = "vimes";
         hostModule = ./configuration.nix;
         extraModules = [
-          ./vimes/hardware-config/hardware-config-generated.nix
+          ./hosts/vimes/hardware-config/hardware-config-generated.nix
+          ./hosts/vimes/adaptation.nix
           ./desktop.nix
-          ./vimes/adaptation.nix
           sops-nix.nixosModules.sops
         ];
       };
@@ -118,8 +118,8 @@
         hostname = "nixlaptop";
         hostModule = ./configuration.nix;
         extraModules = [
-          ./laptop/adaptation.nix
-          ./laptop/hardware-configuration.nix
+          ./hosts/laptop/hardware-configuration.nix
+          ./hosts/laptop/adaptation.nix
           ./desktop.nix
         ];
       };
@@ -128,14 +128,14 @@
         hostname = "hex";
         hostModule = ./configuration.nix;
         extraModules = [
-            ./hex/adaptation.nix
-            ./hex/hardware-configuration.nix
+            ./hosts/hex/hardware-configuration.nix
+            ./hosts/hex/adaptation.nix
         ];
       };
 
       mort-modules = mkHostModules {
         hostname = "mort";
-        hostModule = ./mort/adaptation.nix;
+        hostModule = ./hosts/mort/adaptation.nix;
       };
 
       wifiDevice = "wlp0s20f3";
