@@ -2,17 +2,12 @@
   pkgs,
   ...
 }@args:
-let
-  secretsFolders = toString args.flake-inputs.nix-secrets;
-in
 {
   imports = [
     (import ../workstation.nix args)
 
     ../../packages/copilot-cli
     ../../packages/pi-agent
-
-    args.flake-inputs.sops-nix.homeManagerModules.sops
   ];
 
   home.packages =
@@ -34,16 +29,9 @@ in
       (pkgs.callPackage ../../packages/open-ralph-wiggum { })
     ];
 
-  sops = {
-    age.keyFile = "/home/nthorne/.config/sops/age/keys.txt";
-    defaultSopsFile = "${secretsFolders}/secrets.yaml";
-
-    secrets = {
-      "vimes/ssh_keys/rsa_pub".path = "/home/nthorne/.ssh/id_rsa.pub";
-      "vimes/ssh_keys/rsa_secret".path = "/home/nthorne/.ssh/id_rsa";
-      "all/atuin/key".path = "/home/nthorne/.local/share/atuin/key";
-      "all/atuin/session".path = "/home/nthorne/.local/share/atuin/session";
-    };
+  sops.secrets = {
+    "vimes/ssh_keys/rsa_pub".path = "/home/nthorne/.ssh/id_rsa.pub";
+    "vimes/ssh_keys/rsa_secret".path = "/home/nthorne/.ssh/id_rsa";
   };
 
   programs = {

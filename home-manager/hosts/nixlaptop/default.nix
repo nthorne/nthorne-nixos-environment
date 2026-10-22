@@ -1,13 +1,10 @@
 {
   pkgs,
-  flake-inputs,
   ...
-} @ args: let
-  secretsFolders = toString flake-inputs.nix-secrets;
-in {
+}@args:
+{
   imports = [
     (import ../workstation.nix args)
-    flake-inputs.sops-nix.homeManagerModules.sops
   ];
 
   home.packages = with pkgs; [
@@ -16,16 +13,6 @@ in {
     obsidian
     sshfs-fuse
   ];
-
-  sops = {
-    age.keyFile = "/home/nthorne/.config/sops/age/keys.txt";
-    defaultSopsFile = "${secretsFolders}/secrets.yaml";
-
-    secrets = {
-      "all/atuin/key".path = "/home/nthorne/.local/share/atuin/key";
-      "all/atuin/session".path = "/home/nthorne/.local/share/atuin/session";
-    };
-  };
 
   # Also add these cloud models for private use
   programs.opencode.settings.provider.ollama.models = {
