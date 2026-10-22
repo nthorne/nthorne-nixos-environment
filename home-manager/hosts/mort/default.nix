@@ -32,6 +32,7 @@ in
       entr
       hunk
       lnav
+      obsidian
       xlsx2csv
 
       flake-inputs.robotcode.packages.${pkgs.stdenv.hostPlatform.system}.default
