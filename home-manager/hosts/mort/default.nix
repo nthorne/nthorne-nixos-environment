@@ -46,8 +46,6 @@ in
 
     tmux.codingagent = "copilot-wrapped";
 
-    home.file.".copilot/skills/hardware-interact".source = packages/copilot-cli/skills/hardware-interact;
-
     # Add the private notes repo as a Obsidian vault
     programs = {
       nixvim = {

@@ -8,8 +8,6 @@ in
 {
   imports = [
     (import ../workstation.nix args)
-    (import ../../scripts/tf2rem args)
-    (import ../../dotfiles/vimes/gh-cli args)
 
     ../../packages/copilot-cli
     ../../packages/pi-agent
@@ -48,56 +46,58 @@ in
     };
   };
 
-  programs.ssh = {
-    enable = true;
-    enableDefaultConfig = false;
+  programs = {
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
 
-    settings = {
-      "github.com" = {
-        hostname = "github.com";
-        identityFile = "/home/nthorne/.ssh/id_rsa";
+      settings = {
+        "github.com" = {
+          hostname = "github.com";
+          identityFile = "/home/nthorne/.ssh/id_rsa";
+        };
       };
     };
-  };
 
-  programs.zsh.shellAliases = {
-    nlsh = ''nlsh() { curl -s localhost:11434/api/generate -d "{\"model\": \"westenfelder/NL2SH\", \"prompt\": \"$1\", \"stream\": false}" | jq -r '.response'}; nlsh'';
-  };
+    zsh.shellAliases = {
+      nlsh = ''nlsh() { curl -s localhost:11434/api/generate -d "{\"model\": \"westenfelder/NL2SH\", \"prompt\": \"$1\", \"stream\": false}" | jq -r '.response'}; nlsh'';
+    };
 
-  programs.opencode.settings.provider.ollama.models = {
-    "gemma4:latest" = {
-      name = "gemma4:latest";
+    opencode.settings.provider.ollama.models = {
+      "gemma4:latest" = {
+        name = "gemma4:latest";
+      };
+      "qwen3-coder:latest" = {
+        name = "qwen3-coder:latest";
+      };
+      "qwen3.5:latest" = {
+        name = "qwen3.5:latest";
+      };
     };
-    "qwen3-coder:latest" = {
-      name = "qwen3-coder:latest";
-    };
-    "qwen3.5:latest" = {
-      name = "qwen3.5:latest";
-    };
-  };
 
-  programs.firefox.profiles.default = {
-    # Points Home Manager to your existing profile directory
-    path = "xon5n7p1.default";
-    isDefault = true;
-  };
-
-  programs.pi-coding-agent = {
-    settings = {
-      defaultProvider = "openrouter";
-      defaultModel= "deepseek/deepseek-v4-flash";
+    firefox.profiles.default = {
+      # Points Home Manager to your existing profile directory
+      path = "xon5n7p1.default";
+      isDefault = true;
     };
-    models = {
-      "providers" = {
-        "ollama" = {
-          "baseUrl" = "http://localhost:11434/v1";
-          "api" = "openai-completions";
-          "apiKey" = "ollama";
-          "models" = [
-            {
-              "id" = "qwen3-coder";
-            }
-          ];
+
+    pi-coding-agent = {
+      settings = {
+        defaultProvider = "openrouter";
+        defaultModel = "deepseek/deepseek-v4-flash";
+      };
+      models = {
+        "providers" = {
+          "ollama" = {
+            "baseUrl" = "http://localhost:11434/v1";
+            "api" = "openai-completions";
+            "apiKey" = "ollama";
+            "models" = [
+              {
+                "id" = "qwen3-coder";
+              }
+            ];
+          };
         };
       };
     };

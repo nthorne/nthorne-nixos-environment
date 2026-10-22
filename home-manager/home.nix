@@ -10,11 +10,12 @@ args@{
 let
   inherit (flake-inputs) hostname;
 
-  hostCollection = pth: (pth + ("/" + hostname));
-  hostDotfiles = hostCollection ./dotfiles;
-  hostPackages = hostCollection ./packages;
-  hostScripts = hostCollection ./scripts;
-  hostModules = hostCollection ./hosts;
+  hostDir = ./hosts + "/${hostname}";
+  hostCollection = name: hostDir + "/${name}";
+  hostDotfiles = hostCollection "dotfiles";
+  hostPackages = hostCollection "packages";
+  hostScripts = hostCollection "scripts";
+  hostModules = hostDir;
 
   # Not all hosts use a window manager (hyprland), so we
   # trim installed derivations and files accordingly.
@@ -35,7 +36,7 @@ in
 
     ./packages/tmux-sessionizer
 
-    # .. and as a convenience, automatically pull in e.g. dotfiles/<hostname>/default.nix
+    # .. and as a convenience, automatically pull in e.g. hosts/<hostname>/dotfiles/default.nix
     #    here to keep the host specific config files short
   ]
   ++ lib.optionals wmEnabled [
