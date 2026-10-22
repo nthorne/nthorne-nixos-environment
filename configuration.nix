@@ -1,13 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{pkgs, lib, ...}: let
+{ pkgs, ... }:
+let
   theme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-  wallpaper = pkgs.runCommand "image.jpg" {} ''
+  wallpaper = pkgs.runCommand "image.jpg" { } ''
     COLOR=$(${pkgs.yq}/bin/yq -r .palette.base00 ${theme})
     ${pkgs.imagemagick}/bin/magick -size 1920x1080 xc:$COLOR $out
   '';
-in {
+in
+{
   nixpkgs.config = {
     # :(
     allowUnfree = true;
@@ -32,7 +34,19 @@ in {
     nerd-fonts.jetbrains-mono
   ];
 
-  users.users.root.packages = with pkgs; [vim];
+  users = {
+    users.root.packages = with pkgs; [ vim ];
+
+    users.nthorne = {
+      isNormalUser = true;
+      uid = 1000;
+      extraGroups = [ "wheel" ];
+      createHome = true;
+      home = "/home/nthorne";
+      shell = pkgs.zsh;
+    };
+    defaultUserShell = pkgs.zsh;
+  };
 
   # Select internationalisation properties.
   console = {
@@ -57,18 +71,8 @@ in {
   # services.printing.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.nthorne = {
-    isNormalUser = true;
-    uid = 1000;
-    extraGroups = ["wheel"];
-    createHome = true;
-    home = "/home/nthorne";
-    shell = pkgs.zsh;
-  };
 
   programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
-
   security.sudo.enable = true;
 
   system = {
@@ -81,17 +85,19 @@ in {
     '';
   };
 
-  nix.nixPath = ["nixpkgs=/run/current-system/nixpkgs"];
+  nix = {
+    nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
 
-  # Enable this one when building derivations intented for NixPkgs
-  #nix.useSandbox = true;
+    # Enable this one when building derivations intented for NixPkgs
+    #nix.useSandbox = true;
 
-  nix.optimise.automatic = true;
+    optimise.automatic = true;
 
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 21d";
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 21d";
+    };
   };
 
   services.gnome.gnome-keyring.enable = true;
@@ -101,9 +107,9 @@ in {
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = ["graphical-session.target"];
-      wants = ["graphical-session.target"];
-      after = ["graphical-session.target"];
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -150,7 +156,7 @@ in {
 
   # Get completions for system packages such as systemd
   environment = {
-    pathsToLink = ["/share/zsh"];
+    pathsToLink = [ "/share/zsh" ];
     variables = {
       # Fix for GTK apps (e.g. ghostty) not detecting dead keys (e.g. tilde) properly
       GTK_IM_MODULE = "simple";
