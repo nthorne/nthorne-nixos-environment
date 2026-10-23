@@ -124,6 +124,10 @@ Periodically review and optimize stored memories, much like the brain consolidat
 - Keep each memory concise and actionable, and keep its index description accurate.
 - Preserve useful context and the global/project precedence rules when reorganizing; do not discard a memory merely to make the store smaller.
 - Consolidate after substantial memory changes and during periodic maintenance, not just when a memory causes a problem.
+- During periodic consolidation, use the host-specific `obsidian-vault` skill to review relevant notes in the configured Obsidian vault as a potential source for durable memory.
+- Inspect relevant index and project notes rather than ingesting the vault wholesale. Promote only stable, useful preferences, decisions, and recurring workflows; avoid copying sensitive or ephemeral details.
+- Check candidate facts against existing memories and current evidence before adding them. Store them in the appropriate memory layer and retain a source note link when useful.
+- Treat Obsidian notes as read-only unless the user asks to change them.
 
 ---
 

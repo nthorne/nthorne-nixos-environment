@@ -9,6 +9,8 @@ description: Search, create, and manage notes in the Obsidian vault with wikilin
 
 `/home/nthorne/repos/notes/`
 
+Secondary vault location (only available on some hosts): `/home/nthorne/repos/private-notes/` . If this one exists, then the primary vault is for work-related information, and the secondary vault is for personal information. If the secondary vault does not exist, then the primary vault is for personal information.
+
 # Folder structure
 
 These are the most important folders in the vault that you are most likely to interact with:
@@ -41,6 +43,15 @@ tags: []
 - Use Obsidian `[[wikilinks]]` syntax: `[[Note Title]]`
 
 ## Workflows
+
+### Review notes for durable memory
+
+When consolidating Copilot memory, use the vault as a source of context without importing it wholesale:
+
+1. Search relevant index notes and project or knowledge notes for durable user preferences, decisions, and recurring workflows.
+2. Read only the notes needed to understand each candidate fact, then check whether it is current and already represented in memory.
+3. Add useful, stable facts to the appropriate global or project memory file and update its index. Keep the memory concise and include an Obsidian wikilink to its source when that helps preserve context.
+4. Do not copy secrets, sensitive personal details, or temporary/in-progress information into memory. Leave Obsidian notes unchanged unless the user asks to edit them.
 
 ### Search for notes
 
