@@ -115,6 +115,16 @@ Memories record facts as of when they were written — they may be stale.
 
 If a recalled memory conflicts with what you can observe directly, correct the memory file before proceeding. When updating stale content, rewrite the file with the corrected facts and append a brief note at the end — e.g. `**Revised:** <date> — <what changed and why>` — so there is a visible audit trail.
 
+## Continuous Memory Consolidation
+
+Periodically review and optimize stored memories, much like the brain consolidates and reorganizes memories during sleep. Keep memory relevant, easy to find, and efficiently organized.
+
+- Remove or revise facts that are obsolete, contradicted by current evidence, or no longer useful.
+- Merge duplicate or closely related memories; split entries only when distinct topics are easier to retrieve separately.
+- Keep each memory concise and actionable, and keep its index description accurate.
+- Preserve useful context and the global/project precedence rules when reorganizing; do not discard a memory merely to make the store smaller.
+- Consolidate after substantial memory changes and during periodic maintenance, not just when a memory causes a problem.
+
 ---
 
 ## How to backup memory
