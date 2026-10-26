@@ -44,7 +44,7 @@ in
       gheURL = "https://logisnext.ghe.com/";
     };
 
-    tmux.codingagent = "copilot-wrapped";
+    tmux.codingagent = lib.getExe copilotWrapped;
 
     # Add the private notes repo as a Obsidian vault
     programs = {
