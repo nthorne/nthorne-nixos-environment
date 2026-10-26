@@ -6,7 +6,7 @@
 {
   imports = [
     flake-inputs.sops-nix.homeManagerModules.sops
-    ../packages/opencode
+    ../packages/pi-agent
   ];
 
   sops = {
