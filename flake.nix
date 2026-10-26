@@ -79,6 +79,7 @@
       # These are modules that are common across all my systems.
       common-modules = [
         ./nix-settings.nix
+        ./stylix-settings.nix
         stylix.nixosModules.stylix
         pin-registries
         home-manager.nixosModules.home-manager
