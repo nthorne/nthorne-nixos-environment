@@ -5,6 +5,8 @@
   ...
 }@args:
 let
+  eaSearch = pkgs.callPackage ./packages/ea-search.nix { };
+
   copilotWrapped = pkgs.writeShellScriptBin "copilot-wrapped" ''
     exec ${lib.getExe pkgs.github-copilot-cli} \
       --allow-tool awk \
@@ -36,6 +38,7 @@ in
       xlsx2csv
 
       flake-inputs.robotcode.packages.${pkgs.stdenv.hostPlatform.system}.default
+      eaSearch
     ];
 
     nixvim = {
