@@ -113,6 +113,18 @@
         )
       end, { desc = "Close floats or clear search" })
 
+      vim.keymap.set("n", "<leader>nA", function()
+        local noice = require("noice")
+        local all = require("noice.config").options.commands.all
+        local view = require("noice.view").get_view(all.view, all.opts)
+
+        if view._visible then
+          view:hide()
+        else
+          noice.cmd("all")
+        end
+      end, { desc = "Toggle all Noice messages" })
+
       vim.keymap.set("n", "<leader>zn", function()
         local node = vim.treesitter.get_node()
         if node then
