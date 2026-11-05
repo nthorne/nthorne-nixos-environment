@@ -21,6 +21,7 @@
     ".copilot/skills/quiz-me".source = ../copilot-cli/skills/quiz-me;
     ".copilot/skills/reflect".source = ../copilot-cli/skills/reflect;
     ".copilot/skills/wait-what".source = ../copilot-cli/skills/wait-what;
+    ".copilot/skills/writing-for-agents".source = ../copilot-cli/skills/writing-for-agents;
   };
 
   programs.github-copilot-cli = {
