@@ -1,6 +1,6 @@
 ---
 name: quiz-me
-description: Test whether the user's mental model still matches work that already exists — code the agent wrote, a PRD, a plan, a document tree — usually because they delegated it, skimmed it, or were away while it was built. Derives a tree from the artifact, then asks one multiple-choice question at a time; general framing first, then hard into the decision points, with distractors drawn from the alternatives actually rejected, or from the conventional choice this artifact departed from. Every wrong answer is triaged — did the agent drift from the user's intent (→ punch list), or is it a gap in the user's knowledge (→ explained)? Needs an artifact that already exists? For a subject nothing was built for use `tutor`, and for a plain re-orientation with no questions asked use `catchup`. Triggered by /quiz-me, "quiz me on what we built", "test me on this plan", "grill me on the code you wrote", "do I actually understand what we built", "am I still in sync with what you wrote", "I approved that without reading it".
+description: Quiz the user's understanding of an existing artifact—implemented code, a PRD, plan, or documentation—one question at a time. Use when asked to test understanding of what exists, not to critique or redesign it (use `grill-me` for that).
 license: MIT
 ---
 
