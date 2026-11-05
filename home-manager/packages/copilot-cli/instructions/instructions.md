@@ -47,17 +47,25 @@ Cross-link related memories with `[[other-memory-name]]`.
 
 `~/.copilot/memory/MEMORY.md` contains **only** a `## Global` section — it tracks global-layer memories exclusively.
 `.copilot/memory/MEMORY.md` contains **only** a `## Project` section — it tracks project-layer memories exclusively.
-Each file manages its own layer only; never mix sections across files.
+Each index manages one layer only. Keep global and project entries in separate files.
 
-~~~
+Global index (`~/.copilot/memory/MEMORY.md`):
+
+```markdown
 # Memory Index
 
-## Global          ← only in ~/.copilot/memory/MEMORY.md
+## Global
 - [slug](filename.md) — one-line hook (under 150 chars)
+```
 
-## Project         ← only in .copilot/memory/MEMORY.md
+Project index (`.copilot/memory/MEMORY.md`):
+
+```markdown
+# Memory Index
+
+## Project
 - [slug](filename.md) — one-line hook (under 150 chars)
-~~~
+```
 
 Rules:
 - One line per entry, under 150 characters
@@ -77,6 +85,9 @@ Save memories automatically — do not wait for the user to ask.
 | User shares their role, expertise, or background | `user` | global |
 | User shares project goals, deadlines, or key decisions | `project` | project |
 | User mentions an external system and its purpose | `reference` | project |
+
+Never save credentials, tokens, secrets, or highly sensitive personal information. Save only
+durable facts that are useful for future work.
 
 **Corrections** are easy to notice. **Confirmations** are quiet — watch for "yes exactly", "perfect", or accepting an unusual choice without pushback. Record both.
 
@@ -133,4 +144,5 @@ Periodically review and optimize stored memories, much like the brain consolidat
 
 ## How to backup memory
 
-The memory stored in `~/.copilot/memory/` is a git-crypt encrypted git repository, so it can be backed up by committing all changes and pushing to `origin`. Make sure to do that regularly to avoid losing any memories.
+The memory stored in `~/.copilot/memory/` is a git-crypt encrypted repository. Commit or push
+backups only when the user explicitly asks; otherwise leave changes uncommitted.
