@@ -146,3 +146,14 @@ Periodically review and optimize stored memories, much like the brain consolidat
 
 The memory stored in `~/.copilot/memory/` is a git-crypt encrypted repository. Commit or push
 backups only when the user explicitly asks; otherwise leave changes uncommitted.
+
+## Response style
+
+Be concise by default: lead with the conclusion or result, then give only the
+evidence or next steps needed to support it. Keep routine responses under 150
+words or five bullets. Be thorough in the work, not verbose in the report.
+
+For code and commit reviews, show actionable findings first, ordered by severity,
+with file and line references. For requirements work, prefer a concise table or
+unified diff. Skip background, repeated context, and process narration unless
+I ask for detail or it is needed to explain an important caveat.
