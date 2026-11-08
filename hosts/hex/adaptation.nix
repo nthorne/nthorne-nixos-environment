@@ -43,11 +43,11 @@ in {
   ];
 
   # Systemd socket unit
-  systemd.sockets.open-webui = {
-    enable = true;
-    wantedBy = ["sockets.target"];
-    socketConfig.ListenStream = 8080;
-  };
+  # systemd.sockets.open-webui = {
+  #   enable = true;
+  #   wantedBy = ["sockets.target"];
+  #   socketConfig.ListenStream = 8080;
+  # };
 
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
@@ -72,30 +72,30 @@ in {
     oci-containers = {
       backend = "podman";
       containers = {
-        openwebui = {
-          image = "ghcr.io/open-webui/open-webui:main";
-          ports = ["8080:8080"];
-          volumes = [
-            "openwebui:/app/backend/data"
-          ];
-          autoStart = true;
+          # openwebui = {
+          #   image = "ghcr.io/open-webui/open-webui:main";
+          #   ports = ["8080:8080"];
+          #   volumes = [
+          #     "openwebui:/app/backend/data"
+          #   ];
+          #   autoStart = true;
 
-          extraOptions = ["--network=host"];
-        };
-        searxng = {
-          image = "searxng/searxng";
-          volumes = [
-            "searxng:/etc/searxng"
-          ];
-          autoStart = true;
+          #   extraOptions = ["--network=host"];
+          # };
+          # searxng = {
+          #   image = "searxng/searxng";
+          #   volumes = [
+          #     "searxng:/etc/searxng"
+          #   ];
+          #   autoStart = true;
 
-          extraOptions = ["--network=host"];
+          #   extraOptions = ["--network=host"];
 
-          environment = {
-            BIND_ADDRESS = "0.0.0.0:8081";
-            INSTANCE_NAME = "hex";
-          };
-        };
+          #   environment = {
+          #     BIND_ADDRESS = "0.0.0.0:8081";
+          #     INSTANCE_NAME = "hex";
+          #   };
+          # };
       };
     };
   };
@@ -109,7 +109,7 @@ in {
     addToSystemPackages = true;
     extraDependencyGroups = [ "messaging" ];
 
-    settings.model.default = "anthropic/claude-sonnet-4";
+    settings.model.default = "deepseek/deepseek-v4-flash";
 
     # Secrets: rendered from sops-nix into a DOTENV file
     environmentFiles = [ config.sops.templates."hermes-env".path ];
