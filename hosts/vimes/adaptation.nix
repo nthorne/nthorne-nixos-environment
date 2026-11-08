@@ -299,6 +299,16 @@ in
     forwardX11 = true;
   };
 
+  # Add ccache to ollama-cuda build so subsequent ollama version bumps
+  # reuse compiled C++/CUDA object files when the source hasn't changed.
+  nixpkgs.overlays = [
+    (final: prev: {
+      ollama-cuda = prev.ollama-cuda.overrideAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.ccache ];
+      });
+    })
+  ];
+
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda;
