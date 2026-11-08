@@ -53,6 +53,8 @@
     nixos-wsl.url = "github:nix-community/nixos-wsl/main";
 
     robotcode.url = "path:./home-manager/packages/robotcode/";
+
+    hermes-agent.url = "github:NousResearch/hermes-agent";
   };
   outputs =
     {
@@ -61,6 +63,7 @@
       stylix,
       sops-nix,
       nixos-wsl,
+      hermes-agent,
       ...
     }@inputs:
     let
@@ -129,8 +132,14 @@
         hostname = "hex";
         hostModule = ./configuration.nix;
         extraModules = [
-            ./hosts/hex/hardware-configuration.nix
-            ./hosts/hex/adaptation.nix
+          ./hosts/hex/hardware-configuration.nix
+          ./hosts/hex/adaptation.nix
+          sops-nix.nixosModules.sops
+          hermes-agent.nixosModules.default
+          {
+            sops.defaultSopsFile = "${inputs.nix-secrets}/secrets.yaml";
+            sops.age.keyFile = "/home/nthorne/.config/sops/age/keys.txt";
+          }
         ];
       };
 

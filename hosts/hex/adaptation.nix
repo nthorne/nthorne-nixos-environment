@@ -101,4 +101,35 @@ in {
   };
 
   programs.mosh.enable = true;
+
+  # ── Hermes Agent ───────────────────────────────────────────────────────
+  # https://hermes-agent.nousresearch.com/docs/getting-started/nix-setup
+  services.hermes-agent = {
+    enable = true;
+    addToSystemPackages = true;
+    extraDependencyGroups = [ "messaging" ];
+
+    settings.model.default = "anthropic/claude-sonnet-4";
+
+    # Secrets: rendered from sops-nix into a DOTENV file
+    environmentFiles = [ config.sops.templates."hermes-env".path ];
+  };
+
+  sops = {
+    # Each sops secret under the "hermes/" prefix in secrets.yaml
+    secrets = {
+      "hermes/open_router_api_key" = { };
+      "hermes/discord_bot_token" = { };
+    };
+
+    templates."hermes-env" = {
+      owner = "hermes";
+      group = "hermes";
+      mode = "0400";
+      content = ''
+        OPENROUTER_API_KEY=${config.sops.placeholder."hermes/open_router_api_key"}
+        DISCORD_BOT_TOKEN=${config.sops.placeholder."hermes/discord_bot_token"}
+      '';
+    };
+  };
 }
