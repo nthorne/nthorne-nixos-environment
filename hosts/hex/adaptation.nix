@@ -57,6 +57,10 @@ in {
       else "podman*";
   in {
     "${matchAll}".allowedUDPPorts = [53];
+
+    # Hermes webapp. The listener binds 0.0.0.0 (the only non-loopback bind
+    # the webapp accepts), so the firewall is what keeps it tailnet-only.
+    tailscale0.allowedTCPPorts = [ 9120 ];
   };
 
   virtualisation = {
@@ -109,7 +113,21 @@ in {
     addToSystemPackages = true;
     extraDependencyGroups = [ "messaging" ];
 
-    settings.model.default = "deepseek/deepseek-v4-flash";
+    settings = {
+      model.default = "deepseek/deepseek-v4-flash";
+
+      # Browser-hosted web app, served by the gateway's own HTTP listener.
+      # The webapp accepts only a loopback or a wildcard bind; a wildcard
+      # engages the dashboard sign-in gate, which the basic-auth provider
+      # below satisfies from sops. The firewall limits the port to
+      # tailscale0, so it is reachable at http://<tailnet-name>:9120 from
+      # the tailnet and nowhere else.
+      webapp = {
+        enabled = true;
+        host = "0.0.0.0";
+        port = 9120;
+      };
+    };
 
     # Secrets: rendered from sops-nix into a DOTENV file
     environmentFiles = [ config.sops.templates."hermes-env".path ];
@@ -120,6 +138,9 @@ in {
     secrets = {
       "hex/hermes/open_router_api_key" = { };
       "hex/hermes/discord_bot_token" = { };
+      # Basic-auth credentials for the webapp's sign-in gate
+      "hex/hermes/dashboard_password_hash" = { };
+      "hex/hermes/dashboard_secret" = { };
     };
 
     templates."hermes-env" = {
@@ -129,6 +150,9 @@ in {
       content = ''
         OPENROUTER_API_KEY=${config.sops.placeholder."hex/hermes/open_router_api_key"}
         DISCORD_BOT_TOKEN=${config.sops.placeholder."hex/hermes/discord_bot_token"}
+        HERMES_DASHBOARD_BASIC_AUTH_USERNAME=nthorne
+        HERMES_DASHBOARD_BASIC_AUTH_PASSWORD_HASH=${config.sops.placeholder."hex/hermes/dashboard_password_hash"}
+        HERMES_DASHBOARD_BASIC_AUTH_SECRET=${config.sops.placeholder."hex/hermes/dashboard_secret"}
       '';
     };
   };
