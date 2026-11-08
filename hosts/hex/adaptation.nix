@@ -118,8 +118,8 @@ in {
   sops = {
     # Each sops secret under the "hermes/" prefix in secrets.yaml
     secrets = {
-      "hermes/open_router_api_key" = { };
-      "hermes/discord_bot_token" = { };
+      "hex/hermes/open_router_api_key" = { };
+      "hex/hermes/discord_bot_token" = { };
     };
 
     templates."hermes-env" = {
@@ -127,8 +127,8 @@ in {
       group = "hermes";
       mode = "0400";
       content = ''
-        OPENROUTER_API_KEY=${config.sops.placeholder."hermes/open_router_api_key"}
-        DISCORD_BOT_TOKEN=${config.sops.placeholder."hermes/discord_bot_token"}
+        OPENROUTER_API_KEY=${config.sops.placeholder."hex/hermes/open_router_api_key"}
+        DISCORD_BOT_TOKEN=${config.sops.placeholder."hex/hermes/discord_bot_token"}
       '';
     };
   };
