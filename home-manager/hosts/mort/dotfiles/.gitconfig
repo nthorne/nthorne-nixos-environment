@@ -1,5 +1,3 @@
-[url "git@ssh.bitbucket.org:"]
-    insteadOf = git@bitbucket.org:
 [init]
   defaultBranch = main
 [color]
