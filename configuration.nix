@@ -1,16 +1,10 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
 { pkgs, ... }:
 {
   nixpkgs.config = {
     # :(
     allowUnfree = true;
-    oraclejdk.accept_license = true;
   };
 
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     age
     git
@@ -37,35 +31,20 @@
     defaultUserShell = pkgs.zsh;
   };
 
-  # Select internationalisation properties.
   console = {
     font = "Lat2-Terminus16";
     keyMap = "sv-latin1";
   };
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
-  # List services that you want to enable:
   documentation.nixos.enable = true;
-
-  # Enable the OpenSSH daemon.
-  #services.openssh.enable = true;
-
-  # Enable power management
-  #services.tlp.enable = true;
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
 
   programs.zsh.enable = true;
   security.sudo.enable = true;
 
   system = {
-    # The NixOS release to be compatible with for stateful data such as databases.
     stateVersion = "22.05";
 
     # Fix for getting NIX_PATH to work after having deleted channels
@@ -76,9 +55,6 @@
 
   nix = {
     nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
-
-    # Enable this one when building derivations intented for NixPkgs
-    #nix.useSandbox = true;
 
     optimise.automatic = true;
 
@@ -91,7 +67,7 @@
 
   services.gnome.gnome-keyring.enable = true;
 
-  # Needed for e.g. privleged operations in Clion
+  # Needed for e.g. privileged operations in Clion
   security.polkit.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
