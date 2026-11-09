@@ -25,6 +25,7 @@ in
   imports = [
     ./dotfiles/zsh.nix
     (import ./dotfiles/tmux.nix args)
+    ./dotfiles/editor.nix
 
     flake-inputs.nix-index-database.homeModules.default
     {
