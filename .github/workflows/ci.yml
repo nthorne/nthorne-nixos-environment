@@ -233,5 +233,5 @@ jobs:
 
       - name: nixos-rebuild build
         run: |
-          nixos-rebuild build --flake ".#${{ matrix.host }}" \
+          nix run nixpkgs#nixos-rebuild -- build --flake ".#${{ matrix.host }}" \
             --override-input nix-secrets "$NIX_SECRETS_STUB"
