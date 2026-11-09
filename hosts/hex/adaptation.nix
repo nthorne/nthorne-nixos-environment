@@ -42,6 +42,11 @@ in {
     "dialout"
   ];
 
+  # services.hermes-agent creates the hermes user; this only adds a group to
+  # it. systemd-journal lets the agent read `journalctl -u hermes-agent`
+  # itself instead of asking for log excerpts.
+  users.users.hermes.extraGroups = [ "systemd-journal" ];
+
   # Systemd socket unit
   # systemd.sockets.open-webui = {
   #   enable = true;
