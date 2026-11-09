@@ -1,9 +1,15 @@
-{flake-inputs, ...}: let
+{ flake-inputs, ... }:
+let
   secretsFolders = builtins.toString flake-inputs.nix-secrets;
-in {
+in
+{
   imports = [
     flake-inputs.sops-nix.homeManagerModules.sops
   ];
+
+  # hex is a headless server: plain vim is enough there, and the nixvim
+  # closure is ~14 GiB on a 109 GiB disk.
+  nixvim.enable = false;
 
   sops = {
     age.keyFile = "/home/nthorne/.config/sops/age/keys.txt";

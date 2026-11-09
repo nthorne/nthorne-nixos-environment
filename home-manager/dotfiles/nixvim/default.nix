@@ -20,7 +20,9 @@
 
   config = {
     programs.nixvim = {
-      enable = true;
+      # nixvim is enabled per host: hex only needs plain vim and drops the
+      # ~14 GiB closure.
+      enable = config.nixvim.enable;
       nixpkgs.config.allowUnfree = true;
     };
 

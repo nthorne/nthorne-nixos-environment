@@ -1,8 +1,14 @@
 {
+  config,
   lib,
   pkgs,
   ...
-}: {
+}:
+let
+  # nixvim provides `nvim`; hosts with nixvim disabled fall back to plain vim.
+  editor = if config.nixvim.enable then "nvim" else "vim";
+in
+{
   # https://nixos.wiki/wiki/Zsh
   # https://home-manager-options.extranix.com/?query=zsh&release=release-24.11
 
@@ -27,18 +33,20 @@
       ls = "eza";
       l = "eza -al --no-user --time-style=long-iso --no-permissions --group-directories-first --header";
       grep = "grep --color=auto";
-      vim = "nvim";
-      view = "nvim -R";
+      view = "${editor} -R";
       _ = "sudo";
       less = "less -R";
       md = "mkdir";
       fd = "fd -H";
       today = "todoist --color l -f '(today|overdue)'";
       worktoday = "todoist --color l -f '#work&(today|overdue)'";
+    }
+    // lib.optionalAttrs config.nixvim.enable {
+      vim = "nvim";
     };
 
     sessionVariables = {
-      EDITOR = "nvim";
+      EDITOR = editor;
       EXINIT = "set ai sm sw=2 sts=2 bs=2 showmode ruler guicursor=a:blinkon0";
       LSOPT = "--color=auto";
       LS_COLORS = "ow=01;35:di=01;35";
@@ -116,8 +124,7 @@
     ];
 
     # .zshenv
-    envExtra = ''
-    '';
+    envExtra = "";
 
     # .zshrc
     initContent = ''
