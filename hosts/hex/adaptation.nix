@@ -1,4 +1,4 @@
-{config, ...}: let
+{config, pkgs, ...}: let
   private = /etc/nixos/private.nix;
 in {
   imports =
@@ -113,8 +113,14 @@ in {
     addToSystemPackages = true;
     extraDependencyGroups = [ "messaging" ];
 
+    # git needs an ssh client for git+ssh remotes; the hermes service PATH
+    # carries none of its own.
+    extraPackages = [ pkgs.openssh ];
+
     settings = {
-      model.default = "deepseek/deepseek-v4-flash";
+      # Matches what the per-user install runs today, so the config merge
+      # during the migration does not silently change the model.
+      model.default = "deepseek/deepseek-v4.1-flash-1017";
 
       # Browser-hosted web app, served by the gateway's own HTTP listener.
       # The webapp accepts only a loopback or a wildcard bind; a wildcard
@@ -150,6 +156,8 @@ in {
       content = ''
         OPENROUTER_API_KEY=${config.sops.placeholder."hex/hermes/open_router_api_key"}
         DISCORD_BOT_TOKEN=${config.sops.placeholder."hex/hermes/discord_bot_token"}
+        # Without an allowlist the gateway connects and then denies everyone.
+        DISCORD_ALLOWED_USERS=1402392313132482733
         HERMES_DASHBOARD_BASIC_AUTH_USERNAME=nthorne
         HERMES_DASHBOARD_BASIC_AUTH_PASSWORD_HASH=${config.sops.placeholder."hex/hermes/dashboard_password_hash"}
         HERMES_DASHBOARD_BASIC_AUTH_SECRET=${config.sops.placeholder."hex/hermes/dashboard_secret"}
