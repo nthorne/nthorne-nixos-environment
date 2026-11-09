@@ -152,6 +152,8 @@ in {
       # Basic-auth credentials for the webapp's sign-in gate
       "hex/hermes/dashboard_password_hash" = { };
       "hex/hermes/dashboard_secret" = { };
+      # Fine-grained PAT, Pull requests: write only, for `gh pr create`
+      "hex/hermes/github_token" = { };
     };
 
     templates."hermes-env" = {
@@ -166,6 +168,8 @@ in {
         HERMES_DASHBOARD_BASIC_AUTH_USERNAME=nthorne
         HERMES_DASHBOARD_BASIC_AUTH_PASSWORD_HASH=${config.sops.placeholder."hex/hermes/dashboard_password_hash"}
         HERMES_DASHBOARD_BASIC_AUTH_SECRET=${config.sops.placeholder."hex/hermes/dashboard_secret"}
+        # gh reads GH_TOKEN itself; the PAT is scoped to Pull requests: write
+        GH_TOKEN=${config.sops.placeholder."hex/hermes/github_token"}
       '';
     };
   };
