@@ -166,8 +166,8 @@ info "recent gateway log:"
 journalctl -u "$UNIT" --since "-3 min" --no-pager 2>/dev/null \
   | grep -iE "discord|webapp|dashboard|error|traceback" | tail -6 | sed 's/^/      /' || true
 
-# ------------------------------------------------------- git + deploy key ---
-say "Git identity and deploy key for $TARGET_USER"
+# ------------------------------------------------------ git + deploy keys ---
+say "Git identity and deploy keys for $TARGET_USER"
 GIT_NAME="$(as_source git config --global user.name 2>/dev/null || true)"
 GIT_MAIL="$(as_source git config --global user.email 2>/dev/null || true)"
 
@@ -182,21 +182,54 @@ else
   info "  runuser -u $TARGET_USER -- env HOME=$TARGET_HOME git config --global user.email you@example.com"
 fi
 
-install -d -m 0700 -o "$TARGET_USER" -g "$TARGET_USER" "$TARGET_HOME/.ssh"
-if [[ ! -f "$TARGET_HOME/.ssh/id_ed25519" ]]; then
-  # No ssh-agent in the unit, so the key must carry no passphrase.
-  if as_target ssh-keygen -t ed25519 -N "" -C "hermes@${HOST}" -f "$TARGET_HOME/.ssh/id_ed25519" >/dev/null; then
-    info "generated $TARGET_HOME/.ssh/id_ed25519 (no passphrase)"
+SSH_DIR="$TARGET_HOME/.ssh"
+install -d -m 0700 -o "$TARGET_USER" -g "$TARGET_USER" "$SSH_DIR"
+
+# Two keys, because a GitHub deploy key belongs to exactly one repo.
+# nix-secrets is protected: read-only, only enough to fetch the flake input.
+# The config repo gets a write key, for branches and PRs — never main.
+make_key() {
+  local key="$SSH_DIR/$1" comment="$2"
+  if [[ -f "$key" ]]; then
+    info "reusing $key"
+  elif as_target ssh-keygen -t ed25519 -N "" -C "$comment" -f "$key" >/dev/null; then
+    info "generated $key (no passphrase: the unit has no ssh-agent)"
   else
-    warn "ssh-keygen failed — create the deploy key by hand"
+    warn "ssh-keygen failed for $key — create it by hand"
   fi
+}
+make_key id_ed25519_secrets "hermes@${HOST} nix-secrets read-only"
+make_key id_ed25519_nixos   "hermes@${HOST} nixos-environment"
+
+if cat > "$SSH_DIR/config" <<EOF
+Host github.com
+  User git
+  IdentityFile $SSH_DIR/id_ed25519_secrets
+  IdentitiesOnly yes
+  StrictHostKeyChecking accept-new
+
+Host github-nixos
+  HostName github.com
+  User git
+  IdentityFile $SSH_DIR/id_ed25519_nixos
+  IdentitiesOnly yes
+  StrictHostKeyChecking accept-new
+EOF
+then
+  chown "${TARGET_USER}:${TARGET_USER}" "$SSH_DIR/config"
+  chmod 600 "$SSH_DIR/config"
+  info "wrote $SSH_DIR/config (github.com -> read-only secrets key, github-nixos -> config-repo key)"
 else
-  info "reusing existing $TARGET_HOME/.ssh/id_ed25519"
+  warn "could not write $SSH_DIR/config"
 fi
 
-printf '\n    add this as a deploy key (with write access) on nthorne-nixos-environment\n'
-printf '    and nix-secrets:\n\n'
-sed 's/^/      /' "$TARGET_HOME/.ssh/id_ed25519.pub" 2>/dev/null || warn "no public key to show"
+printf '\n    add these as deploy keys in GitHub:\n\n'
+printf '      nix-secrets (nthorne/nix-secrets)            read-only — leave "Allow write access" OFF\n'
+printf '      nthorne-nixos-environment                    write access\n\n'
+printf '    nix-secrets:\n'
+sed 's/^/      /' "$SSH_DIR/id_ed25519_secrets.pub" 2>/dev/null || warn "no secrets public key to show"
+printf '\n    nixos environment:\n'
+sed 's/^/      /' "$SSH_DIR/id_ed25519_nixos.pub" 2>/dev/null || warn "no config public key to show"
 
 # --------------------------------------------------------------- summary ---
 say "Done"
@@ -209,11 +242,16 @@ The managed install is now the only Hermes on this host.
   login:    nthorne — password in $SOURCE_HOME/.hermes-webapp-login
   logs:     journalctl -u $UNIT -f
 
-Only $TARGET_HOME is writable by the agent, so clone repos there:
+Only $TARGET_HOME is writable by the agent, so clone repos there. The config
+repo goes through the github-nixos alias (its write key); nix-secrets is only
+ever fetched as a flake input and stays read-only:
 
   runuser -u $TARGET_USER -- env HOME=$TARGET_HOME \\
-    git clone git@github.com:nthorne/nthorne-nixos-environment.git \\
+    git clone git@github-nixos:nthorne/nthorne-nixos-environment.git \\
     $TARGET_HOME/src/nthorne-nixos-environment
+
+Per the config repo's AGENTS.md: never push to main — push a branch and open a
+pull request, and only when asked.
 
 Rollback (old install back in charge; the switched config stays):
 
