@@ -1,0 +1,237 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # The flake pulls nix-secrets over SSH. CI has no key, so every evaluation
+  # overrides the input with a committed stub that only has to exist as a
+  # path (see ci/nix-secrets-stub/README.md).
+  NIX_SECRETS_STUB: path:${{ github.workspace }}/ci/nix-secrets-stub
+
+jobs:
+  changes:
+    name: Detect affected hosts
+    runs-on: ubuntu-latest
+    outputs:
+      build: ${{ steps.select.outputs.build }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Map changed files to hosts
+        id: select
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          if [ -n "${BASE_SHA:-}" ]; then
+            base="$BASE_SHA"
+          else
+            base="$(git rev-parse HEAD^)"
+          fi
+          git diff --name-only --diff-filter=ACMR "$base" HEAD | tee changed.txt
+
+          selected=()
+          add() {
+            for host in "${selected[@]}"; do
+              [ "$host" = "$1" ] && return 0
+            done
+            selected+=("$1")
+          }
+
+          if grep -qE '^(hosts|home-manager/hosts)/hex/' changed.txt; then add hex; fi
+          if grep -qE '^(hosts|home-manager/hosts)/vimes/' changed.txt; then add vimes; fi
+          if grep -qE '^(hosts/laptop|home-manager/hosts/nixlaptop)/' changed.txt; then add nixlaptop; fi
+          if grep -qE '^(hosts|home-manager/hosts)/mort/' changed.txt; then add mort; fi
+
+          # Shared files (configuration.nix, flake.nix, home-manager/home.nix, ...)
+          # affect every host, so fall back to the default host.
+          if [ "${#selected[@]}" -eq 0 ]; then
+            echo "No host-specific file touched; building the default host (vimes)."
+            selected=(vimes)
+          fi
+
+          # mort is a WSL target: evaluate it, but there is nothing useful to
+          # build on a Linux runner.
+          builds=()
+          for host in "${selected[@]}"; do
+            case "$host" in
+              mort) ;;
+              *) builds+=("$host") ;;
+            esac
+          done
+          echo "Selected: ${selected[*]}"
+          echo "Building: ${builds[*]:-<none>}"
+
+          if [ "${#builds[@]}" -eq 0 ]; then
+            json='[]'
+          else
+            joined="$(IFS=,; echo "${builds[*]}")"
+            json="[\"${joined//,/\",\"}\"]"
+          fi
+          echo "build=$json" >> "$GITHUB_OUTPUT"
+
+  lint:
+    name: Format & static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: cachix/install-nix-action@v31
+
+      - uses: nix-community/cache-nix-action@v7
+        with:
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          gc-max-store-size-linux: 6G
+
+      - name: Collect changed Nix files
+        id: changed
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          if [ -n "${BASE_SHA:-}" ]; then
+            base="$BASE_SHA"
+          else
+            base="$(git rev-parse HEAD^)"
+          fi
+          files="$(git diff --name-only --diff-filter=ACMR "$base" HEAD -- '*.nix' \
+            | while read -r f; do [ -f "$f" ] && echo "$f"; done)"
+          {
+            echo "files<<EOF"
+            echo "$files"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: nixfmt-rfc-style (changed files)
+        if: steps.changed.outputs.files != ''
+        env:
+          FILES: ${{ steps.changed.outputs.files }}
+        run: |
+          set -euo pipefail
+          mapfile -t files <<< "$FILES"
+          echo "Checking: ${files[*]}"
+          nix fmt --override-input nix-secrets "$NIX_SECRETS_STUB" -- --check "${files[@]}"
+
+      - name: nixfmt-rfc-style (whole tree, informational)
+        continue-on-error: true
+        run: |
+          nix fmt --override-input nix-secrets "$NIX_SECRETS_STUB" -- --check . \
+            || echo "::warning::the tree is not fully nixfmt-clean yet; only changed files are enforced"
+
+      # deadnix/statix report findings but do not block yet: the current tree
+      # still has findings, which are triaged separately.
+      - name: deadnix
+        continue-on-error: true
+        run: nix run nixpkgs#deadnix -- --fail .
+
+      - name: statix
+        continue-on-error: true
+        run: nix run nixpkgs#statix -- check .
+
+  eval:
+    name: Eval ${{ matrix.host }}
+    strategy:
+      fail-fast: false
+      matrix:
+        host: [hex, vimes, nixlaptop, mort]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: cachix/install-nix-action@v31
+
+      - uses: nix-community/cache-nix-action@v7
+        with:
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          gc-max-store-size-linux: 6G
+
+      - name: Evaluate system.build.toplevel.drvPath
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          host="${{ matrix.host }}"
+          attr=".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"
+
+          drv="$(nix eval --raw --override-input nix-secrets "$NIX_SECRETS_STUB" "$attr")"
+          echo "${host} (this PR): $drv"
+
+          base_drv=""
+          if [ -n "${BASE_SHA:-}" ]; then
+            git worktree add --detach ../base "$BASE_SHA" >/dev/null
+            base_drv="$(cd ../base && nix eval --raw \
+              --override-input nix-secrets "$NIX_SECRETS_STUB" "$attr" 2>/dev/null || true)"
+            git worktree remove --force ../base >/dev/null
+          fi
+          echo "${host} (main): ${base_drv:-<not compared>}"
+
+          {
+            echo "### \`${host}\`"
+            echo
+            echo "| ref | toplevel drvPath |"
+            echo "|---|---|"
+            echo "| this PR | \`${drv}\` |"
+            if [ -n "$base_drv" ]; then
+              echo "| main | \`${base_drv}\` |"
+              echo
+              if [ "$drv" = "$base_drv" ]; then
+                echo "**identical** to \`main\`: no system drift."
+              else
+                echo "**differs** from \`main\`: the system closure changes."
+              fi
+            fi
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  build:
+    name: Build ${{ matrix.host }}
+    needs: changes
+    if: needs.changes.outputs.build != '' && needs.changes.outputs.build != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        host: ${{ fromJSON(needs.changes.outputs.build) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+            /opt/hostedtoolcache /usr/local/share/boost /usr/share/swift
+          df -h /
+
+      - uses: cachix/install-nix-action@v31
+
+      - uses: nix-community/cache-nix-action@v7
+        with:
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          gc-max-store-size-linux: 6G
+
+      - name: nixos-rebuild build
+        run: |
+          nixos-rebuild build --flake ".#${{ matrix.host }}" \
+            --override-input nix-secrets "$NIX_SECRETS_STUB"
