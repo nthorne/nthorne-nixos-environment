@@ -2,6 +2,7 @@ use rusqlite::Connection;
 use clap::Parser;
 use regex::Regex;
 use serde::Serialize;
+use std::io::{self, BufWriter, Write};
 
 #[derive(Debug, Serialize)]
 struct Requirement {
@@ -35,6 +36,15 @@ fn parse_regex(s: &str) -> Result<Regex, String> {
 }
 
 fn main() {
+    if let Err(error) = run() {
+        if error.kind() != io::ErrorKind::BrokenPipe {
+            eprintln!("Failed to write output: {error}");
+            std::process::exit(1);
+        }
+    }
+}
+
+fn run() -> io::Result<()> {
     let args = Args::parse();
 
     let conn = Connection::open(args.database).expect("Failed to open database");
@@ -68,27 +78,32 @@ fn main() {
     .filter(|req| args.requirement.is_match(&req.name))
     .collect::<Vec<Requirement>>();
 
-
+    let stdout = io::stdout();
+    let mut output = BufWriter::new(stdout.lock());
 
     if args.json {
         let json = serde_json::to_string_pretty(&requirements).expect("Failed to serialize to JSON");
-        println!("{}", json);
-        return;
+        writeln!(output, "{json}")?;
+        return output.flush();
     }
     for requirement in requirements {
-        println!("{} ({})\n{}",
+        writeln!(
+            output,
+            "{} ({})\n{}",
             requirement.name,
             requirement.alias.as_deref().unwrap_or(""),
-            requirement.note);
+            requirement.note
+        )?;
         if let Some(stereotype) = requirement.stereotype {
-            println!("Stereotype: {stereotype}");
+            writeln!(output, "Stereotype: {stereotype}")?;
         }
         if let Some(truck_models) = requirement.truck_models {
-            println!("TruckModels: {truck_models}");
+            writeln!(output, "TruckModels: {truck_models}")?;
         }
         if let Some(stakeholder) = requirement.stakeholder {
-            println!("Requirement:Stakeholder: {stakeholder}");
+            writeln!(output, "Requirement:Stakeholder: {stakeholder}")?;
         }
-        println!("----------------------------------------\n");
+        writeln!(output, "----------------------------------------\n")?;
     }
+    output.flush()
 }
