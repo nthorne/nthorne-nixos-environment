@@ -8,6 +8,12 @@ struct Requirement {
     name: String,
     alias: Option<String>,
     note: String,
+    #[serde(rename = "Stereotype")]
+    stereotype: Option<String>,
+    #[serde(rename = "TruckModels")]
+    truck_models: Option<String>,
+    #[serde(rename = "Requirement:Stakeholder")]
+    stakeholder: Option<String>,
 }
 
 #[derive(Parser, Debug)]
@@ -34,13 +40,28 @@ fn main() {
     let conn = Connection::open(args.database).expect("Failed to open database");
 
     let mut statement = conn
-        .prepare("SELECT Name, Alias, Note FROM t_object WHERE Object_Type is 'Requirement'")
+        .prepare(
+            "SELECT o.Name, o.Alias, o.Note, o.Stereotype,
+                    (SELECT p.Value
+                     FROM t_objectproperties p
+                     WHERE p.Object_ID = o.Object_ID AND p.Property = 'TruckModels'
+                     LIMIT 1),
+                    (SELECT p.Value
+                     FROM t_objectproperties p
+                     WHERE p.Object_ID = o.Object_ID AND p.Property = 'Requirement:Stakeholder'
+                     LIMIT 1)
+             FROM t_object o
+             WHERE o.Object_Type IS 'Requirement'",
+        )
         .expect("Failed to prepare statement");
     let requirements = statement.query_map([], |row| {
         Ok(Requirement {
             name: row.get(0)?,
             alias: row.get(1)?,
             note: row.get(2)?,
+            stereotype: row.get(3)?,
+            truck_models: row.get(4)?,
+            stakeholder: row.get(5)?,
         })
     }).unwrap()
     .filter_map(Result::ok)
@@ -59,6 +80,15 @@ fn main() {
             requirement.name,
             requirement.alias.as_deref().unwrap_or(""),
             requirement.note);
+        if let Some(stereotype) = requirement.stereotype {
+            println!("Stereotype: {stereotype}");
+        }
+        if let Some(truck_models) = requirement.truck_models {
+            println!("TruckModels: {truck_models}");
+        }
+        if let Some(stakeholder) = requirement.stakeholder {
+            println!("Requirement:Stakeholder: {stakeholder}");
+        }
         println!("----------------------------------------\n");
     }
 }
