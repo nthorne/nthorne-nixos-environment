@@ -1,15 +1,12 @@
-{config, pkgs, ...}: let
+{ config, pkgs, ... }:
+let
   private = /etc/nixos/private.nix;
-in {
-  imports =
-    [
-      ./wallabag.nix
-    ]
-    ++ (
-      if builtins.pathExists private
-      then [private]
-      else []
-    );
+in
+{
+  imports = [
+    ./wallabag.nix
+  ]
+  ++ (if builtins.pathExists private then [ private ] else [ ]);
 
   networking.hostName = "hex";
   networking.networkmanager.enable = true;
@@ -55,25 +52,28 @@ in {
   # };
 
   # Enable container name DNS for all Podman networks.
-  networking.firewall.interfaces = let
-    matchAll =
-      if !config.networking.nftables.enable
-      then "podman+"
-      else "podman*";
-  in {
-    "${matchAll}".allowedUDPPorts = [53];
+  networking.firewall.interfaces =
+    let
+      matchAll = if !config.networking.nftables.enable then "podman+" else "podman*";
+    in
+    {
+      "${matchAll}".allowedUDPPorts = [ 53 ];
 
-    # Hermes webapp. The listener binds 0.0.0.0 (the only non-loopback bind
-    # the webapp accepts), so the firewall is what keeps it tailnet-only.
-    tailscale0.allowedTCPPorts = [ 9120 ];
-  };
+      # Hermes webapp (9120) and dashboard/desktop backend (9119). Both bind
+      # 0.0.0.0 (the only non-loopback bind either listener accepts), so the
+      # firewall is what keeps them tailnet-only.
+      tailscale0.allowedTCPPorts = [
+        9119
+        9120
+      ];
+    };
 
   virtualisation = {
     podman = {
       enable = true;
       autoPrune = {
         enable = true;
-        flags = ["--all"];
+        flags = [ "--all" ];
       };
     };
     docker.enable = true;
@@ -81,30 +81,30 @@ in {
     oci-containers = {
       backend = "podman";
       containers = {
-          # openwebui = {
-          #   image = "ghcr.io/open-webui/open-webui:main";
-          #   ports = ["8080:8080"];
-          #   volumes = [
-          #     "openwebui:/app/backend/data"
-          #   ];
-          #   autoStart = true;
+        # openwebui = {
+        #   image = "ghcr.io/open-webui/open-webui:main";
+        #   ports = ["8080:8080"];
+        #   volumes = [
+        #     "openwebui:/app/backend/data"
+        #   ];
+        #   autoStart = true;
 
-          #   extraOptions = ["--network=host"];
-          # };
-          # searxng = {
-          #   image = "searxng/searxng";
-          #   volumes = [
-          #     "searxng:/etc/searxng"
-          #   ];
-          #   autoStart = true;
+        #   extraOptions = ["--network=host"];
+        # };
+        # searxng = {
+        #   image = "searxng/searxng";
+        #   volumes = [
+        #     "searxng:/etc/searxng"
+        #   ];
+        #   autoStart = true;
 
-          #   extraOptions = ["--network=host"];
+        #   extraOptions = ["--network=host"];
 
-          #   environment = {
-          #     BIND_ADDRESS = "0.0.0.0:8081";
-          #     INSTANCE_NAME = "hex";
-          #   };
-          # };
+        #   environment = {
+        #     BIND_ADDRESS = "0.0.0.0:8081";
+        #     INSTANCE_NAME = "hex";
+        #   };
+        # };
       };
     };
   };
@@ -142,6 +142,18 @@ in {
 
     # Secrets: rendered from sops-nix into a DOTENV file
     environmentFiles = [ config.sops.templates."hermes-env".path ];
+
+    # Admin panel, and the backend Hermes Desktop attaches to. A separate
+    # process from the gateway (unit hermes-backend) on its own port; it
+    # reads the same HERMES_HOME, so the basic-auth provider in the env file
+    # covers it as well. The wildcard bind is what engages that sign-in gate
+    # and makes the Host-header check a no-op, and the firewall keeps 9119 on
+    # tailscale0 only — same shape as the webapp above.
+    backend = {
+      mode = "dashboard";
+      host = "0.0.0.0";
+      port = 9119;
+    };
   };
 
   sops = {
@@ -166,7 +178,9 @@ in {
         # Without an allowlist the gateway connects and then denies everyone.
         DISCORD_ALLOWED_USERS=1402392313132482733
         HERMES_DASHBOARD_BASIC_AUTH_USERNAME=nthorne
-        HERMES_DASHBOARD_BASIC_AUTH_PASSWORD_HASH=${config.sops.placeholder."hex/hermes/dashboard_password_hash"}
+        HERMES_DASHBOARD_BASIC_AUTH_PASSWORD_HASH=${
+          config.sops.placeholder."hex/hermes/dashboard_password_hash"
+        }
         HERMES_DASHBOARD_BASIC_AUTH_SECRET=${config.sops.placeholder."hex/hermes/dashboard_secret"}
         # gh reads GH_TOKEN itself; the PAT is scoped to Pull requests: write
         GH_TOKEN=${config.sops.placeholder."hex/hermes/github_token"}
