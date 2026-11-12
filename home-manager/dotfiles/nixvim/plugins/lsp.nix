@@ -8,7 +8,8 @@
         copilot = {
           enable = true;
           settings = {
-          } // lib.optionalAttrs config.nixvim.useGHE {
+          }
+          // lib.optionalAttrs config.nixvim.useGHE {
             github-enterprise = {
               uri = config.nixvim.gheURL;
             };
@@ -23,6 +24,7 @@
         ocamllsp.enable = true;
         pyrefly.enable = true;
         ruff.enable = true;
+        statix.enable = true;
         ts_ls.enable = true;
         yamlls.enable = true;
       };
@@ -53,26 +55,26 @@
       }
 
       {
-         mode = "n";
-         key = "<leader>nai"; # Toggle AI completion
-         action.__raw = ''
-           function()
-             if vim.g.copilot_enabled == 0 then
-               vim.g.copilot_enabled = 1
-               vim.notify("Copilot enabled", vim.log.levels.INFO)
-             else
-               for _, client in ipairs(vim.lsp.get_clients()) do
-                 if client.name:lower() == "github copilot" or client.name:lower() == "copilot" then
-                   vim.lsp.stop_client(client.id)
-                 end
-               end
-               vim.g.copilot_enabled = 0
-               require("sidekick.nes").disable()
-               vim.notify("Copilot disabled", vim.log.levels.INFO)
-             end
-           end
-         '';
-         options.desc = "Toggle [N]o [A][I] completion";
+        mode = "n";
+        key = "<leader>nai"; # Toggle AI completion
+        action.__raw = ''
+          function()
+            if vim.g.copilot_enabled == 0 then
+              vim.g.copilot_enabled = 1
+              vim.notify("Copilot enabled", vim.log.levels.INFO)
+            else
+              for _, client in ipairs(vim.lsp.get_clients()) do
+                if client.name:lower() == "github copilot" or client.name:lower() == "copilot" then
+                  vim.lsp.stop_client(client.id)
+                end
+              end
+              vim.g.copilot_enabled = 0
+              require("sidekick.nes").disable()
+              vim.notify("Copilot disabled", vim.log.levels.INFO)
+            end
+          end
+        '';
+        options.desc = "Toggle [N]o [A][I] completion";
       }
 
       {
@@ -105,7 +107,7 @@
           end
         '';
         options.desc = "Toggle In[L]ay [H]ints";
-       }
+      }
 
       {
         mode = "n";
@@ -158,11 +160,11 @@
         mode = "n";
         desc = "Rename";
       }
-       {
-         __unkeyed = "K";
-         mode = "n";
-         desc = "Hover";
-       }
-     ];
-   };
+      {
+        __unkeyed = "K";
+        mode = "n";
+        desc = "Hover";
+      }
+    ];
+  };
 }
