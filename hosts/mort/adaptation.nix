@@ -18,7 +18,10 @@
     vim
   ];
 
-  environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
   nixpkgs.config = {
     allowUnfree = true;
   };
@@ -27,7 +30,7 @@
   users.users.nthorne = {
     isNormalUser = true;
     uid = 1001;
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
     createHome = true;
     home = "/home/nthorne";
     shell = pkgs.zsh;

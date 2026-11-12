@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   tf2rem = pkgs.writeShellApplication {
     name = "tf2rem";
     runtimeInputs = with pkgs; [
@@ -41,7 +42,8 @@
       echo "''${password}" | remmina --update-profile "''${profile_path}" --set-option server="''${public_ips}" --set-option password
     '';
   };
-in {
+in
+{
   home.packages = with pkgs; [
     tf2rem
   ];

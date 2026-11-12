@@ -5,7 +5,7 @@
   ];
 
   programs.nixvim.plugins.lsp.servers.groovyls = {
-          enable = true;
-          package = pkgs.groovy-language-server;
+    enable = true;
+    package = pkgs.groovy-language-server;
   };
 }

@@ -1,4 +1,4 @@
-{...}: {
+_: {
   programs.nixvim = {
     plugins = {
       todo-comments.enable = true;
@@ -29,7 +29,7 @@
         key = "<leader>uq";
         action = "<cmd>Trouble quickfix<cr>";
         options.desc = "Show [Q]uickfix in Trouble";
-      }    
+      }
       {
         mode = "n";
         key = "<leader>us";
@@ -42,7 +42,7 @@
         {
           __unkeyed = "<leader>u";
           group = "Tro[U]ble";
-          mode = ["n"];
+          mode = [ "n" ];
         }
       ];
     };

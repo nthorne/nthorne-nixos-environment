@@ -101,11 +101,22 @@
         }
       ];
 
-      mkHostModules = { hostname, hostModule, extraModules ? [ ] }: common-modules ++ [ hostModule ] ++ extraModules ++ [{
-        home-manager.extraSpecialArgs.flake-inputs = inputs // {
-          inherit hostname system;
-        };
-      }];
+      mkHostModules =
+        {
+          hostname,
+          hostModule,
+          extraModules ? [ ],
+        }:
+        common-modules
+        ++ [ hostModule ]
+        ++ extraModules
+        ++ [
+          {
+            home-manager.extraSpecialArgs.flake-inputs = inputs // {
+              inherit hostname system;
+            };
+          }
+        ];
 
       vimes-modules = mkHostModules {
         hostname = "vimes";

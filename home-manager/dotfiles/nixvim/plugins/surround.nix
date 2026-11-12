@@ -1,5 +1,5 @@
-{...}: {
-  programs.nixvim = { 
+_: {
+  programs.nixvim = {
     plugins = {
       repeat.enable = true;
       vim-surround.enable = true;

@@ -1,5 +1,4 @@
-args:
-{
+args: {
   imports = [
     ./gitconfig.nix
     ./lnav.nix

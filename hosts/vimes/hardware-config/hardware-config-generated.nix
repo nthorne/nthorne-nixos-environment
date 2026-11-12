@@ -7,29 +7,33 @@
   pkgs,
   modulesPath,
   ...
-}: let
+}:
+let
   thermald-conf = ./thermald-conf.xml;
-in {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+in
+{
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "thunderbolt"
-    "nvme"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-    "rtsx_pci_sdmmc"
-  ];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = [
-    "kvm-intel"
-    "i915"
-  ];
-  boot.extraModulePackages = [];
-  # Prevent kvm-intel from taking control over VT-x at boot, to allow
-  # VirtualBox to use it when needed.
-  boot.kernelParams = ["kvm.enable_virt_at_load=0"];
+  boot = {
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "thunderbolt"
+      "nvme"
+      "usb_storage"
+      "usbhid"
+      "sd_mod"
+      "rtsx_pci_sdmmc"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [
+      "kvm-intel"
+      "i915"
+    ];
+    extraModulePackages = [ ];
+    # Prevent kvm-intel from taking control over VT-x at boot, to allow
+    # VirtualBox to use it when needed.
+    kernelParams = [ "kvm.enable_virt_at_load=0" ];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/56a8e334-2f3a-49ae-bd23-de6cb0c165d9";
@@ -41,7 +45,7 @@ in {
     fsType = "vfat";
   };
 
-  swapDevices = [{device = "/dev/disk/by-uuid/5c55cb02-8019-4813-9715-c800fc3728f3";}];
+  swapDevices = [ { device = "/dev/disk/by-uuid/5c55cb02-8019-4813-9715-c800fc3728f3"; } ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -56,16 +60,18 @@ in {
   # Gnome 40 introduced a new way of managing power, without tlp.
   # However, these 2 services clash when enabled simultaneously.
   # https://github.com/NixOS/nixos-hardware/issues/260
-  services.tlp.enable = lib.mkDefault (
-    (lib.versionOlder (lib.versions.majorMinor lib.version) "21.05")
-    || !config.services.power-profiles-daemon.enable
-  );
+  services = {
+    tlp.enable = lib.mkDefault (
+      (lib.versionOlder (lib.versions.majorMinor lib.version) "21.05")
+      || !config.services.power-profiles-daemon.enable
+    );
 
-  services.thermald.enable = true;
+    thermald.enable = true;
 
-  # Thermald doesn't have a default config for the 9500 yet, the one in this repo
-  # was generated with dptfxtract-static (https://github.com/intel/dptfxtract)
-  services.thermald.configFile = lib.mkDefault thermald-conf;
+    # Thermald doesn't have a default config for the 9500 yet, the one in this repo
+    # was generated with dptfxtract-static (https://github.com/intel/dptfxtract)
+    thermald.configFile = lib.mkDefault thermald-conf;
 
-  services.fstrim.enable = lib.mkDefault true;
+    fstrim.enable = lib.mkDefault true;
+  };
 }

@@ -8,8 +8,27 @@ in
   ]
   ++ (if builtins.pathExists private then [ private ] else [ ]);
 
-  networking.hostName = "hex";
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "hex";
+    networkmanager.enable = true;
+
+    # Enable container name DNS for all Podman networks.
+    firewall.interfaces =
+      let
+        matchAll = if !config.networking.nftables.enable then "podman+" else "podman*";
+      in
+      {
+        "${matchAll}".allowedUDPPorts = [ 53 ];
+
+        # Hermes webapp (9120) and dashboard/desktop backend (9119). Both bind
+        # 0.0.0.0 (the only non-loopback bind either listener accepts), so the
+        # firewall is what keeps them tailnet-only.
+        tailscale0.allowedTCPPorts = [
+          9119
+          9120
+        ];
+      };
+  };
 
   boot.loader = {
     # Use the GRUB 2 boot loader.
@@ -22,14 +41,16 @@ in
   };
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services = {
+    openssh.enable = true;
 
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "nthorne";
+    displayManager.autoLogin = {
+      enable = true;
+      user = "nthorne";
+    };
+
+    tailscale.enable = true;
   };
-
-  services.tailscale.enable = true;
 
   hardware.graphics.enable = true;
 
@@ -50,23 +71,6 @@ in
   #   wantedBy = ["sockets.target"];
   #   socketConfig.ListenStream = 8080;
   # };
-
-  # Enable container name DNS for all Podman networks.
-  networking.firewall.interfaces =
-    let
-      matchAll = if !config.networking.nftables.enable then "podman+" else "podman*";
-    in
-    {
-      "${matchAll}".allowedUDPPorts = [ 53 ];
-
-      # Hermes webapp (9120) and dashboard/desktop backend (9119). Both bind
-      # 0.0.0.0 (the only non-loopback bind either listener accepts), so the
-      # firewall is what keeps them tailnet-only.
-      tailscale0.allowedTCPPorts = [
-        9119
-        9120
-      ];
-    };
 
   virtualisation = {
     podman = {

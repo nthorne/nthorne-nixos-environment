@@ -1,5 +1,4 @@
-_:
-{
+_: {
   nix.settings = {
     # Use all available CPU cores for parallel compilation
     cores = 0;

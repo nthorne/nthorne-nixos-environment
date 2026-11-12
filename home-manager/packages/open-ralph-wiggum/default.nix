@@ -1,8 +1,9 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, bun
-, makeBinaryWrapper
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  bun,
+  makeBinaryWrapper,
 }:
 
 stdenv.mkDerivation (finalAttrs: {

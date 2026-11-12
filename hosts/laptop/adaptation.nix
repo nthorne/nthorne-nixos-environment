@@ -1,14 +1,16 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   # This file contains non-public information.
   private = /etc/nixos/private.nix;
 in
 {
-  imports = [ ] ++ (if builtins.pathExists private then [ private ] else [ ]);
+  imports = if builtins.pathExists private then [ private ] else [ ];
 
-  networking.hostName = "nixlaptop"; # Define your hostname.
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "nixlaptop"; # Define your hostname.
+    networkmanager.enable = true;
+  };
 
   boot.loader = {
     # Use the GRUB 2 boot loader.
@@ -25,27 +27,39 @@ in
     # efi.efiSysMountPoint = "/boot/efi";
   };
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services = {
+    # Enable the OpenSSH daemon.
+    openssh.enable = true;
 
-  services.tailscale.enable = true;
+    tailscale.enable = true;
 
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "nthorne";
+    displayManager.autoLogin = {
+      enable = true;
+      user = "nthorne";
+    };
+
+    blueman.enable = true;
+
+    ollama = {
+      enable = true;
+      environmentVariables = {
+        OLLAMA_ORIGINS = "app://obsidian.md*";
+      };
+    };
   };
 
-  hardware.graphics.enable = true;
-  #hardware.opengl.driSupport = true;
+  hardware = {
+    graphics.enable = true;
+    #hardware.opengl.driSupport = true;
 
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+    bluetooth.enable = true;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.alma = {
     isNormalUser = true;
     uid = 1001;
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
     createHome = true;
     home = "/home/alma";
     shell = pkgs.zsh;
@@ -77,12 +91,5 @@ in
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
-
-  services.ollama = {
-    enable = true;
-    environmentVariables = {
-      OLLAMA_ORIGINS = "app://obsidian.md*";
-    };
   };
 }
