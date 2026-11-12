@@ -3,20 +3,22 @@
   ...
 }:
 {
-  home.file.".pi/agent/skills/excel-toolkit".source = ../copilot-cli/skills/excel-toolkit;
-  home.file.".pi/agent/skills/executing-plan".source = ../copilot-cli/skills/executing-plan;
-  home.file.".pi/agent/skills/grill-me".source = ../copilot-cli/skills/grill-me;
-  home.file.".pi/agent/skills/hunk".source = ../copilot-cli/skills/hunk;
-  home.file.".pi/agent/skills/nixos-host".source = ../copilot-cli/skills/nixos-host;
-  home.file.".pi/agent/skills/obsidian-vault".source = ../copilot-cli/skills/obsidian-vault;
+  home.file = {
+    ".pi/agent/skills/excel-toolkit".source = ../copilot-cli/skills/excel-toolkit;
+    ".pi/agent/skills/executing-plan".source = ../copilot-cli/skills/executing-plan;
+    ".pi/agent/skills/grill-me".source = ../copilot-cli/skills/grill-me;
+    ".pi/agent/skills/hunk".source = ../copilot-cli/skills/hunk;
+    ".pi/agent/skills/nixos-host".source = ../copilot-cli/skills/nixos-host;
+    ".pi/agent/skills/obsidian-vault".source = ../copilot-cli/skills/obsidian-vault;
 
-  # Package settings
-  home.file.".pi/agent/extensions/pi-permission-system/config.json".source = ./permissions/config.json;
+    # Package settings
+    ".pi/agent/extensions/pi-permission-system/config.json".source = ./permissions/config.json;
+  };
 
   # Agent settings
   programs.pi-coding-agent = {
     enable = true;
-    extraPackages = with pkgs; [ 
+    extraPackages = with pkgs; [
       nodejs
 
       #LSPs for pi-lens

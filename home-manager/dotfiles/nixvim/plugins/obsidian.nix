@@ -1,4 +1,4 @@
-{...}: {
+_: {
   programs.nixvim = {
     plugins = {
       obsidian = {
@@ -28,10 +28,10 @@
           };
 
           note_id_func.__raw = ''
-              function(title)
-                return os.date("%Y%m%d%H%M") .. " " .. title
-              end
-              '';
+            function(title)
+              return os.date("%Y%m%d%H%M") .. " " .. title
+            end
+          '';
 
           link.style = "wiki";
           link.format = "shortest";
@@ -41,7 +41,7 @@
             folder = "3.templates";
             date_format = "%Y-%m-%d";
             time_format = "%H:%M";
-            substitutions = {};
+            substitutions = { };
           };
 
           picker = {
@@ -67,11 +67,11 @@
               img_folder = "8.assets";
 
               img_name_func.__raw = ''
-               function()
-                 -- Prefix image names with timestamp.
-                 return string.format("%s ", os.time())
-               end
-               '';
+                function()
+                  -- Prefix image names with timestamp.
+                  return string.format("%s ", os.time())
+                end
+              '';
 
               # A function that determines the text to insert in the note when pasting an image.
               # It takes two arguments, the `obsidian.Client` and an `obsidian.Path` to the image file.
@@ -80,14 +80,14 @@
               # @param path obsidian.Path the absolute path to the image file
               # @return string
               img_text_func.__raw = ''
-              function(client, path)
-                path = client:vault_relative_path(path) or path
-                return string.format("![%s](%s)", path.name, path)
-              end
+                function(client, path)
+                  path = client:vault_relative_path(path) or path
+                  return string.format("![%s](%s)", path.name, path)
+                end
               '';
             };
           };
-        }; 
+        };
       };
     };
     # NOTE: I had to put these as autocmds, because callback functionality did not

@@ -1,12 +1,12 @@
-{
-  ...
-}: let
+_:
+let
   models = {
     claude = "claude-sonnet-4";
     claudeThought = "claude-3.7-sonnet-thought";
     qwen = "qwen2.5-coder:latest";
   };
-in {
+in
+{
   programs.nixvim = {
     plugins = {
       avante = {
@@ -20,7 +20,7 @@ in {
           providers = {
             # Default Claude provider through Copilot API
             copilot.model = models.claude;
-            
+
             # Extended provider with longer timeouts for complex reasoning
             copilotthink = {
               __inherited_from = "copilot";
@@ -28,7 +28,7 @@ in {
               timeout = 600000; # 10 minutes
               max_completion_tokens = 64000;
             };
-            
+
             # Local model option through Ollama
             ollama.model = models.qwen;
           };
@@ -46,7 +46,7 @@ in {
               local hub = require("mcphub").get_hub_instance()
               return hub:get_active_servers_prompt()
             end'';
-          
+
           # Add MCP tools to Avante
           custom_tools.__raw = ''
             function()

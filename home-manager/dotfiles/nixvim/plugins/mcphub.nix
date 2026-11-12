@@ -3,11 +3,13 @@
   lib,
   flake-inputs,
   ...
-}: let
-  system = flake-inputs.system;
+}:
+let
+  inherit (flake-inputs) system;
   mcphub-nvim = flake-inputs.mcphub-nvim.packages."${system}".default;
   mcp-hub = flake-inputs.mcp-hub.packages."${system}".default;
-in {
+in
+{
   programs.nixvim = {
     extraPlugins = lib.mkIf config.programs.nixvim.plugins.avante.enable [
       mcphub-nvim

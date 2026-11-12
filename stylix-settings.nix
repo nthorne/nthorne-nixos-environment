@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 let
   theme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
   wallpaper = pkgs.runCommand "image.jpg" { } ''

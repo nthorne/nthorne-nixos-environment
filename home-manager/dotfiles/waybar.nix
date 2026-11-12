@@ -1,6 +1,8 @@
-{pkgs, lib, ...}: let
+{ pkgs, lib, ... }:
+let
   pomodoro = lib.getExe pkgs.openpomodoro-cli;
-in {
+in
+{
   programs.waybar = {
     enable = true;
     settings = {
@@ -8,16 +10,29 @@ in {
         layer = "bottom";
         position = "top";
 
-        modules-left = ["hyprland/workspaces" "hyprland/mode"];
-        modules-center = ["hyprland/window"];
-        modules-right = ["custom/pomodoro" "cpu" "memory" "temperature" "pulseaudio" "network" "battery" "tray" "clock"];
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/mode"
+        ];
+        modules-center = [ "hyprland/window" ];
+        modules-right = [
+          "custom/pomodoro"
+          "cpu"
+          "memory"
+          "temperature"
+          "pulseaudio"
+          "network"
+          "battery"
+          "tray"
+          "clock"
+        ];
 
         cpu = {
           interval = 15;
           format = "💻 {}%";
           max-length = 10;
         };
-        
+
         "custom/pomodoro" = {
           exec = "POMODORO_STATUS=$(${pomodoro} status); test -n \"$POMODORO_STATUS\" && echo \"$POMODORO_STATUS\"";
           interval = 1;
@@ -47,7 +62,10 @@ in {
             phone = "📞";
             portable = "📱";
             car = "🚗";
-            default = ["🔊" "🔉"];
+            default = [
+              "🔊"
+              "🔉"
+            ];
           };
           scroll-step = 1;
           on-click = "pavucontrol";
@@ -63,7 +81,10 @@ in {
 
         battery = {
           format = "{icon} {capacity}%";
-          "format-icons" = ["🪫" "🔋"];
+          "format-icons" = [
+            "🪫"
+            "🔋"
+          ];
         };
 
         clock = {

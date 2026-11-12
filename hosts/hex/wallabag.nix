@@ -3,130 +3,135 @@
 
 {
   # Containers
-  virtualisation.oci-containers.containers."wallabag-db" = {
-    image = "mariadb";
-    environment = {
-      "MYSQL_ROOT_PASSWORD" = "wallaroot";
+  virtualisation.oci-containers.containers = {
+    "wallabag-db" = {
+      image = "mariadb";
+      environment = {
+        "MYSQL_ROOT_PASSWORD" = "wallaroot";
+      };
+      volumes = [
+        "/opt/wallabag/data:/var/lib/mysql:rw"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--no-healthcheck"
+        "--network-alias=db"
+        "--network=wallabag_default"
+      ];
     };
-    volumes = [
-      "/opt/wallabag/data:/var/lib/mysql:rw"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--no-healthcheck"
-      "--network-alias=db"
-      "--network=wallabag_default"
-    ];
-  };
-  systemd.services."podman-wallabag-db" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
+    "wallabag-redis" = {
+      image = "redis:alpine";
+      log-driver = "journald";
+      extraOptions = [
+        "--health-cmd=[\"redis-cli\", \"ping\"]"
+        "--health-interval=300s"
+        "--health-timeout=3s"
+        "--network-alias=redis"
+        "--network=wallabag_default"
+      ];
     };
-    after = [
-      "podman-network-wallabag_default.service"
-    ];
-    requires = [
-      "podman-network-wallabag_default.service"
-    ];
-    partOf = [
-      "podman-compose-wallabag-root.target"
-    ];
-    wantedBy = [
-      "podman-compose-wallabag-root.target"
-    ];
-  };
-  virtualisation.oci-containers.containers."wallabag-redis" = {
-    image = "redis:alpine";
-    log-driver = "journald";
-    extraOptions = [
-      "--health-cmd=[\"redis-cli\", \"ping\"]"
-      "--health-interval=300s"
-      "--health-timeout=3s"
-      "--network-alias=redis"
-      "--network=wallabag_default"
-    ];
-  };
-  systemd.services."podman-wallabag-redis" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
+    "wallabag-wallabag" = {
+      image = "wallabag/wallabag";
+      environment = {
+        "MYSQL_ROOT_PASSWORD" = "wallaroot";
+        "SYMFONY__ENV__DATABASE_CHARSET" = "utf8mb4";
+        "SYMFONY__ENV__DATABASE_DRIVER" = "pdo_mysql";
+        "SYMFONY__ENV__DATABASE_HOST" = "db";
+        "SYMFONY__ENV__DATABASE_NAME" = "wallabag";
+        "SYMFONY__ENV__DATABASE_PASSWORD" = "wallapass";
+        "SYMFONY__ENV__DATABASE_PORT" = "3306";
+        "SYMFONY__ENV__DATABASE_TABLE_PREFIX" = "\"wallabag_\"";
+        "SYMFONY__ENV__DATABASE_USER" = "wallabag";
+        "SYMFONY__ENV__DOMAIN_NAME" = "http://hex:8082";
+        "SYMFONY__ENV__FROM_EMAIL" = "wallabag@example.com";
+        "SYMFONY__ENV__MAILER_DSN" = "smtp://127.0.0.1";
+        "SYMFONY__ENV__SERVER_NAME" = "\"Your wallabag instance\"";
+      };
+      volumes = [
+        "/opt/wallabag/images:/var/www/wallabag/web/assets/images:rw"
+      ];
+      ports = [
+        "8082:80/tcp"
+      ];
+      dependsOn = [
+        "wallabag-db"
+        "wallabag-redis"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network-alias=wallabag"
+        "--network=wallabag_default"
+      ];
     };
-    after = [
-      "podman-network-wallabag_default.service"
-    ];
-    requires = [
-      "podman-network-wallabag_default.service"
-    ];
-    partOf = [
-      "podman-compose-wallabag-root.target"
-    ];
-    wantedBy = [
-      "podman-compose-wallabag-root.target"
-    ];
-  };
-  virtualisation.oci-containers.containers."wallabag-wallabag" = {
-    image = "wallabag/wallabag";
-    environment = {
-      "MYSQL_ROOT_PASSWORD" = "wallaroot";
-      "SYMFONY__ENV__DATABASE_CHARSET" = "utf8mb4";
-      "SYMFONY__ENV__DATABASE_DRIVER" = "pdo_mysql";
-      "SYMFONY__ENV__DATABASE_HOST" = "db";
-      "SYMFONY__ENV__DATABASE_NAME" = "wallabag";
-      "SYMFONY__ENV__DATABASE_PASSWORD" = "wallapass";
-      "SYMFONY__ENV__DATABASE_PORT" = "3306";
-      "SYMFONY__ENV__DATABASE_TABLE_PREFIX" = "\"wallabag_\"";
-      "SYMFONY__ENV__DATABASE_USER" = "wallabag";
-      "SYMFONY__ENV__DOMAIN_NAME" = "http://hex:8082";
-      "SYMFONY__ENV__FROM_EMAIL" = "wallabag@example.com";
-      "SYMFONY__ENV__MAILER_DSN" = "smtp://127.0.0.1";
-      "SYMFONY__ENV__SERVER_NAME" = "\"Your wallabag instance\"";
-    };
-    volumes = [
-      "/opt/wallabag/images:/var/www/wallabag/web/assets/images:rw"
-    ];
-    ports = [
-      "8082:80/tcp"
-    ];
-    dependsOn = [
-      "wallabag-db"
-      "wallabag-redis"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=wallabag"
-      "--network=wallabag_default"
-    ];
-  };
-  systemd.services."podman-wallabag-wallabag" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    after = [
-      "podman-network-wallabag_default.service"
-    ];
-    requires = [
-      "podman-network-wallabag_default.service"
-    ];
-    partOf = [
-      "podman-compose-wallabag-root.target"
-    ];
-    wantedBy = [
-      "podman-compose-wallabag-root.target"
-    ];
   };
 
-  # Networks
-  systemd.services."podman-network-wallabag_default" = {
-    path = [ pkgs.podman ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStop = "podman network rm -f wallabag_default";
+  systemd.services = {
+    "podman-wallabag-db" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+      };
+      after = [
+        "podman-network-wallabag_default.service"
+      ];
+      requires = [
+        "podman-network-wallabag_default.service"
+      ];
+      partOf = [
+        "podman-compose-wallabag-root.target"
+      ];
+      wantedBy = [
+        "podman-compose-wallabag-root.target"
+      ];
     };
-    script = ''
-      podman network inspect wallabag_default || podman network create wallabag_default
-    '';
-    partOf = [ "podman-compose-wallabag-root.target" ];
-    wantedBy = [ "podman-compose-wallabag-root.target" ];
+    "podman-wallabag-redis" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+      };
+      after = [
+        "podman-network-wallabag_default.service"
+      ];
+      requires = [
+        "podman-network-wallabag_default.service"
+      ];
+      partOf = [
+        "podman-compose-wallabag-root.target"
+      ];
+      wantedBy = [
+        "podman-compose-wallabag-root.target"
+      ];
+    };
+    "podman-wallabag-wallabag" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+      };
+      after = [
+        "podman-network-wallabag_default.service"
+      ];
+      requires = [
+        "podman-network-wallabag_default.service"
+      ];
+      partOf = [
+        "podman-compose-wallabag-root.target"
+      ];
+      wantedBy = [
+        "podman-compose-wallabag-root.target"
+      ];
+    };
+
+    # Networks
+    "podman-network-wallabag_default" = {
+      path = [ pkgs.podman ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStop = "podman network rm -f wallabag_default";
+      };
+      script = ''
+        podman network inspect wallabag_default || podman network create wallabag_default
+      '';
+      partOf = [ "podman-compose-wallabag-root.target" ];
+      wantedBy = [ "podman-compose-wallabag-root.target" ];
+    };
   };
 
   # Root service

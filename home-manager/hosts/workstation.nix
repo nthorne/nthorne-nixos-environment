@@ -19,25 +19,27 @@
     };
   };
 
-  home.packages = with pkgs; [
-    gh
-    gparted
-    grimblast # Screen capture tool with hyprland support
-    libnotify
-    openpomodoro-cli
-  ];
+  home = {
+    packages = with pkgs; [
+      gh
+      gparted
+      grimblast # Screen capture tool with hyprland support
+      libnotify
+      openpomodoro-cli
+    ];
 
-  home.sessionVariables = {
-    OLLAMA_ORIGINS = "app://obsidian.md*";
-  };
+    sessionVariables = {
+      OLLAMA_ORIGINS = "app://obsidian.md*";
+    };
 
-  home.file.".pomodoro/hooks/stop" = {
-    text = ''
-      #!/usr/bin/env bash
-      set -ueo pipefail
-      notify-send -et 10000 "Time is up ⏰"
-    '';
-    executable = true;
+    file.".pomodoro/hooks/stop" = {
+      text = ''
+        #!/usr/bin/env bash
+        set -ueo pipefail
+        notify-send -et 10000 "Time is up ⏰"
+      '';
+      executable = true;
+    };
   };
 
   programs.firefox = {

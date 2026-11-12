@@ -1,7 +1,6 @@
 {
   lib,
   stdenv,
-  fetchurl,
 }:
 
 # <https://gist.github.com/osmano807/8b8e9b37043007c68c4cbfb69ee3e562>

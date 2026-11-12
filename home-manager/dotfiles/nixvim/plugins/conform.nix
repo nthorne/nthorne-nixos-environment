@@ -2,7 +2,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   programs.nixvim = {
     plugins.conform-nvim = {
       enable = true;
@@ -15,10 +16,13 @@
         # format_on_save = "function() return end";
         default_format_opts.lsp_format = "fallback";
         formatters_by_ft = {
-          cpp = ["clang_format"];
-          nix = ["nixfmt"];
-          yaml = ["yamlfmt"];
-          python = ["isort" "black"];
+          cpp = [ "clang_format" ];
+          nix = [ "nixfmt" ];
+          yaml = [ "yamlfmt" ];
+          python = [
+            "isort"
+            "black"
+          ];
         };
 
         formatters = {

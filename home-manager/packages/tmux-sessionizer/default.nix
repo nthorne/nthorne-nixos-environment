@@ -1,5 +1,5 @@
-{pkgs, ...}: let
-in {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     tmux-sessionizer
   ];

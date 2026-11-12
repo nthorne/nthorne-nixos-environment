@@ -1,18 +1,17 @@
 {
   pkgs,
-  flake-inputs,
   ...
-}: let
-in {
-  home.packages = with pkgs; [
-    rtk
-  ];
+}:
+{
   programs.opencode = {
     enable = true;
     settings = {
       share = "disabled";
       autoupdate = false;
-      enabled_providers = [ "github-copilot" "ollama" ];
+      enabled_providers = [
+        "github-copilot"
+        "ollama"
+      ];
       model = "github-copilot/claude-haiku-4.5";
       plugin = [
         "@mohak34/opencode-notifier@latest"
@@ -38,22 +37,47 @@ in {
         markitdown = {
           type = "local";
           enabled = true;
-          command = [ "podman" "run" "--rm" "-i" "mcp/markitdown" ];
+          command = [
+            "podman"
+            "run"
+            "--rm"
+            "-i"
+            "mcp/markitdown"
+          ];
         };
         memory = {
           type = "local";
           enabled = true;
-          command = [ "podman" "run" "-i" "-v" "agent-memory:/app/dist" "--rm" "mcp/memory" ];
+          command = [
+            "podman"
+            "run"
+            "-i"
+            "-v"
+            "agent-memory:/app/dist"
+            "--rm"
+            "mcp/memory"
+          ];
         };
         nixos = {
           type = "local";
           enabled = true;
-          command = [ "nix" "run" "github:utensils/mcp-nixos" "--" ];
+          command = [
+            "nix"
+            "run"
+            "github:utensils/mcp-nixos"
+            "--"
+          ];
         };
         sequentialthinking = {
           type = "local";
           enabled = true;
-          command = [ "podman" "run" "--rm" "-i" "mcp/sequentialthinking" ];
+          command = [
+            "podman"
+            "run"
+            "--rm"
+            "-i"
+            "mcp/sequentialthinking"
+          ];
         };
       };
 
@@ -139,16 +163,22 @@ in {
           "/tmp/*" = "allow";
         };
       };
-     };
+    };
 
     tui.keybinds = {
       "session_fork" = "<leader>f";
     };
   };
 
-  home.file.".config/opencode/AGENTS.md".source = ./AGENTS.md;
-  home.file.".config/opencode/agents".source = ./agents;
-  home.file.".config/opencode/commands".source = ./commands;
-  home.file.".config/opencode/plugins".source = ./plugins;
-  home.file.".config/opencode/skills".source = ../copilot-cli/skills;
+  home = {
+    packages = with pkgs; [ rtk ];
+
+    file = {
+      ".config/opencode/AGENTS.md".source = ./AGENTS.md;
+      ".config/opencode/agents".source = ./agents;
+      ".config/opencode/commands".source = ./commands;
+      ".config/opencode/plugins".source = ./plugins;
+      ".config/opencode/skills".source = ../copilot-cli/skills;
+    };
+  };
 }

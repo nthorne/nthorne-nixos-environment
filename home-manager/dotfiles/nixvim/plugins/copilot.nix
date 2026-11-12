@@ -4,12 +4,12 @@
       copilot-vim = {
         enable = true;
         settings = {
-          enterprise_uri = if (config.nixvim.useGHE) then config.nixvim.gheURL else "";
+          enterprise_uri = if config.nixvim.useGHE then config.nixvim.gheURL else "";
         };
       };
 
       copilot-chat = {
-        enable = if (config.nixvim.useGHE) then false else true;
+        enable = if config.nixvim.useGHE then false else true;
         settings = {
           model = "claude-haiku-4.5";
 
