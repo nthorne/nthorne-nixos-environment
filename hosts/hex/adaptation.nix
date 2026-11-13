@@ -10,7 +10,6 @@ in
 
   networking = {
     hostName = "hex";
-    networkmanager.enable = true;
 
     # Enable container name DNS for all Podman networks.
     firewall.interfaces =
@@ -41,21 +40,9 @@ in
   };
 
   # Enable the OpenSSH daemon.
-  services = {
-    openssh.enable = true;
-
-    displayManager.autoLogin = {
-      enable = true;
-      user = "nthorne";
-    };
-
-    tailscale.enable = true;
-  };
-
-  hardware.graphics.enable = true;
+  services.openssh.enable = true;
 
   users.users.nthorne.extraGroups = [
-    "wheel"
     "docker"
     "dialout"
   ];

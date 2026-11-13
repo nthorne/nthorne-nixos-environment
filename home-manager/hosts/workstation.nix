@@ -6,6 +6,7 @@
 {
   imports = [
     flake-inputs.sops-nix.homeManagerModules.sops
+    ../packages/opencode
     ../packages/pi-agent
   ];
 
@@ -27,10 +28,6 @@
       libnotify
       openpomodoro-cli
     ];
-
-    sessionVariables = {
-      OLLAMA_ORIGINS = "app://obsidian.md*";
-    };
 
     file.".pomodoro/hooks/stop" = {
       text = ''
