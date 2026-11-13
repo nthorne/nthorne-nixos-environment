@@ -1,10 +1,5 @@
 _: {
   programs.nixvim = {
-    localOpts = {
-      number = true;
-      relativenumber = true;
-    };
-
     globalOpts = {
       autoindent = true;
       backspace = "indent,eol,start";

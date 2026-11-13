@@ -221,8 +221,8 @@ in
       alias -g ...='cd ../..'
 
       # suffix aliases
-      alias -s cpp=vim
-      alias -s hpp=vim
+      alias -s cpp=${editor}
+      alias -s hpp=${editor}
       alias -s json=${lib.getExe pkgs.jless}
       alias -s md=${lib.getExe pkgs.bat}
       alias -s yml=${lib.getExe pkgs.bat}
@@ -278,8 +278,6 @@ in
 
       ### }}}
 
-      eval "$(direnv hook zsh)"
-
       ### UNDER EVALUATION {{{
       ###
 
@@ -318,10 +316,7 @@ in
       #export PAGER="/bin/less -sR"
       #export TERM="screen-256color"
 
-      export PATH="$HOME:bin/:$PATH:$HOME/.local/bin"
-
-      # For shellcheck
-      export PATH=$PATH:/home/nthorne/.cabal/bin/
+      export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
     '';
   };
 }
