@@ -1,6 +1,6 @@
 use rusqlite::Connection;
 use clap::Parser;
-use regex::Regex;
+use regex::{Regex, RegexBuilder};
 use serde::Serialize;
 use std::io::{self, BufWriter, Write};
 
@@ -18,12 +18,19 @@ struct Requirement {
 }
 
 #[derive(Parser, Debug)]
+#[command(after_help = r#"Filters requirements from a SQLite (qea) database and outputs them in text or JSON format.
+Filters are case-insensitive regex patterns. To make them case-sensitive, use the `(?-i)` flag in the regex pattern.
+"#)]
 struct Args {
     database: String,
 
-    /// Requirement name filter (regex, case sensitive)
+    /// Requirement name filter (regex, case insensitive)
     #[arg(short, long, value_parser = parse_regex, default_value_t = Regex::new(".*").unwrap())]
     requirement: Regex,
+
+    // Truck model filter (regex, case insensitive)
+    #[arg(short, long, value_parser = parse_regex, default_value_t = Regex::new(".*").unwrap())]
+    truck_model: Regex,
 
     /// Output in JSON format
     #[arg(short, long, default_value_t = false)]
@@ -31,7 +38,9 @@ struct Args {
 }
 
 fn parse_regex(s: &str) -> Result<Regex, String> {
-    Regex::new(s)
+    RegexBuilder::new(s)
+        .case_insensitive(true)
+        .build()
         .map_err(|e| e.to_string())
 }
 
@@ -76,6 +85,7 @@ fn run() -> io::Result<()> {
     }).unwrap()
     .filter_map(Result::ok)
     .filter(|req| args.requirement.is_match(&req.name))
+    .filter(|req| args.truck_model.is_match(req.truck_models.as_deref().unwrap_or("")))
     .collect::<Vec<Requirement>>();
 
     let stdout = io::stdout();
