@@ -23,6 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Nixvim deliberately pins its own nixpkgs and warns loudly if it follows
+    # the system one; leave this input un-followed on purpose.
     nixvim.url = "github:nix-community/nixvim";
 
     stylix = {
@@ -50,9 +52,15 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-wsl.url = "github:nix-community/nixos-wsl/main";
+    nixos-wsl = {
+      url = "github:nix-community/nixos-wsl/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    robotcode.url = "path:./home-manager/packages/robotcode/";
+    robotcode = {
+      url = "path:./home-manager/packages/robotcode/";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hermes-agent.url = "github:NousResearch/hermes-agent";
   };

@@ -15,8 +15,11 @@
   environment.systemPackages = with pkgs; [
     git
     tmux
-    vim
   ];
+
+  # nvim comes from nixvim through Home Manager; keep a plain vim for root so
+  # `sudo vim /etc/nixos/...` still works.
+  users.users.root.packages = with pkgs; [ vim ];
 
   environment.pathsToLink = [
     "/share/applications"

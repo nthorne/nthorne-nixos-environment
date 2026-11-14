@@ -23,7 +23,10 @@
     users.nthorne = {
       isNormalUser = true;
       uid = 1000;
-      extraGroups = [ "wheel" ];
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+      ];
       createHome = true;
       home = "/home/nthorne";
       shell = pkgs.zsh;
@@ -39,10 +42,14 @@
 
   time.timeZone = "Europe/Stockholm";
 
-  documentation.nixos.enable = true;
+  # Common to every host that runs this module (vimes, nixlaptop, hex).
+  networking.networkmanager.enable = true;
+
+  services.tailscale.enable = true;
+
+  hardware.graphics.enable = true;
 
   programs.zsh.enable = true;
-  security.sudo.enable = true;
 
   system = {
     stateVersion = "22.05";

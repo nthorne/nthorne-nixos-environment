@@ -79,19 +79,6 @@ in
         MemoryMax = lib.mkForce "1G";
       };
 
-      docker.serviceConfig = {
-        PrivateTmp = lib.mkForce true;
-        ProtectKernelTunables = lib.mkForce true;
-        # Docker needs these capabilities
-        ProtectKernelModules = lib.mkForce false;
-        ProtectControlGroups = lib.mkForce false;
-        NoNewPrivileges = lib.mkForce false;
-
-        # Reasonable resource limits
-        MemoryHigh = lib.mkForce "4G";
-        MemoryMax = lib.mkForce "8G";
-      };
-
       # Fix audit service startup timing by ensuring SUID/SGID wrappers are created first
       audit-rules-nixos = {
         after = [ "suid-sgid-wrappers.service" ];
@@ -108,7 +95,6 @@ in
     # Ensure log directories exist
     tmpfiles.rules = [
       "d /var/log/audit 0750 root adm -"
-      "d /var/log/clamav 0750 clamav clamav -"
     ];
 
     # Enable systemd-oomd for better OOM handling
@@ -147,7 +133,10 @@ in
       virtualHosts."ollama-tailscale" = {
         listen = [
           {
-            addr = "100.67.86.55";
+            # Bind every address and let the firewall below admit 11435 on
+            # tailscale0 only: binding the Tailscale IP directly races
+            # tailscaled at boot and loses, leaving nginx failed.
+            addr = "0.0.0.0";
             port = 11435;
           }
         ];
@@ -162,8 +151,6 @@ in
         };
       };
     };
-
-    tailscale.enable = true;
 
     blueman.enable = true;
 
@@ -183,8 +170,32 @@ in
 
     # Audit logging for security monitoring
     auditd.enable = true;
+
+    # Let the auditd module render /etc/audit/auditd.conf from these settings.
+    # Writing the file via environment.etc merges (types.lines), it does not
+    # replace, so a hand-written copy ends up appended to the generated one
+    # with duplicate keys. `dispatcher` is dropped: audispd no longer exists.
+    auditd.settings = {
+      log_file = "/var/log/audit/audit.log";
+      log_format = "RAW";
+      log_group = "adm";
+      priority_boost = 4;
+      flush = "INCREMENTAL_ASYNC";
+      freq = 50;
+      max_log_file = 8;
+      num_logs = 5;
+      disp_qos = "lossy";
+      name_format = "NONE";
+      max_log_file_action = "ROTATE";
+      space_left = 75;
+      space_left_action = "SYSLOG";
+      admin_space_left = 50;
+      admin_space_left_action = "SUSPEND";
+      disk_full_action = "SUSPEND";
+      disk_error_action = "SUSPEND";
+    };
+
     audit = {
-      enable = true;
       backlogLimit = 1024;
       rateLimit = 0;
       failureMode = "silent";
@@ -306,8 +317,6 @@ in
       modesetting.enable = true;
     };
 
-    # Unless this one, (and no nvidia driver), kitty refuses to start.
-    graphics.enable = true;
   };
 
   virtualisation = {
@@ -404,39 +413,13 @@ in
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment = {
-    systemPackages = with pkgs; [
-      gnupg
+  environment.systemPackages = with pkgs; [
+    gnupg
 
-      virt-manager
-      qemu
-      virtiofsd
-    ];
-
-    etc = {
-      # Auditd configuration for proper logging
-      "audit/auditd.conf".text = ''
-        log_file = /var/log/audit/audit.log
-        log_format = RAW
-        log_group = adm
-        priority_boost = 4
-        flush = INCREMENTAL_ASYNC
-        freq = 50
-        max_log_file = 8
-        num_logs = 5
-        disp_qos = lossy
-        dispatcher = /sbin/audispd
-        name_format = NONE
-        max_log_file_action = ROTATE
-        space_left = 75
-        space_left_action = SYSLOG
-        admin_space_left = 50
-        admin_space_left_action = SUSPEND
-        disk_full_action = SUSPEND
-        disk_error_action = SUSPEND
-      '';
-    };
-  };
+    virt-manager
+    qemu
+    virtiofsd
+  ];
 
   # programs.openvpn3.enable = true;
 
@@ -447,14 +430,11 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nthorne.extraGroups = [
-    "wheel"
-    "docker"
     "dialout"
     "disk"
     "audio"
     "libvirtd"
   ];
-  users.extraGroups.networkmanager.members = [ "nthorne" ];
 
   # Add ccache to ollama-cuda build so subsequent ollama version bumps
   # reuse compiled C++/CUDA object files when the source hasn't changed.

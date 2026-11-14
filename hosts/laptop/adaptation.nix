@@ -7,10 +7,7 @@ in
 {
   imports = if builtins.pathExists private then [ private ] else [ ];
 
-  networking = {
-    hostName = "nixlaptop"; # Define your hostname.
-    networkmanager.enable = true;
-  };
+  networking.hostName = "nixlaptop"; # Define your hostname.
 
   boot.loader = {
     # Use the GRUB 2 boot loader.
@@ -31,12 +28,8 @@ in
     # Enable the OpenSSH daemon.
     openssh.enable = true;
 
-    tailscale.enable = true;
-
-    displayManager.autoLogin = {
-      enable = true;
-      user = "nthorne";
-    };
+    # greetd ignores services.displayManager.autoLogin; real autologin needs
+    # services.greetd.settings.initial_session instead.
 
     blueman.enable = true;
 
@@ -48,12 +41,7 @@ in
     };
   };
 
-  hardware = {
-    graphics.enable = true;
-    #hardware.opengl.driSupport = true;
-
-    bluetooth.enable = true;
-  };
+  hardware.bluetooth.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.alma = {
@@ -72,11 +60,8 @@ in
   };
 
   users.users.nthorne.extraGroups = [
-    "wheel"
     "audio"
-    "docker"
     "dialout"
-    "networkmanager"
   ];
 
   virtualisation = {

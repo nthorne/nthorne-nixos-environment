@@ -84,13 +84,13 @@ in
           nvd
           shellcheck
           tree
-          wl-clipboard
         ]
         ++ lib.optionals wmEnabled [
           pavucontrol
           seahorse # For managing gnome-keyring
           swaynotificationcenter
           waybar
+          wl-clipboard
         ];
 
       pointerCursor.enable = true;
@@ -154,9 +154,5 @@ in
       };
     };
 
-    nix.gc = {
-      automatic = true;
-      options = "--delete-older-than 21d --keep-generations 5";
-    };
   };
 }

@@ -28,10 +28,6 @@
       openpomodoro-cli
     ];
 
-    sessionVariables = {
-      OLLAMA_ORIGINS = "app://obsidian.md*";
-    };
-
     file.".pomodoro/hooks/stop" = {
       text = ''
         #!/usr/bin/env bash

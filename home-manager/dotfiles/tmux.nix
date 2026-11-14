@@ -123,7 +123,7 @@
         # .. and then | for horizontal split, - for vertical split, and p for popup.
         bind -T coding-agent-table | split-window -h -c '#{pane_current_path}' -p 40 '${config.tmux.codingagent}'
         bind -T coding-agent-table - split-window -v -c '#{pane_current_path}' -p 40 '${config.tmux.codingagent}'
-        bind -T coding-agent-table p display-popup -E -d '#{pane_current_patinstall h}' -w 80% -h 80% '${config.tmux.codingagent}'
+        bind -T coding-agent-table p display-popup -E -d '#{pane_current_path}' -w 80% -h 80% '${config.tmux.codingagent}'
 
         bind b confirm-before -p "Send Ctrl-d to all panes? (y/n)" "run tmux-boom"
 
@@ -140,7 +140,7 @@
         set -g focus-events on
 
         # Put some useful information on status bar
-        set -g status-right "#[attr=bright]#[fg=orange]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'Prefix OFF|')CPU: #{cpu_percentage}|BATTERY: #(cat /sys/class/power_supply/BAT0/capacity)%#[fg=yellow]|load:#(cut -d' ' -f1-3 /proc/loadavg)|#[attr=bright]#[fg=green]#(date +'%Y-%m-%d %H:%M')"
+        set -g status-right "#[attr=bright]#[fg=orange]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'Prefix OFF|')CPU: #{cpu_percentage}|#(c=/sys/class/power_supply/BAT0/capacity; [ -r $c ] && printf 'BATTERY: %s%%|' $(cat $c))#[fg=yellow]|load:#(cut -d' ' -f1-3 /proc/loadavg)|#[attr=bright]#[fg=green]#(date +'%Y-%m-%d %H:%M')"
 
         # Set a decent status bar refresh rate
         set -g status-interval 3
@@ -154,14 +154,9 @@
 
         set-option -g display-time 4000
 
-        #   configurations
-        set -g @resurrect-processes 'ssh'
-
         set-option -g detach-on-destroy on
 
         set -g @fingers-skip-health-check '1'
-
-        run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
 
         bind f run -b "#{@fingers-cli} start #{pane_id}"
 
