@@ -140,8 +140,8 @@
         set -g focus-events on
 
         # Put some useful information on status bar
-        set -g status-right "#[attr=bright]#[fg=orange]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'Prefix OFF|')CPU: #{cpu_percentage}|#(c=/sys/class/power_supply/BAT0/capacity; [ -r $c ] && printf 'BATTERY: %s%%|' $(cat $c))#[fg=yellow]|load:#(cut -d' ' -f1-3 /proc/loadavg)|#[attr=bright]#[fg=green]#(date +'%Y-%m-%d %H:%M')"
-
+        set -g status-right "#[attr=bright]#[fg=orange]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'Prefix OFF|')CPU: #{cpu_percentage}|BATTERY: #(cat /sys/class/power_supply/BAT*/capacity)%#[fg=yellow]|load:#(cut -d' ' -f1-3 /proc/loadavg)|#[attr=bright]#[fg=green]#(date +'%Y-%m-%d %H:%M')"
+        
         # Set a decent status bar refresh rate
         set -g status-interval 3
 
@@ -157,6 +157,8 @@
         set-option -g detach-on-destroy on
 
         set -g @fingers-skip-health-check '1'
+
+        run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
 
         bind f run -b "#{@fingers-cli} start #{pane_id}"
 
