@@ -141,7 +141,7 @@
 
         # Put some useful information on status bar
         set -g status-right "#[attr=bright]#[fg=orange]#([ $(tmux show-option -qv key-table) = 'off' ] && echo 'Prefix OFF|')CPU: #{cpu_percentage}|BATTERY: #(cat /sys/class/power_supply/BAT*/capacity)%#[fg=yellow]|load:#(cut -d' ' -f1-3 /proc/loadavg)|#[attr=bright]#[fg=green]#(date +'%Y-%m-%d %H:%M')"
-        
+
         # Set a decent status bar refresh rate
         set -g status-interval 3
 
