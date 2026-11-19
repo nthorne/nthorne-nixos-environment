@@ -77,6 +77,7 @@ in
           file
           fzf
           git-crypt
+          glow
           htop
           jq
           jqp
