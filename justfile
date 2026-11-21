@@ -35,15 +35,12 @@ update_hex_containers:
   #!/usr/bin/env bash
   sudo systemctl stop \
     podman-openwebui.service \
-    podman-searxng.service \
-    podman-wallabag-wallabag.service
+    podman-searxng.service
 
   podman pull \
     docker.io/searxng/searxng:latest \
-    ghcr.io/open-webui/open-webui:main \
-    docker.io/wallabag/wallabag:latest
+    ghcr.io/open-webui/open-webui:main
 
   sudo systemctl start \
-    podman-wallabag-wallabag.service \
     podman-searxng.service \
     podman-openwebui.service \
