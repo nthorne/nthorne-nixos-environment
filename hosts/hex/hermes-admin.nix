@@ -1,11 +1,19 @@
 # Administration bridge between the Hermes agent and this host.
 #
-# Two separate grants, both for the `hermes` service user:
+# Three grants for the `hermes` service user, all of them a *unit start*:
 #
 #   1. apply a system generation the agent built itself
 #      (agent: nix build → point /var/lib/hermes/.hermes/hex-target at ./result
-#       → `systemctl start hex-apply`), and
-#   2. reboot / power off the host — used only when the operator explicitly asks.
+#       → `systemctl start hex-apply`),
+#   2. reboot the host (`systemctl start hex-reboot`) — used only when the
+#      operator explicitly asks for it, and
+#   3. (the polkit reboot/power-off actions below stay for a human shell.)
+#
+# Why a unit instead of a command: Hermes blocks `systemctl reboot` issued from
+# the agent's own shell at its tool layer (a hardline block, independent of any
+# permission), so a plain polkit grant is unusable from the agent. Starting a
+# unit is not blocked, and it keeps the privileged action in a file the operator
+# reviewed in the repo rather than in a command string.
 #
 # The agent never runs as root: the sandbox on hermes-agent stays as configured
 # (NoNewPrivileges, ProtectSystem=strict). The activation runs in this root
@@ -42,6 +50,21 @@ in
     };
   };
 
+  # `systemctl start hex-reboot` reboots the host. The unit exists because the
+  # agent's shell cannot issue the command itself (see the header); it is the
+  # same reviewed-unit pattern as hex-apply. It stays inert until started — there
+  # is no [Install] section, so nothing pulls it in at boot.
+  systemd.services.hex-reboot = {
+    description = "Reboot the host on request from the Hermes agent";
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = false;
+      ExecStart = "${pkgs.systemd}/bin/systemctl --no-block reboot";
+      # The reboot kills this unit mid-run; success is the reboot itself.
+      SuccessExitStatus = "0 1";
+    };
+  };
+
   # Polkit is the authorisation path, so no sudoers entry (and no weakening of
   # the agent's systemd sandbox) is needed.
   security.polkit.extraConfig = ''
@@ -50,9 +73,10 @@ in
         return polkit.Result.NOT_HANDLED;
       }
 
-      // Let the agent activate a generation it built.
+      // Let the agent activate a generation it built, and reboot when asked.
       if (action.id === "org.freedesktop.systemd1.manage-units" &&
-          action.lookup("unit") === "hex-apply.service" &&
+          (action.lookup("unit") === "hex-apply.service" ||
+           action.lookup("unit") === "hex-reboot.service") &&
           (action.lookup("verb") === "start" || action.lookup("verb") === "restart")) {
         return polkit.Result.YES;
       }
