@@ -145,6 +145,7 @@
           ./hosts/hex/hardware-configuration.nix
           ./hosts/hex/adaptation.nix
           ./hosts/hex/hermes-admin.nix
+          ./hosts/hex/watchdog.nix
           sops-nix.nixosModules.sops
           hermes-agent.nixosModules.default
           {
