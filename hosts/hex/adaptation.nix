@@ -3,10 +3,7 @@ let
   private = /etc/nixos/private.nix;
 in
 {
-  imports = [
-    ./wallabag.nix
-  ]
-  ++ (if builtins.pathExists private then [ private ] else [ ]);
+  imports = (if builtins.pathExists private then [ private ] else [ ]);
 
   networking = {
     hostName = "hex";
