@@ -144,6 +144,7 @@
         extraModules = [
           ./hosts/hex/hardware-configuration.nix
           ./hosts/hex/adaptation.nix
+          ./hosts/hex/hermes-admin.nix
           sops-nix.nixosModules.sops
           hermes-agent.nixosModules.default
           {
