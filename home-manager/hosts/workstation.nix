@@ -41,11 +41,15 @@
   programs.firefox = {
     enable = true;
   };
-  stylix.targets.firefox = {
-    enable = true;
-    profileNames = [
-      "default"
-    ];
-    firefoxGnomeTheme.enable = true;
+  stylix.targets = {
+    firefox = {
+      enable = true;
+      profileNames = [
+        "default"
+      ];
+      firefoxGnomeTheme.enable = true;
+    };
+
+    wayprompt.enable = false;
   };
 }

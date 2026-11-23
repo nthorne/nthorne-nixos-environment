@@ -111,5 +111,7 @@ in
       };
     };
 
+    # Wayprompt is removed ..
+    stylix.targets.wayprompt.enable = false;
   };
 }
