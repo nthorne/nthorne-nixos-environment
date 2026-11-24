@@ -20,4 +20,5 @@ in
       "all/atuin/session".path = "/home/nthorne/.local/share/atuin/session";
     };
   };
+  stylix.targets.wayprompt.enable = false;
 }
