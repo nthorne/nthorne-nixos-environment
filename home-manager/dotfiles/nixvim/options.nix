@@ -10,6 +10,8 @@ _: {
       incsearch = true;
       linebreak = true;
       mouse = "a";
+      number = true;
+      relativenumber = true;
       sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions";
       smartcase = true;
       smartindent = true;
